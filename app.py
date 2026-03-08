@@ -371,7 +371,7 @@ def load_data():
     df['Defaut'] = df['Statut'].apply(lambda x: 1 if x.strip() in ['EN RETARD'] else 0)
     df['Rembourse_Flag'] = df['Statut'].apply(lambda x: 1 if x.strip() == 'REMBOURSE' else 0)
     df['Age'] = pd.to_numeric(df['Age'], errors='coerce')
-    df['Duree_Num'] = pd.to_numeric(df[' Duree_Mois'], errors='coerce')
+    df['Duree_Num'] = pd.to_numeric(df['Duree_Mois'], errors='coerce')
     df['Activite'] = df['Activite'].str.strip()
     df['Region'] = df['Region'].str.strip()
     df['Sexe'] = df['Sexe'].str.strip()
@@ -1233,3 +1233,4 @@ elif page == L["nav_risk"]:
     et de calibrer les modèles sur un historique plus long.
     </div>
     """, unsafe_allow_html=True)
+
