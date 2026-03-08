@@ -1,1236 +1,797 @@
+"""CreditMacro — Risk Engine for Microfinance"""
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 from scipy import stats
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score, roc_curve, confusion_matrix, classification_report
+from sklearn.calibration import calibration_curve
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings("ignore")
 
-# ─────────────────────────────────────────────
-#  CONFIGURATION & TRANSLATIONS
-# ─────────────────────────────────────────────
-st.set_page_config(
-    page_title="CreditMacro Togo",
-    page_icon="🏦",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+st.set_page_config(page_title="CreditMacro · Risk Engine", page_icon="🏦", layout="wide")
 
-TRANSLATIONS = {
-    "fr": {
-        "app_title": "🏦 CreditMacro Togo",
-        "app_subtitle": "Outil d'aide à la décision pour analystes crédit en microfinance",
-        "lang_label": "Langue / Language",
-        "nav_dashboard": "📊 Tableau de bord",
-        "nav_macro": "🌍 Analyse Macroéconomique",
-        "nav_portfolio": "📁 Analyse du Portefeuille",
-        "nav_decision": "⚖️ Aide à la Décision",
-        "nav_econometrics": "📐 Modèles Économétriques",
-        "nav_risk": "🚨 Scoring de Risque",
-
-        # Dashboard
-        "dash_title": "Vue d'ensemble du portefeuille et contexte macro",
-        "kpi_total_loans": "Total prêts",
-        "kpi_total_disbursed": "Encours total",
-        "kpi_repayment_rate": "Taux de remboursement global",
-        "kpi_default_rate": "Taux de défaut",
-        "kpi_avg_amount": "Montant moyen",
-        "kpi_gdp_growth": "Croissance PIB (dernière)",
-        "portfolio_by_status": "Répartition par statut",
-        "portfolio_by_sector": "Répartition par secteur",
-        "portfolio_by_region": "Distribution géographique",
-        "trend_disbursements": "Évolution des décaissements",
-
-        # Macro
-        "macro_title": "Analyse Macroéconomique — Togo",
-        "gdp_growth_title": "Croissance du PIB annuel (%)",
-        "pop_title": "Évolution de la population",
-        "macro_context": "Contexte macroéconomique actuel",
-        "gdp_avg_5y": "Croissance moyenne (5 ans)",
-        "gdp_volatility": "Volatilité du PIB",
-        "gdp_trend": "Tendance PIB",
-        "pop_growth": "Croissance démographique",
-        "macro_alert_positive": "✅ Environnement favorable au crédit",
-        "macro_alert_warning": "⚠️ Environnement à surveiller",
-        "macro_alert_negative": "🔴 Environnement défavorable",
-        "gdp_filter": "Période d'analyse",
-        "gdp_context_text": "Interprétation macroéconomique",
-        "pop_density": "Densité de crédit potentielle",
-        "credit_demand_index": "Indice de demande de crédit estimé",
-
-        # Portfolio
-        "port_title": "Analyse statistique du portefeuille",
-        "dist_amount": "Distribution des montants prêtés",
-        "dist_duration": "Distribution des durées",
-        "dist_rate": "Distribution des taux d'intérêt",
-        "corr_matrix": "Matrice de corrélation",
-        "sector_performance": "Performance par secteur",
-        "region_performance": "Performance par région",
-        "age_analysis": "Analyse par tranche d'âge",
-        "gender_analysis": "Analyse par genre",
-
-        # Decision
-        "dec_title": "Module d'aide à la décision crédit",
-        "dec_subtitle": "Évaluation macroéconomique et sectorielle pour grands montants",
-        "dec_sector": "Secteur d'activité du projet",
-        "dec_region": "Région d'implantation",
-        "dec_amount": "Montant sollicité (FCFA)",
-        "dec_duration": "Durée souhaitée (mois)",
-        "dec_age": "Âge du demandeur",
-        "dec_gender": "Genre",
-        "dec_analyze": "🔍 Analyser le dossier",
-        "dec_score_title": "Score de risque global",
-        "dec_macro_score": "Score Macroéconomique",
-        "dec_sector_score": "Score Sectoriel",
-        "dec_stat_score": "Score Statistique (portefeuille)",
-        "dec_recommendation": "Recommandation",
-        "rec_favorable": "✅ FAVORABLE",
-        "rec_reserve": "⚠️ FAVORABLE AVEC RÉSERVES",
-        "rec_unfavorable": "🔴 DÉFAVORABLE",
-        "dec_justification": "Justification analytique",
-        "conditions_title": "Conditions suggérées",
-        "cond_amount": "Montant recommandé",
-        "cond_rate": "Fourchette de taux suggérée",
-        "cond_duration": "Durée recommandée",
-        "cond_collateral": "Garanties recommandées",
-        "dec_comparables": "Dossiers comparables dans le portefeuille",
-
-        # Econometrics
-        "eco_title": "Modèles Économétriques",
-        "eco_regression": "Régression: Facteurs de remboursement",
-        "eco_var": "Variables explicatives",
-        "eco_coef": "Coefficient",
-        "eco_pval": "p-valeur",
-        "eco_significance": "Significativité",
-        "eco_r2": "R² du modèle",
-        "eco_forecast": "Prévision de la demande de crédit",
-        "eco_gdp_corr": "Corrélation PIB / Volume de crédit",
-        "eco_ols_title": "Résultats de la régression OLS",
-
-        # Risk
-        "risk_title": "Scoring de Risque Sectoriel & Macro",
-        "risk_sector_map": "Carte de risque sectorielle",
-        "risk_regional_map": "Carte de risque régionale",
-        "risk_gdp_sensitivity": "Sensibilité sectorielle aux chocs PIB",
-
-        # General
-        "fcfa": "F CFA",
-        "years": "ans",
-        "months": "mois",
-        "male": "Homme",
-        "female": "Femme",
-        "agriculture": "Agriculture",
-        "commerce": "Commerce",
-        "artisanat": "Artisanat",
-        "source_wb": "Source: Banque Mondiale",
-        "no_data": "Données insuffisantes",
-    },
-    "en": {
-        "app_title": "🏦 CreditMacro Togo",
-        "app_subtitle": "Decision support tool for microfinance credit analysts",
-        "lang_label": "Langue / Language",
-        "nav_dashboard": "📊 Dashboard",
-        "nav_macro": "🌍 Macroeconomic Analysis",
-        "nav_portfolio": "📁 Portfolio Analysis",
-        "nav_decision": "⚖️ Decision Support",
-        "nav_econometrics": "📐 Econometric Models",
-        "nav_risk": "🚨 Risk Scoring",
-
-        # Dashboard
-        "dash_title": "Portfolio overview and macro context",
-        "kpi_total_loans": "Total loans",
-        "kpi_total_disbursed": "Total outstanding",
-        "kpi_repayment_rate": "Global repayment rate",
-        "kpi_default_rate": "Default rate",
-        "kpi_avg_amount": "Average amount",
-        "kpi_gdp_growth": "GDP growth (latest)",
-        "portfolio_by_status": "Distribution by status",
-        "portfolio_by_sector": "Distribution by sector",
-        "portfolio_by_region": "Geographic distribution",
-        "trend_disbursements": "Disbursement trends",
-
-        # Macro
-        "macro_title": "Macroeconomic Analysis — Togo",
-        "gdp_growth_title": "Annual GDP Growth (%)",
-        "pop_title": "Population Growth",
-        "macro_context": "Current macroeconomic context",
-        "gdp_avg_5y": "Average growth (5 years)",
-        "gdp_volatility": "GDP volatility",
-        "gdp_trend": "GDP trend",
-        "pop_growth": "Demographic growth",
-        "macro_alert_positive": "✅ Favorable lending environment",
-        "macro_alert_warning": "⚠️ Environment to monitor",
-        "macro_alert_negative": "🔴 Unfavorable environment",
-        "gdp_filter": "Analysis period",
-        "gdp_context_text": "Macroeconomic interpretation",
-        "pop_density": "Potential credit density",
-        "credit_demand_index": "Estimated credit demand index",
-
-        # Portfolio
-        "port_title": "Portfolio statistical analysis",
-        "dist_amount": "Loan amount distribution",
-        "dist_duration": "Duration distribution",
-        "dist_rate": "Interest rate distribution",
-        "corr_matrix": "Correlation matrix",
-        "sector_performance": "Performance by sector",
-        "region_performance": "Performance by region",
-        "age_analysis": "Analysis by age group",
-        "gender_analysis": "Gender analysis",
-
-        # Decision
-        "dec_title": "Credit Decision Support Module",
-        "dec_subtitle": "Macroeconomic and sectoral evaluation for large loans",
-        "dec_sector": "Project activity sector",
-        "dec_region": "Implementation region",
-        "dec_amount": "Requested amount (FCFA)",
-        "dec_duration": "Desired duration (months)",
-        "dec_age": "Applicant age",
-        "dec_gender": "Gender",
-        "dec_analyze": "🔍 Analyze Application",
-        "dec_score_title": "Overall risk score",
-        "dec_macro_score": "Macroeconomic Score",
-        "dec_sector_score": "Sectoral Score",
-        "dec_stat_score": "Statistical Score (portfolio)",
-        "dec_recommendation": "Recommendation",
-        "rec_favorable": "✅ FAVORABLE",
-        "rec_reserve": "⚠️ FAVORABLE WITH RESERVES",
-        "rec_unfavorable": "🔴 UNFAVORABLE",
-        "dec_justification": "Analytical justification",
-        "conditions_title": "Suggested conditions",
-        "cond_amount": "Recommended amount",
-        "cond_rate": "Suggested rate range",
-        "cond_duration": "Recommended duration",
-        "cond_collateral": "Recommended collateral",
-        "dec_comparables": "Comparable files in portfolio",
-
-        # Econometrics
-        "eco_title": "Econometric Models",
-        "eco_regression": "Regression: Repayment factors",
-        "eco_var": "Explanatory variables",
-        "eco_coef": "Coefficient",
-        "eco_pval": "p-value",
-        "eco_significance": "Significance",
-        "eco_r2": "Model R²",
-        "eco_forecast": "Credit demand forecast",
-        "eco_gdp_corr": "GDP / Credit volume correlation",
-        "eco_ols_title": "OLS Regression Results",
-
-        # Risk
-        "risk_title": "Sectoral & Macro Risk Scoring",
-        "risk_sector_map": "Sectoral risk map",
-        "risk_regional_map": "Regional risk map",
-        "risk_gdp_sensitivity": "Sectoral sensitivity to GDP shocks",
-
-        # General
-        "fcfa": "FCFA",
-        "years": "years",
-        "months": "months",
-        "male": "Male",
-        "female": "Female",
-        "agriculture": "Agriculture",
-        "commerce": "Commerce",
-        "artisanat": "Crafts",
-        "source_wb": "Source: World Bank",
-        "no_data": "Insufficient data",
-    }
-}
-
-# ─────────────────────────────────────────────
-#  CSS STYLING
-# ─────────────────────────────────────────────
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
-    * { font-family: 'Inter', sans-serif; }
-    
-    .main { background-color: #f0f2f6; }
-    
-    .metric-card {
-        background: white;
-        border-radius: 12px;
-        padding: 1.2rem 1.5rem;
-        border-left: 4px solid #1a56db;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        margin-bottom: 0.5rem;
-    }
-    .metric-card.green { border-left-color: #0e9f6e; }
-    .metric-card.red { border-left-color: #e02424; }
-    .metric-card.orange { border-left-color: #ff5a1f; }
-    .metric-card.purple { border-left-color: #7e3af2; }
-    
-    .metric-label { font-size: 0.75rem; color: #6b7280; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
-    .metric-value { font-size: 1.6rem; font-weight: 700; color: #111827; line-height: 1.2; }
-    .metric-delta { font-size: 0.8rem; color: #6b7280; margin-top: 2px; }
-    
-    .section-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #111827;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid #e5e7eb;
-        margin-bottom: 1rem;
-    }
-    
-    .score-gauge {
-        text-align: center;
-        padding: 1.5rem;
-        border-radius: 16px;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    
-    .score-number { font-size: 3rem; font-weight: 800; }
-    .score-label { font-size: 0.9rem; color: #6b7280; font-weight: 500; }
-    
-    .decision-box {
-        padding: 1.5rem 2rem;
-        border-radius: 12px;
-        font-size: 1.2rem;
-        font-weight: 700;
-        text-align: center;
-        margin: 1rem 0;
-    }
-    .decision-green { background: #d1fae5; color: #065f46; border: 2px solid #6ee7b7; }
-    .decision-orange { background: #fff3cd; color: #92400e; border: 2px solid #fcd34d; }
-    .decision-red { background: #fee2e2; color: #991b1b; border: 2px solid #fca5a5; }
-    
-    .info-box {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 8px;
-        padding: 1rem 1.2rem;
-        margin: 0.5rem 0;
-        font-size: 0.9rem;
-        color: #1e40af;
-    }
-    
-    .warning-box {
-        background: #fffbeb;
-        border: 1px solid #fde68a;
-        border-radius: 8px;
-        padding: 1rem 1.2rem;
-        margin: 0.5rem 0;
-        font-size: 0.9rem;
-        color: #92400e;
-    }
-    
-    .stTabs [data-baseweb="tab-list"] { gap: 8px; }
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 8px 8px 0 0;
-        padding: 8px 16px;
-        font-weight: 500;
-    }
-    
-    .sidebar-header {
-        font-size: 0.7rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: #9ca3af;
-        padding: 0.5rem 0 0.2rem 0;
-    }
-    
-    div[data-testid="stMetric"] { background: white; border-radius: 10px; padding: 0.8rem; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+* { font-family: 'Inter', sans-serif; }
+[data-testid="stSidebar"] { background: #0f172a !important; }
+[data-testid="stSidebar"] * { color: #e2e8f0 !important; }
+.kpi-card { background:white; border-radius:14px; padding:1.1rem 1.4rem; border-left:5px solid #3b82f6; box-shadow:0 1px 4px rgba(0,0,0,.07); margin-bottom:.4rem; }
+.kpi-card.green  { border-left-color:#10b981; }
+.kpi-card.red    { border-left-color:#ef4444; }
+.kpi-card.orange { border-left-color:#f59e0b; }
+.kpi-card.purple { border-left-color:#8b5cf6; }
+.kpi-card.teal   { border-left-color:#06b6d4; }
+.kpi-label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:#94a3b8; }
+.kpi-val   { font-size:1.75rem; font-weight:800; color:#0f172a; line-height:1.1; }
+.kpi-sub   { font-size:.75rem; color:#64748b; margin-top:2px; }
+.sec-title { font-size:1.2rem; font-weight:700; color:#0f172a; border-bottom:2px solid #e2e8f0; padding-bottom:.4rem; margin-bottom:1rem; margin-top:.5rem; }
+.upload-hero { background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%); border-radius:16px; padding:2.5rem; color:white; text-align:center; margin-bottom:1.5rem; }
+.upload-hero h2 { font-size:1.6rem; font-weight:800; margin:0 0 .5rem; }
+.upload-hero p { font-size:.9rem; color:#94a3b8; margin:0; }
+.info-box    { background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:.9rem 1.1rem; font-size:.85rem; color:#1e40af; margin:.5rem 0; }
+.warn-box    { background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:.9rem 1.1rem; font-size:.85rem; color:#92400e; margin:.5rem 0; }
+.success-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:.9rem 1.1rem; font-size:.85rem; color:#166534; margin:.5rem 0; }
 </style>
 """, unsafe_allow_html=True)
 
-
-# ─────────────────────────────────────────────
-#  DATA LOADING
-# ─────────────────────────────────────────────
-@st.cache_data
-def load_data():
-    # GDP
-    gdp_raw = pd.read_csv("Croissance_du_PIB_Togo.csv")
-    years = [str(y) for y in range(1960, 2025)]
-    gdp_values = gdp_raw[years].values[0]
-    gdp = pd.DataFrame({"Année": list(range(1960, 2025)), "Croissance_PIB": gdp_values})
-    gdp = gdp.dropna()
-
-    # Population
-    pop_raw = pd.read_csv("Population_togo.csv")
-    pop_values = pop_raw[years].values[0]
-    pop = pd.DataFrame({"Année": list(range(1960, 2025)), "Population": pop_values})
-    pop = pop.dropna()
-
-    # Portfolio
-    df = pd.read_csv("Jeux_donnees.csv")
-    # Clean monetary columns
-    def clean_amount(col):
-        return df[col].astype(str).str.replace(r'[^\d.]', '', regex=True).replace('', np.nan).astype(float)
-
-    df['Montant_Num'] = clean_amount(' Montant_Prete_FCFA ')
-    df['Taux_Num'] = df[' Taux_Interet '].astype(str).str.replace(r'[^\d.]', '', regex=True).astype(float)
-    df['Remboursement_Num'] = clean_amount(' Montant_Rembourse_FCFA ')
-    df['Total_Du_Num'] = clean_amount('Montant_Total_Du')
-    df['Restant_Num'] = clean_amount(' Montant_Restant ')
-
-    df['Defaut'] = df['Statut'].apply(lambda x: 1 if x.strip() in ['EN RETARD'] else 0)
-    df['Rembourse_Flag'] = df['Statut'].apply(lambda x: 1 if x.strip() == 'REMBOURSE' else 0)
-    df['Age'] = pd.to_numeric(df['Age'], errors='coerce')
-    df['Duree_Num'] = pd.to_numeric(df['Duree_Mois'], errors='coerce')
-    df['Activite'] = df['Activite'].str.strip()
-    df['Region'] = df['Region'].str.strip()
-    df['Sexe'] = df['Sexe'].str.strip()
-    df['Statut'] = df['Statut'].str.strip()
-
-    return gdp, pop, df
-
-gdp_df, pop_df, loans_df = load_data()
-
-
-# ─────────────────────────────────────────────
-#  SIDEBAR
-# ─────────────────────────────────────────────
-with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/6/68/Flag_of_Togo.svg", width=60)
-    
-    lang = st.selectbox("🌐 Langue / Language", ["Français", "English"], key="lang_select")
-    L = TRANSLATIONS["fr"] if lang == "Français" else TRANSLATIONS["en"]
-
-    st.markdown(f"""
-    <div style='background: linear-gradient(135deg, #1a56db, #0891b2); padding: 1rem; border-radius: 10px; color: white; margin: 0.5rem 0;'>
-        <div style='font-size: 1rem; font-weight: 700;'>{L["app_title"]}</div>
-        <div style='font-size: 0.75rem; opacity: 0.85; margin-top: 4px;'>{L["app_subtitle"]}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown('<div class="sidebar-header">Navigation</div>', unsafe_allow_html=True)
-    page = st.radio(
-        "Menu",
-        [L["nav_dashboard"], L["nav_macro"], L["nav_portfolio"],
-         L["nav_decision"], L["nav_econometrics"], L["nav_risk"]],
-        label_visibility="collapsed"
+# ── Translations ──
+T = {
+    "fr": dict(
+        title="🏦 CreditMacro · Risk Engine", subtitle="Analyse de risque crédit microfinance",
+        nav_upload="📂 Chargement", nav_pd="📉 Probabilité de Défaut", nav_ols="📐 Régression OLS",
+        nav_corr="🔗 Corrélations", nav_logit="🧮 Régression Logistique", nav_export="📄 Export",
+        upload_title="Chargez votre portefeuille de prêts", upload_desc="CSV ou Excel · Toute institution de microfinance",
+        col_map="Mapping des colonnes", col_map_desc="Associez vos colonnes aux champs analytiques",
+        col_default="Colonne statut / défaut", col_amount="Montant du prêt", col_duration="Durée (mois)",
+        col_rate="Taux d'intérêt (%)", col_age="Âge emprunteur", col_sector="Secteur d'activité",
+        col_region="Région", col_gender="Genre", val_default="Valeurs = défaut (ex: EN RETARD, 1)",
+        apply_map="✅ Valider le mapping", no_data="⬅️ Chargez d'abord vos données dans Chargement",
+        not_enough="Données insuffisantes (min. 30 lignes valides)",
+        pd_title="Probabilité de Défaut — Analyse empirique", pd_global="PD globale",
+        pd_by_sector="PD par secteur", pd_by_region="PD par région", pd_by_amount="PD par tranche de montant",
+        pd_by_age="PD par tranche d'âge", pd_by_gender="PD par genre", pd_by_duration="PD par durée",
+        ols_title="Régression OLS — Facteurs explicatifs du défaut",
+        ols_dep="Variable dépendante", ols_indep="Variables indépendantes",
+        ols_r2="R² ajusté", ols_fstat="F-statistique", ols_nobs="Observations",
+        corr_title="Matrice de corrélations", corr_desc="Corrélations de Pearson entre variables numériques",
+        corr_top="Corrélations les plus fortes avec le défaut", corr_scatter="Nuage de points",
+        logit_title="Régression Logistique — Modèle de scoring PD",
+        logit_roc="Courbe ROC", logit_auc="AUC", logit_cm="Matrice de confusion",
+        logit_calib="Courbe de calibration", logit_score="Distribution des scores PD",
+        logit_thresh="Seuil de décision", logit_report="Rapport de classification", logit_gini="Gini",
+        export_title="Export & Rapport de synthèse",
+        export_dl_csv="⬇️ Télécharger portefeuille scoré (CSV)", export_dl_sum="⬇️ Rapport analytique (TXT)",
+    ),
+    "en": dict(
+        title="🏦 CreditMacro · Risk Engine", subtitle="Credit risk analysis for microfinance",
+        nav_upload="📂 Data Upload", nav_pd="📉 Probability of Default", nav_ols="📐 OLS Regression",
+        nav_corr="🔗 Correlations", nav_logit="🧮 Logistic Regression", nav_export="📄 Export",
+        upload_title="Upload your loan portfolio", upload_desc="CSV or Excel · Any microfinance institution",
+        col_map="Column Mapping", col_map_desc="Map your columns to the required analytical fields",
+        col_default="Default / status column", col_amount="Loan amount", col_duration="Duration (months)",
+        col_rate="Interest rate (%)", col_age="Borrower age", col_sector="Activity sector",
+        col_region="Region", col_gender="Gender", val_default="Default values (e.g. LATE, 1)",
+        apply_map="✅ Confirm mapping", no_data="⬅️ Please load your data in the Upload tab first",
+        not_enough="Not enough data (min. 30 valid rows)",
+        pd_title="Probability of Default — Empirical Analysis", pd_global="Portfolio PD",
+        pd_by_sector="PD by sector", pd_by_region="PD by region", pd_by_amount="PD by loan size",
+        pd_by_age="PD by age group", pd_by_gender="PD by gender", pd_by_duration="PD by duration",
+        ols_title="OLS Regression — Default determinants",
+        ols_dep="Dependent variable", ols_indep="Independent variables",
+        ols_r2="Adjusted R²", ols_fstat="F-statistic", ols_nobs="Observations",
+        corr_title="Correlation Matrix", corr_desc="Pearson correlations between numeric variables",
+        corr_top="Strongest correlations with default", corr_scatter="Scatter plot",
+        logit_title="Logistic Regression — PD Scoring Model",
+        logit_roc="ROC Curve", logit_auc="AUC", logit_cm="Confusion Matrix",
+        logit_calib="Calibration Curve", logit_score="Score distribution (PD)",
+        logit_thresh="Decision threshold", logit_report="Classification report", logit_gini="Gini",
+        export_title="Export & Summary Report",
+        export_dl_csv="⬇️ Download scored portfolio (CSV)", export_dl_sum="⬇️ Analytical report (TXT)",
     )
-
-    # Quick macro stats
-    last_gdp = gdp_df[gdp_df['Croissance_PIB'].notna()].iloc[-1]['Croissance_PIB']
-    gdp_5y_avg = gdp_df.tail(5)['Croissance_PIB'].mean()
-    st.markdown('<div class="sidebar-header">Macro Rapide / Quick</div>', unsafe_allow_html=True)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric("PIB/GDP", f"{last_gdp:.1f}%")
-    with col2:
-        st.metric("5Y avg", f"{gdp_5y_avg:.1f}%")
-    
-    st.markdown(f"<div style='font-size:0.7rem; color:#9ca3af; text-align:center; margin-top:1rem;'>{L['source_wb']}</div>", unsafe_allow_html=True)
-
-
-# ─────────────────────────────────────────────
-#  HELPER FUNCTIONS
-# ─────────────────────────────────────────────
-def fmt_fcfa(n):
-    if pd.isna(n): return "—"
-    return f"{n:,.0f} F CFA"
-
-def score_color(score):
-    if score >= 70: return "#0e9f6e"
-    if score >= 45: return "#ff5a1f"
-    return "#e02424"
-
-def gauge_chart(score, title):
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=score,
-        title={'text': title, 'font': {'size': 13}},
-        number={'suffix': '/100', 'font': {'size': 22}},
-        gauge={
-            'axis': {'range': [0, 100]},
-            'bar': {'color': score_color(score)},
-            'steps': [
-                {'range': [0, 45], 'color': '#fee2e2'},
-                {'range': [45, 70], 'color': '#fff3cd'},
-                {'range': [70, 100], 'color': '#d1fae5'},
-            ],
-            'threshold': {'line': {'color': "black", 'width': 2}, 'thickness': 0.75, 'value': score}
-        }
-    ))
-    fig.update_layout(height=200, margin=dict(l=20, r=20, t=40, b=10))
-    return fig
-
-
-# ─────────────────────────────────────────────
-#  PAGE: DASHBOARD
-# ─────────────────────────────────────────────
-if page == L["nav_dashboard"]:
-    st.markdown(f"<div class='section-title'>{L['dash_title']}</div>", unsafe_allow_html=True)
-
-    # KPIs
-    total_loans = len(loans_df)
-    total_disbursed = loans_df['Montant_Num'].sum()
-    repayment_rate = loans_df['Rembourse_Flag'].mean() * 100
-    default_rate = loans_df['Defaut'].mean() * 100
-    avg_amount = loans_df['Montant_Num'].mean()
-    last_gdp_val = gdp_df.dropna().iloc[-1]['Croissance_PIB']
-
-    c1, c2, c3, c4, c5, c6 = st.columns(6)
-    with c1:
-        st.markdown(f"""<div class='metric-card'>
-            <div class='metric-label'>{L['kpi_total_loans']}</div>
-            <div class='metric-value'>{total_loans}</div>
-        </div>""", unsafe_allow_html=True)
-    with c2:
-        st.markdown(f"""<div class='metric-card purple'>
-            <div class='metric-label'>{L['kpi_total_disbursed']}</div>
-            <div class='metric-value'>{total_disbursed/1e6:.1f}M</div>
-            <div class='metric-delta'>F CFA</div>
-        </div>""", unsafe_allow_html=True)
-    with c3:
-        st.markdown(f"""<div class='metric-card green'>
-            <div class='metric-label'>{L['kpi_repayment_rate']}</div>
-            <div class='metric-value'>{repayment_rate:.1f}%</div>
-        </div>""", unsafe_allow_html=True)
-    with c4:
-        st.markdown(f"""<div class='metric-card red'>
-            <div class='metric-label'>{L['kpi_default_rate']}</div>
-            <div class='metric-value'>{default_rate:.1f}%</div>
-        </div>""", unsafe_allow_html=True)
-    with c5:
-        st.markdown(f"""<div class='metric-card orange'>
-            <div class='metric-label'>{L['kpi_avg_amount']}</div>
-            <div class='metric-value'>{avg_amount/1000:.0f}K</div>
-            <div class='metric-delta'>F CFA</div>
-        </div>""", unsafe_allow_html=True)
-    with c6:
-        gdp_color = "green" if last_gdp_val > 4 else ("orange" if last_gdp_val > 0 else "red")
-        st.markdown(f"""<div class='metric-card {gdp_color}'>
-            <div class='metric-label'>{L['kpi_gdp_growth']}</div>
-            <div class='metric-value'>{last_gdp_val:.1f}%</div>
-            <div class='metric-delta'>PIB Togo</div>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        # Status distribution
-        status_counts = loans_df['Statut'].value_counts().reset_index()
-        status_counts.columns = ['Statut', 'Count']
-        colors = {'REMBOURSE': '#0e9f6e', 'EN COURS': '#1a56db', 'EN RETARD': '#e02424'}
-        fig = px.pie(status_counts, values='Count', names='Statut',
-                     title=L["portfolio_by_status"],
-                     color='Statut', color_discrete_map=colors,
-                     hole=0.4)
-        fig.update_layout(height=320, margin=dict(l=0, r=0, t=40, b=0))
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        # Sector distribution
-        sector_counts = loans_df.groupby('Activite').agg(
-            Count=('ID', 'count'),
-            Volume=('Montant_Num', 'sum')
-        ).reset_index()
-        fig = px.bar(sector_counts, x='Activite', y='Volume',
-                     title=L["portfolio_by_sector"],
-                     color='Count',
-                     color_continuous_scale='Blues',
-                     labels={'Volume': 'F CFA', 'Activite': ''})
-        fig.update_layout(height=320, margin=dict(l=0, r=0, t=40, b=0), coloraxis_showscale=False)
-        st.plotly_chart(fig, use_container_width=True)
-
-    col3, col4 = st.columns(2)
-    with col3:
-        # Regional distribution
-        region_data = loans_df.groupby('Region').agg(
-            Prêts=('ID', 'count'),
-            Défauts=('Defaut', 'sum'),
-            Volume=('Montant_Num', 'sum')
-        ).reset_index()
-        region_data['Taux_défaut'] = (region_data['Défauts'] / region_data['Prêts'] * 100).round(1)
-        fig = px.bar(region_data.sort_values('Volume', ascending=True),
-                     x='Volume', y='Region', orientation='h',
-                     color='Taux_défaut',
-                     title=L["portfolio_by_region"],
-                     color_continuous_scale='RdYlGn_r',
-                     labels={'Volume': 'F CFA', 'Region': ''})
-        fig.update_layout(height=320, margin=dict(l=0, r=0, t=40, b=0))
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col4:
-        # GDP trend (recent 20 years)
-        gdp_recent = gdp_df.tail(20)
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(
-            x=gdp_recent['Année'], y=gdp_recent['Croissance_PIB'],
-            mode='lines+markers', fill='tozeroy',
-            line=dict(color='#1a56db', width=2),
-            fillcolor='rgba(26,86,219,0.1)',
-            name='PIB Growth'
-        ))
-        fig.add_hline(y=0, line_dash="dash", line_color="red", opacity=0.5)
-        fig.update_layout(title=L["gdp_growth_title"] + " (2003–2023)",
-                          height=320, margin=dict(l=0, r=0, t=40, b=0),
-                          xaxis_title="", yaxis_title="%")
-        st.plotly_chart(fig, use_container_width=True)
-
-
-# ─────────────────────────────────────────────
-#  PAGE: MACRO ANALYSIS
-# ─────────────────────────────────────────────
-elif page == L["nav_macro"]:
-    st.markdown(f"<div class='section-title'>{L['macro_title']}</div>", unsafe_allow_html=True)
-
-    # Year range filter
-    year_range = st.slider(L["gdp_filter"], 1960, 2023, (2000, 2023))
-    gdp_filtered = gdp_df[(gdp_df['Année'] >= year_range[0]) & (gdp_df['Année'] <= year_range[1])]
-    pop_filtered = pop_df[(pop_df['Année'] >= year_range[0]) & (pop_df['Année'] <= year_range[1])]
-
-    # KPI row
-    gdp_mean = gdp_filtered['Croissance_PIB'].mean()
-    gdp_std = gdp_filtered['Croissance_PIB'].std()
-    gdp_last = gdp_filtered.dropna().iloc[-1]['Croissance_PIB']
-    pop_last = pop_df.dropna().iloc[-1]['Population']
-    pop_prev = pop_df.dropna().iloc[-2]['Population']
-    pop_growth_rate = (pop_last / pop_prev - 1) * 100
-
-    # Trend (linear regression on GDP)
-    x = gdp_filtered.dropna()['Année'].values
-    y = gdp_filtered.dropna()['Croissance_PIB'].values
-    if len(x) > 2:
-        slope, intercept, r_val, p_val, _ = stats.linregress(x, y)
-        trend_dir = "↗ Haussière" if slope > 0.05 else ("↘ Baissière" if slope < -0.05 else "→ Stable")
-    else:
-        slope, trend_dir = 0, "→ Stable"
-
-    c1, c2, c3, c4 = st.columns(4)
-    metrics = [
-        (L['gdp_avg_5y'], f"{gdp_mean:.2f}%", "Moyenne période", "green" if gdp_mean > 4 else "orange"),
-        (L['gdp_volatility'], f"±{gdp_std:.2f}%", "Écart-type", "green" if gdp_std < 4 else "red"),
-        (L['gdp_trend'], trend_dir, f"pente = {slope:.3f}", ""),
-        (L['pop_growth'], f"{pop_growth_rate:.2f}%/an", f"{pop_last/1e6:.1f}M hab.", ""),
-    ]
-    for col, (label, val, delta, color) in zip([c1, c2, c3, c4], metrics):
-        with col:
-            st.markdown(f"""<div class='metric-card {color}'>
-                <div class='metric-label'>{label}</div>
-                <div class='metric-value'>{val}</div>
-                <div class='metric-delta'>{delta}</div>
-            </div>""", unsafe_allow_html=True)
-
-    # Alert banner
-    st.markdown("<br>", unsafe_allow_html=True)
-    if gdp_last > 5 and gdp_mean > 4:
-        st.markdown(f"<div class='info-box'><strong>{L['macro_alert_positive']}</strong> — PIB {gdp_last:.1f}% | Moyenne {gdp_mean:.1f}% | Volatilité {gdp_std:.1f}%</div>", unsafe_allow_html=True)
-    elif gdp_last > 0:
-        st.markdown(f"<div class='warning-box'><strong>{L['macro_alert_warning']}</strong> — PIB {gdp_last:.1f}% | Moyenne {gdp_mean:.1f}% | Volatilité {gdp_std:.1f}%</div>", unsafe_allow_html=True)
-    else:
-        st.markdown(f"<div style='background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:1rem;color:#991b1b;'><strong>{L['macro_alert_negative']}</strong></div>", unsafe_allow_html=True)
-
-    # GDP chart with trend line
-    col1, col2 = st.columns(2)
-    with col1:
-        fig = go.Figure()
-        fig.add_trace(go.Bar(
-            x=gdp_filtered['Année'], y=gdp_filtered['Croissance_PIB'],
-            marker_color=[('#0e9f6e' if v > 0 else '#e02424') for v in gdp_filtered['Croissance_PIB']],
-            name='PIB %'
-        ))
-        if len(x) > 2:
-            y_trend = slope * x + intercept
-            fig.add_trace(go.Scatter(x=x, y=y_trend, mode='lines',
-                                     line=dict(color='orange', width=2, dash='dash'),
-                                     name='Tendance'))
-        fig.update_layout(title=L["gdp_growth_title"],
-                          height=350, margin=dict(l=0, r=0, t=40, b=0),
-                          yaxis_title="%", xaxis_title="")
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(
-            x=pop_filtered['Année'], y=pop_filtered['Population'] / 1e6,
-            mode='lines', fill='tozeroy',
-            line=dict(color='#7e3af2', width=2),
-            fillcolor='rgba(126,58,242,0.1)'
-        ))
-        fig.update_layout(title=L["pop_title"],
-                          height=350, margin=dict(l=0, r=0, t=40, b=0),
-                          yaxis_title="Millions", xaxis_title="")
-        st.plotly_chart(fig, use_container_width=True)
-
-    # Interpretation box
-    st.markdown(f"<div class='section-title' style='margin-top:1rem;'>{L['gdp_context_text']}</div>", unsafe_allow_html=True)
-
-    col3, col4 = st.columns(2)
-    with col3:
-        st.markdown("""
-        <div class='info-box'>
-        <strong>🇹🇬 Analyse structurelle:</strong><br><br>
-        • Le Togo affiche une résilience macroéconomique notable post-2010 avec une croissance soutenue autour de 5–6%<br>
-        • La diversification sectorielle (commerce, agriculture, artisanat) limite l'exposition aux chocs sectoriels<br>
-        • La forte croissance démographique (+2.5%/an) crée une demande structurelle de crédit microfinance<br>
-        • Les crédits à l'investissement dans les secteurs productifs sont soutenus par le contexte macro actuel
-        </div>
-        """, unsafe_allow_html=True)
-    with col4:
-        # GDP rolling stats
-        gdp_rolling = gdp_filtered.copy()
-        gdp_rolling['Rolling_3y'] = gdp_rolling['Croissance_PIB'].rolling(3).mean()
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=gdp_rolling['Année'], y=gdp_rolling['Croissance_PIB'],
-                                 mode='lines', name='Annuel', line=dict(color='#cbd5e1', width=1)))
-        fig.add_trace(go.Scatter(x=gdp_rolling['Année'], y=gdp_rolling['Rolling_3y'],
-                                 mode='lines', name='Moy. 3 ans', line=dict(color='#1a56db', width=2.5)))
-        fig.update_layout(title="Lissage 3 ans / 3Y smoothing",
-                          height=280, margin=dict(l=0, r=0, t=40, b=0))
-        st.plotly_chart(fig, use_container_width=True)
-
-
-# ─────────────────────────────────────────────
-#  PAGE: PORTFOLIO ANALYSIS
-# ─────────────────────────────────────────────
-elif page == L["nav_portfolio"]:
-    st.markdown(f"<div class='section-title'>{L['port_title']}</div>", unsafe_allow_html=True)
-
-    tabs = st.tabs(["📊 Distributions", "🏭 Secteurs/Régions", "👥 Profil emprunteur", "🔗 Corrélations"])
-
-    with tabs[0]:
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            fig = px.histogram(loans_df, x='Montant_Num', nbins=20,
-                               title=L["dist_amount"], color_discrete_sequence=['#1a56db'],
-                               labels={'Montant_Num': 'F CFA'})
-            fig.update_layout(height=280, margin=dict(l=0, r=0, t=40, b=0))
-            st.plotly_chart(fig, use_container_width=True)
-
-        with col2:
-            fig = px.histogram(loans_df, x='Duree_Num', nbins=10,
-                               title=L["dist_duration"], color_discrete_sequence=['#7e3af2'],
-                               labels={'Duree_Num': 'Mois'})
-            fig.update_layout(height=280, margin=dict(l=0, r=0, t=40, b=0))
-            st.plotly_chart(fig, use_container_width=True)
-
-        with col3:
-            fig = px.histogram(loans_df, x='Taux_Num', nbins=10,
-                               title=L["dist_rate"], color_discrete_sequence=['#0e9f6e'],
-                               labels={'Taux_Num': '%'})
-            fig.update_layout(height=280, margin=dict(l=0, r=0, t=40, b=0))
-            st.plotly_chart(fig, use_container_width=True)
-
-        # Box plots by category
-        col4, col5 = st.columns(2)
-        with col4:
-            fig = px.box(loans_df, x='Activite', y='Montant_Num', color='Activite',
-                         title="Distribution montants par secteur",
-                         labels={'Montant_Num': 'F CFA', 'Activite': ''})
-            fig.update_layout(height=320, margin=dict(l=0, r=0, t=40, b=0), showlegend=False)
-            st.plotly_chart(fig, use_container_width=True)
-        with col5:
-            fig = px.box(loans_df, x='Statut', y='Montant_Num', color='Statut',
-                         title="Distribution montants par statut",
-                         color_discrete_map={'REMBOURSE': '#0e9f6e', 'EN COURS': '#1a56db', 'EN RETARD': '#e02424'},
-                         labels={'Montant_Num': 'F CFA', 'Statut': ''})
-            fig.update_layout(height=320, margin=dict(l=0, r=0, t=40, b=0), showlegend=False)
-            st.plotly_chart(fig, use_container_width=True)
-
-    with tabs[1]:
-        # Sector performance table
-        sector_perf = loans_df.groupby('Activite').agg(
-            Nb_prêts=('ID', 'count'),
-            Volume_total=('Montant_Num', 'sum'),
-            Montant_moyen=('Montant_Num', 'mean'),
-            Taux_intérêt_moyen=('Taux_Num', 'mean'),
-            Taux_défaut=('Defaut', 'mean'),
-            Taux_remboursement=('Rembourse_Flag', 'mean')
-        ).reset_index()
-        sector_perf['Taux_défaut'] = (sector_perf['Taux_défaut'] * 100).round(1)
-        sector_perf['Taux_remboursement'] = (sector_perf['Taux_remboursement'] * 100).round(1)
-        sector_perf['Volume_total'] = sector_perf['Volume_total'].apply(lambda x: f"{x/1e6:.2f}M F CFA")
-        sector_perf['Montant_moyen'] = sector_perf['Montant_moyen'].apply(lambda x: f"{x:,.0f} F CFA")
-        sector_perf['Taux_intérêt_moyen'] = sector_perf['Taux_intérêt_moyen'].round(1)
-
-        st.markdown(f"<div class='section-title'>{L['sector_performance']}</div>", unsafe_allow_html=True)
-        st.dataframe(sector_perf.style.background_gradient(subset=['Taux_défaut'], cmap='RdYlGn_r'),
-                     use_container_width=True, hide_index=True)
-
-        # Regional heatmap
-        st.markdown(f"<div class='section-title'>{L['region_performance']}</div>", unsafe_allow_html=True)
-        region_sector = loans_df.groupby(['Region', 'Activite'])['Defaut'].mean().reset_index()
-        region_pivot = region_sector.pivot(index='Region', columns='Activite', values='Defaut').fillna(0) * 100
-        fig = px.imshow(region_pivot, title="Taux de défaut (%) par région × secteur",
-                        color_continuous_scale='RdYlGn_r', text_auto='.1f',
-                        labels=dict(color="Défaut %"))
-        fig.update_layout(height=350, margin=dict(l=0, r=0, t=40, b=0))
-        st.plotly_chart(fig, use_container_width=True)
-
-    with tabs[2]:
-        col1, col2 = st.columns(2)
-        with col1:
-            loans_df['Age_groupe'] = pd.cut(loans_df['Age'], bins=[18, 25, 35, 45, 55, 75],
-                                             labels=['18-25', '26-35', '36-45', '46-55', '55+'])
-            age_perf = loans_df.groupby('Age_groupe', observed=True).agg(
-                Count=('ID', 'count'),
-                Défaut=('Defaut', 'mean'),
-                Montant_moy=('Montant_Num', 'mean')
-            ).reset_index()
-            fig = make_subplots(specs=[[{"secondary_y": True}]])
-            fig.add_trace(go.Bar(x=age_perf['Age_groupe'], y=age_perf['Count'], name="Nb prêts", marker_color='#bfdbfe'), secondary_y=False)
-            fig.add_trace(go.Scatter(x=age_perf['Age_groupe'], y=age_perf['Défaut']*100, mode='lines+markers',
-                                     name="Taux défaut %", line=dict(color='#e02424', width=2)), secondary_y=True)
-            fig.update_layout(title=L["age_analysis"], height=320, margin=dict(l=0, r=0, t=40, b=0))
-            st.plotly_chart(fig, use_container_width=True)
-
-        with col2:
-            gender_perf = loans_df.groupby('Sexe').agg(
-                Count=('ID', 'count'),
-                Volume=('Montant_Num', 'sum'),
-                Défaut=('Defaut', 'mean'),
-                Remboursement=('Rembourse_Flag', 'mean')
-            ).reset_index()
-            fig = go.Figure()
-            fig.add_trace(go.Bar(x=gender_perf['Sexe'], y=gender_perf['Défaut']*100,
-                                 name="Taux défaut %", marker_color=['#1a56db', '#ff5a1f']))
-            fig.update_layout(title=L["gender_analysis"], height=320, margin=dict(l=0, r=0, t=40, b=0))
-            st.plotly_chart(fig, use_container_width=True)
-
-        # Summary stats
-        st.markdown("**Statistiques descriptives / Descriptive statistics**")
-        desc = loans_df[['Montant_Num', 'Duree_Num', 'Taux_Num', 'Age']].describe().round(2)
-        desc.columns = ['Montant (FCFA)', 'Durée (mois)', 'Taux (%)', 'Âge']
-        st.dataframe(desc, use_container_width=True)
-
-    with tabs[3]:
-        numeric_cols = loans_df[['Montant_Num', 'Duree_Num', 'Taux_Num', 'Age', 'Defaut', 'Rembourse_Flag']].copy()
-        numeric_cols.columns = ['Montant', 'Durée', 'Taux', 'Âge', 'Défaut', 'Remboursé']
-        corr = numeric_cols.corr()
-        fig = px.imshow(corr, text_auto='.2f', title=L["corr_matrix"],
-                        color_continuous_scale='RdBu_r', zmin=-1, zmax=1)
-        fig.update_layout(height=450, margin=dict(l=0, r=0, t=40, b=0))
-        st.plotly_chart(fig, use_container_width=True)
-
-        # Key findings
-        st.markdown("""
-        <div class='info-box'>
-        <strong>💡 Insights statistiques clés:</strong><br>
-        • La durée du prêt et le montant sont positivement corrélés — les grands projets nécessitent plus de temps<br>
-        • Le taux d'intérêt élevé est souvent appliqué aux emprunteurs à profil risqué (corrélation avec défaut)<br>
-        • L'âge montre une corrélation faible avec le défaut — l'expérience sectorielle prime
-        </div>
-        """, unsafe_allow_html=True)
-
-
-# ─────────────────────────────────────────────
-#  PAGE: DECISION SUPPORT
-# ─────────────────────────────────────────────
-elif page == L["nav_decision"]:
-    st.markdown(f"<div class='section-title'>{L['dec_title']}</div>", unsafe_allow_html=True)
-    st.markdown(f"<p style='color:#6b7280;margin-bottom:1.5rem;'>{L['dec_subtitle']}</p>", unsafe_allow_html=True)
-
-    col_form, col_result = st.columns([1, 1.6])
-
-    with col_form:
-        st.markdown("**📋 Paramètres du dossier**")
-
-        sectors = list(loans_df['Activite'].unique())
-        sector = st.selectbox(L["dec_sector"], sectors)
-
-        regions = list(loans_df['Region'].unique())
-        region = st.selectbox(L["dec_region"], regions)
-
-        amount = st.number_input(L["dec_amount"], min_value=50000, max_value=50000000,
-                                  value=1000000, step=50000, format="%d")
-
-        duration = st.slider(L["dec_duration"], 6, 60, 24)
-
-        age = st.slider(L["dec_age"], 18, 75, 38)
-
-        gender = st.radio(L["dec_gender"], [L["male"], L["female"]], horizontal=True)
-
-        analyze = st.button(L["dec_analyze"], type="primary", use_container_width=True)
-
-    with col_result:
-        if analyze:
-            # ── Score 1: Macroeconomic ──
-            gdp_recent_5 = gdp_df.tail(5)['Croissance_PIB'].mean()
-            gdp_vol = gdp_df.tail(10)['Croissance_PIB'].std()
-            macro_score = 0
-            if gdp_recent_5 > 5: macro_score += 40
-            elif gdp_recent_5 > 3: macro_score += 25
-            else: macro_score += 10
-            if gdp_vol < 2: macro_score += 30
-            elif gdp_vol < 4: macro_score += 20
-            else: macro_score += 5
-            # Duration vs macro risk
-            if duration <= 24: macro_score += 30
-            elif duration <= 36: macro_score += 20
-            else: macro_score += 10
-
-            # ── Score 2: Sectoral ──
-            sector_data = loans_df[loans_df['Activite'] == sector]
-            sector_default = sector_data['Defaut'].mean() if len(sector_data) > 0 else 0.3
-            sector_reimbursed = sector_data['Rembourse_Flag'].mean() if len(sector_data) > 0 else 0.5
-            sector_score = max(0, 100 - sector_default * 200) * 0.6 + sector_reimbursed * 40
-
-            # ── Score 3: Statistical ──
-            stat_score = 0
-            region_data = loans_df[loans_df['Region'] == region]
-            region_default = region_data['Defaut'].mean() if len(region_data) > 0 else 0.3
-            stat_score += max(0, 40 - region_default * 100)
-
-            # Age factor
-            if 30 <= age <= 55: stat_score += 30
-            elif 25 <= age < 30 or 55 < age <= 65: stat_score += 20
-            else: stat_score += 10
-
-            # Amount vs portfolio benchmark
-            median_amount = loans_df['Montant_Num'].median()
-            if amount <= median_amount * 3: stat_score += 30
-            elif amount <= median_amount * 6: stat_score += 20
-            else: stat_score += 10
-
-            # Global score (weighted)
-            global_score = macro_score * 0.35 + sector_score * 0.35 + stat_score * 0.30
-            global_score = min(100, max(0, global_score))
-
-            # ── Display scores ──
-            sc1, sc2, sc3 = st.columns(3)
-            with sc1:
-                st.plotly_chart(gauge_chart(macro_score, L["dec_macro_score"]), use_container_width=True)
-            with sc2:
-                st.plotly_chart(gauge_chart(sector_score, L["dec_sector_score"]), use_container_width=True)
-            with sc3:
-                st.plotly_chart(gauge_chart(stat_score, L["dec_stat_score"]), use_container_width=True)
-
-            # ── Global score + recommendation ──
-            if global_score >= 68:
-                rec_class = "decision-green"
-                rec_label = L["rec_favorable"]
-            elif global_score >= 45:
-                rec_class = "decision-orange"
-                rec_label = L["rec_reserve"]
-            else:
-                rec_class = "decision-red"
-                rec_label = L["rec_unfavorable"]
-
-            st.markdown(f"""
-            <div class='decision-box {rec_class}'>
-                Score global: {global_score:.0f}/100 &nbsp;|&nbsp; {rec_label}
-            </div>
-            """, unsafe_allow_html=True)
-
-            # ── Suggested conditions ──
-            st.markdown(f"**{L['conditions_title']}**")
-            base_rate = loans_df[(loans_df['Activite'] == sector)]['Taux_Num'].median()
-            if pd.isna(base_rate): base_rate = 12.0
-            risk_premium = (1 - global_score / 100) * 8
-            suggested_rate_min = round(base_rate + risk_premium / 2, 1)
-            suggested_rate_max = round(base_rate + risk_premium, 1)
-
-            rec_amount = amount if global_score >= 68 else amount * 0.75
-            rec_duration = duration if global_score >= 55 else min(duration, 24)
-
-            cond_data = {
-                L['cond_amount']: [fmt_fcfa(rec_amount)],
-                L['cond_rate']: [f"{suggested_rate_min}% – {suggested_rate_max}%"],
-                L['cond_duration']: [f"{int(rec_duration)} {L['months']}"],
-                L['cond_collateral']: ["Acte de propriété / Caution solidaire" if amount > 500000 else "Caution morale"],
-            }
-            st.dataframe(pd.DataFrame(cond_data).T.rename(columns={0: "Recommandation"}),
-                         use_container_width=True)
-
-            # ── Justification ──
-            with st.expander(f"📄 {L['dec_justification']}", expanded=True):
-                gdp_yr = gdp_df.dropna().iloc[-1]['Croissance_PIB']
-                justif_fr = f"""
-**Contexte macroéconomique:**
-- Croissance PIB Togo (dernière): **{gdp_yr:.1f}%** — Moyenne 5 ans: **{gdp_recent_5:.1f}%**
-- Volatilité: **{gdp_vol:.2f}%** — Contexte {'favorable' if gdp_recent_5 > 4 else 'mitigé'} pour les investissements
-
-**Analyse sectorielle — {sector}:**
-- Taux de défaut sectoriel observé: **{sector_default*100:.1f}%**
-- Taux de remboursement sectoriel: **{sector_reimbursed*100:.1f}%**
-- Positionnement: {"secteur résilient" if sector_default < 0.3 else "secteur à risque modéré"}
-
-**Analyse statistique:**
-- Taux de défaut régional ({region}): **{region_default*100:.1f}%**
-- Profil emprunteur (âge {age} ans): {"profil optimal" if 30 <= age <= 55 else "profil à surveiller"}
-- Montant vs. médiane portefeuille: **{amount/median_amount:.1f}x** la médiane
-"""
-                st.markdown(justif_fr)
-
-            # ── Comparable files ──
-            st.markdown(f"**{L['dec_comparables']}**")
-            comparables = loans_df[
-                (loans_df['Activite'] == sector) &
-                (loans_df['Region'] == region) &
-                (loans_df['Montant_Num'] >= amount * 0.5) &
-                (loans_df['Montant_Num'] <= amount * 2)
-            ][['ID', 'Age', 'Sexe', 'Montant_Num', 'Duree_Num', 'Taux_Num', 'Statut']].head(8)
-
-            if len(comparables) > 0:
-                comparables['Montant_Num'] = comparables['Montant_Num'].apply(lambda x: f"{x:,.0f}")
-                comparables.columns = ['ID', 'Âge', 'Sexe', 'Montant', 'Durée', 'Taux%', 'Statut']
-                st.dataframe(comparables.style.apply(
-                    lambda col: ['background-color: #fee2e2' if v == 'EN RETARD'
-                                 else ('background-color: #d1fae5' if v == 'REMBOURSE' else '')
-                                 for v in col] if col.name == 'Statut' else [''] * len(col),
-                    axis=0), use_container_width=True, hide_index=True)
-            else:
-                st.info(L["no_data"])
+}
+
+# ── Session state ──
+for _k in ["df","df_raw","mapping","default_col","default_values",
+           "logit_model","scaler","feature_cols","X_test","y_test","y_prob"]:
+    if _k not in st.session_state:
+        st.session_state[_k] = None
+
+# ── Helpers ──
+def smart_num(series):
+    return (series.astype(str)
+            .str.replace(r'[^\d.\-]', '', regex=True)
+            .replace('', np.nan).astype(float))
+
+def guess(cols, kws):
+    for kw in kws:
+        for c in cols:
+            if kw.lower() in c.lower():
+                return c
+    return None
+
+def sig_stars(p):
+    if p < .001: return "***"
+    if p < .01:  return "**"
+    if p < .05:  return "*"
+    if p < .10:  return "."
+    return "n.s."
+
+def kpi(col, cls, lbl, val, sub=""):
+    with col:
+        st.markdown(
+            f"<div class='kpi-card {cls}'>"
+            f"<div class='kpi-label'>{lbl}</div>"
+            f"<div class='kpi-val'>{val}</div>"
+            f"<div class='kpi-sub'>{sub}</div></div>",
+            unsafe_allow_html=True)
+
+def build_df(df_raw, mapping, dcol, dvals):
+    rename = {v: k for k, v in mapping.items() if v and v != "—" and v in df_raw.columns}
+    df = df_raw.rename(columns=rename).copy()
+    for nc in ["amount", "duration", "rate", "age"]:
+        if nc in df.columns:
+            df[nc] = smart_num(df[nc])
+    if dcol and dcol in df_raw.columns:
+        raw = df_raw[dcol].astype(str).str.strip()
+        if dvals:
+            dvlist = [v.strip() for v in dvals.split(",")]
+            df["default"] = raw.isin(dvlist).astype(int)
         else:
-            st.markdown("""
-            <div style='text-align:center; padding: 3rem 2rem; color: #9ca3af;'>
-                <div style='font-size: 3rem;'>⚖️</div>
-                <div style='font-size: 1rem; margin-top: 1rem;'>
-                Remplissez le formulaire et cliquez sur Analyser<br>
-                <em>Fill in the form and click Analyze</em>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            df["default"] = pd.to_numeric(raw, errors="coerce").fillna(0).astype(int)
+    else:
+        df["default"] = np.nan
+    return df
 
+# ── Sidebar ──
+with st.sidebar:
+    st.markdown(
+        "<div style='padding:.8rem .5rem .4rem;font-size:1.05rem;"
+        "font-weight:800;color:white;'>🏦 CreditMacro</div>",
+        unsafe_allow_html=True)
+    lang = st.selectbox("🌐", ["Français", "English"], label_visibility="collapsed")
+    L = T["fr"] if lang == "Français" else T["en"]
+    st.markdown("<hr style='border-color:#1e293b;margin:.4rem 0;'>", unsafe_allow_html=True)
+    page = st.radio(
+        "Nav",
+        [L["nav_upload"], L["nav_pd"], L["nav_ols"],
+         L["nav_corr"], L["nav_logit"], L["nav_export"]],
+        label_visibility="collapsed")
+    st.markdown("<hr style='border-color:#1e293b;margin:.4rem 0;'>", unsafe_allow_html=True)
+    if st.session_state.df is not None:
+        _d = st.session_state.df
+        _nd = int(_d["default"].sum()) if "default" in _d.columns else "?"
+        st.markdown(
+            f"<div style='background:#0f2744;border-radius:10px;padding:.7rem 1rem;'>"
+            f"<div style='font-size:.65rem;color:#64748b;text-transform:uppercase;'>Portefeuille</div>"
+            f"<div style='font-size:1.2rem;font-weight:800;color:white;'>{len(_d):,} prêts</div>"
+            f"<div style='font-size:.75rem;color:#94a3b8;'>{_nd} défauts</div></div>",
+            unsafe_allow_html=True)
+    else:
+        st.markdown("<div style='font-size:.7rem;color:#475569;'>Aucun fichier chargé</div>",
+                    unsafe_allow_html=True)
 
-# ─────────────────────────────────────────────
-#  PAGE: ECONOMETRICS
-# ─────────────────────────────────────────────
-elif page == L["nav_econometrics"]:
-    st.markdown(f"<div class='section-title'>{L['eco_title']}</div>", unsafe_allow_html=True)
+# ════════════════════════════════════════════
+# GUARD FUNCTION
+# ════════════════════════════════════════════
+def require():
+    if st.session_state.df is None:
+        st.markdown(f"<div class='warn-box'>{L['no_data']}</div>", unsafe_allow_html=True)
+        st.stop()
+    _df = st.session_state.df
+    if len(_df) < 10:
+        st.markdown(f"<div class='warn-box'>{L['not_enough']}</div>", unsafe_allow_html=True)
+        st.stop()
+    return _df
 
-    tabs = st.tabs(["📐 Régression OLS", "📈 Prévision PIB", "🔗 PIB × Crédit"])
+# ════════════════════════════════════════════
+# PAGE 1 — UPLOAD
+# ════════════════════════════════════════════
+def page_upload():
+    st.markdown(
+        f"<div class='upload-hero'><h2>{L['upload_title']}</h2>"
+        f"<p>{L['upload_desc']}</p></div>",
+        unsafe_allow_html=True)
+    uploaded = st.file_uploader("Fichier CSV ou Excel", type=["csv", "xlsx", "xls"])
+    if uploaded:
+        try:
+            if uploaded.name.endswith((".xlsx", ".xls")):
+                df_raw = pd.read_excel(uploaded)
+            else:
+                raw = uploaded.read(); uploaded.seek(0)
+                sample = raw[:2000].decode("utf-8", errors="replace")
+                sep = ";" if sample.count(";") > sample.count(",") else ","
+                df_raw = pd.read_csv(uploaded, sep=sep, encoding="utf-8", on_bad_lines="skip")
+        except Exception as e:
+            st.error(f"Erreur lecture : {e}"); return
+        st.session_state.df_raw = df_raw
+        cols = list(df_raw.columns)
+        st.markdown(
+            f"<div class='success-box'>✅ {len(df_raw):,} lignes · "
+            f"{len(cols)} colonnes · {uploaded.name}</div>",
+            unsafe_allow_html=True)
+        with st.expander("👁️ Aperçu des données brutes"):
+            st.dataframe(df_raw.head(10), use_container_width=True)
+        st.markdown(f"<div class='sec-title'>{L['col_map']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='info-box'>{L['col_map_desc']}</div>", unsafe_allow_html=True)
+        NONE = "—"; opts = [NONE] + cols
+        gd   = guess(cols, ["statut","status","defaut","default","retard","late","impaye"])
+        ga   = guess(cols, ["montant","amount","prete","loan","credit"])
+        gdu  = guess(cols, ["duree","duration","mois","month","terme"])
+        gr   = guess(cols, ["taux","rate","interet","interest"])
+        gage = guess(cols, ["age"])
+        gs   = guess(cols, ["activite","sector","secteur","activity"])
+        greg = guess(cols, ["region","zone","ville","city","localite"])
+        gg   = guess(cols, ["sexe","genre","gender","sex"])
+        c1, c2 = st.columns(2)
+        with c1:
+            md  = st.selectbox(L["col_default"],  opts, index=opts.index(gd)   if gd   in opts else 0)
+            ma  = st.selectbox(L["col_amount"],   opts, index=opts.index(ga)   if ga   in opts else 0)
+            mdu = st.selectbox(L["col_duration"], opts, index=opts.index(gdu)  if gdu  in opts else 0)
+            mra = st.selectbox(L["col_rate"],     opts, index=opts.index(gr)   if gr   in opts else 0)
+        with c2:
+            mage = st.selectbox(L["col_age"],    opts, index=opts.index(gage) if gage in opts else 0)
+            mse  = st.selectbox(L["col_sector"], opts, index=opts.index(gs)   if gs   in opts else 0)
+            mreg = st.selectbox(L["col_region"], opts, index=opts.index(greg) if greg in opts else 0)
+            mge  = st.selectbox(L["col_gender"], opts, index=opts.index(gg)   if gg   in opts else 0)
+        if md != NONE:
+            sv = df_raw[md].astype(str).str.strip().value_counts().head(8).index.tolist()
+            st.markdown(f"**{L['val_default']}**")
+            st.caption(f"Valeurs observées dans la colonne : `{sv}`")
+            hint = ", ".join([v for v in sv if any(k in v.upper()
+                for k in ["RETARD","LATE","DEFAULT","IMPAY","BAD"]) or v == "1"])
+            dvi = st.text_input("Valeurs de défaut (séparées par virgule)", value=hint)
+        else:
+            dvi = ""
+        if st.button(L["apply_map"], type="primary"):
+            mapping = {
+                "amount": ma if ma != NONE else None,
+                "duration": mdu if mdu != NONE else None,
+                "rate": mra if mra != NONE else None,
+                "age": mage if mage != NONE else None,
+                "sector": mse if mse != NONE else None,
+                "region": mreg if mreg != NONE else None,
+                "gender": mge if mge != NONE else None,
+            }
+            dfc = build_df(df_raw, mapping, md, dvi)
+            st.session_state.df = dfc
+            st.session_state.mapping = mapping
+            st.session_state.default_col = md
+            st.session_state.default_values = dvi
+            st.session_state.logit_model = None
+            nd2 = int(dfc["default"].sum()); pdg = dfc["default"].mean() * 100
+            st.markdown(
+                f"<div class='success-box'>✅ {len(dfc):,} prêts · "
+                f"{nd2} défauts · PD globale = {pdg:.1f}%</div>",
+                unsafe_allow_html=True)
+            st.dataframe(dfc.head(8), use_container_width=True)
+    else:
+        st.markdown(
+            "<div class='warn-box'>💡 Aucun fichier chargé — "
+            "utilisez le bouton ci-dessous pour la démo.</div>",
+            unsafe_allow_html=True)
+        if st.button("🎲 Charger données de démonstration (Togo)"):
+            try:
+                dfd = pd.read_csv("Jeux_donnees.csv")
+                mapping = {
+                    "amount": " Montant_Prete_FCFA ", "duration": "Duree_Mois",
+                    "rate": " Taux_Interet ", "age": "Age",
+                    "sector": "Activite", "region": "Region", "gender": "Sexe"}
+                dfc = build_df(dfd, mapping, "Statut", "EN RETARD")
+                st.session_state.df = dfc; st.session_state.df_raw = dfd
+                st.session_state.mapping = mapping
+                st.session_state.default_col = "Statut"
+                st.session_state.default_values = "EN RETARD"
+                st.session_state.logit_model = None
+                st.success(f"✅ {len(dfc)} prêts chargés depuis le fichier démo")
+                st.rerun()
+            except FileNotFoundError:
+                st.error("Fichier Jeux_donnees.csv introuvable dans le répertoire courant.")
 
-    with tabs[0]:
-        st.markdown(f"**{L['eco_regression']}**")
+# ════════════════════════════════════════════
+# PAGE 2 — PD
+# ════════════════════════════════════════════
+def page_pd():
+    df = require()
+    st.markdown(f"<div class='sec-title'>{L['pd_title']}</div>", unsafe_allow_html=True)
+    n = len(df); nd = int(df["default"].sum()); pdp = df["default"].mean() * 100
+    c1, c2, c3, c4 = st.columns(4)
+    kpi(c1, "",        "Total prêts / Total loans", f"{n:,}")
+    kpi(c2, "red",     "Défauts / Defaults",         f"{nd:,}",       f"PD = {pdp:.2f}%")
+    kpi(c3, "green",   "Sains / Performing",          f"{n - nd:,}",   f"{100 - pdp:.1f}%")
+    kpi(c4, "orange",  L["pd_global"],                f"{pdp:.2f}%",   "Taux observé")
+    st.markdown("<br>", unsafe_allow_html=True)
 
-        # Prepare regression data
-        reg_df = loans_df[['Montant_Num', 'Duree_Num', 'Taux_Num', 'Age', 'Defaut']].dropna()
-        reg_df['Log_Montant'] = np.log(reg_df['Montant_Num'])
-
-        # Simple OLS manually using scipy
-        variables = {
-            'Log(Montant)': reg_df['Log_Montant'].values,
-            'Durée (mois)': reg_df['Duree_Num'].values,
-            'Taux (%)': reg_df['Taux_Num'].values,
-            'Âge': reg_df['Age'].values,
-        }
-        y = reg_df['Defaut'].values
-        results = []
-
-        for var_name, x_vals in variables.items():
-            slope, intercept, r, p, se = stats.linregress(x_vals, y)
-            sig = "***" if p < 0.001 else ("**" if p < 0.01 else ("*" if p < 0.05 else ""))
-            results.append({
-                L['eco_var']: var_name,
-                L['eco_coef']: f"{slope:.4f}",
-                "Std Error": f"{se:.4f}",
-                L['eco_pval']: f"{p:.4f}",
-                L['eco_significance']: sig or "n.s.",
-                "Effet": "↑ Risque" if slope > 0 else "↓ Risque"
-            })
-
-        results_df = pd.DataFrame(results)
-        st.dataframe(results_df, use_container_width=True, hide_index=True)
-
-        st.markdown("""
-        <div class='info-box'>
-        <strong>Lecture:</strong> *** p<0.001 | ** p<0.01 | * p<0.05 | n.s. non significatif<br>
-        <em>Reading:</em> *** p<0.001 | ** p<0.01 | * p<0.05 | n.s. not significant
-        </div>
-        """, unsafe_allow_html=True)
-
-        # Scatter with regression line for most significant variable
-        col1, col2 = st.columns(2)
-        with col1:
-            slope, intercept, r, p, se = stats.linregress(reg_df['Log_Montant'], y)
-            x_range = np.linspace(reg_df['Log_Montant'].min(), reg_df['Log_Montant'].max(), 100)
-            fig = go.Figure()
-            fig.add_trace(go.Scatter(x=reg_df['Log_Montant'], y=y, mode='markers',
-                                     marker=dict(color='#93c5fd', opacity=0.5), name='Observations'))
-            fig.add_trace(go.Scatter(x=x_range, y=slope * x_range + intercept,
-                                     mode='lines', line=dict(color='#e02424', width=2), name='Régression'))
-            fig.update_layout(title="Défaut ~ Log(Montant)", height=320,
-                               margin=dict(l=0, r=0, t=40, b=0),
-                               xaxis_title="log(Montant)", yaxis_title="Défaut (0/1)")
-            st.plotly_chart(fig, use_container_width=True)
-
-        with col2:
-            slope2, intercept2, r2, p2, se2 = stats.linregress(reg_df['Taux_Num'], y)
-            x2_range = np.linspace(reg_df['Taux_Num'].min(), reg_df['Taux_Num'].max(), 100)
-            fig2 = go.Figure()
-            fig2.add_trace(go.Scatter(x=reg_df['Taux_Num'], y=y, mode='markers',
-                                      marker=dict(color='#a7f3d0', opacity=0.5), name='Observations'))
-            fig2.add_trace(go.Scatter(x=x2_range, y=slope2 * x2_range + intercept2,
-                                      mode='lines', line=dict(color='#7e3af2', width=2), name='Régression'))
-            fig2.update_layout(title="Défaut ~ Taux d'intérêt", height=320,
-                                margin=dict(l=0, r=0, t=40, b=0),
-                                xaxis_title="Taux (%)", yaxis_title="Défaut (0/1)")
-            st.plotly_chart(fig2, use_container_width=True)
-
-    with tabs[1]:
-        st.markdown(f"**{L['eco_forecast']}**")
-
-        # GDP time series forecast using linear trend + noise model
-        gdp_clean = gdp_df.dropna()
-        x_years = gdp_clean['Année'].values
-        y_gdp = gdp_clean['Croissance_PIB'].values
-        slope_gdp, intercept_gdp, r_gdp, p_gdp, _ = stats.linregress(x_years, y_gdp)
-
-        future_years = np.arange(2024, 2031)
-        forecasts = slope_gdp * future_years + intercept_gdp
-        ci_upper = forecasts + 1.5 * gdp_clean['Croissance_PIB'].std()
-        ci_lower = forecasts - 1.5 * gdp_clean['Croissance_PIB'].std()
-
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=gdp_clean['Année'].tolist() + future_years.tolist(),
-                                  y=y_gdp.tolist() + forecasts.tolist(),
-                                  mode='lines', name='PIB observé + prévision',
-                                  line=dict(color='#1a56db', width=2)))
-        fig.add_trace(go.Scatter(x=future_years.tolist() + future_years.tolist()[::-1],
-                                  y=ci_upper.tolist() + ci_lower.tolist()[::-1],
-                                  fill='toself', fillcolor='rgba(26,86,219,0.15)',
-                                  line=dict(color='rgba(0,0,0,0)'),
-                                  name='Intervalle de confiance 90%'))
-        fig.add_vline(x=2023, line_dash="dash", line_color="orange", annotation_text="Aujourd'hui")
-        fig.update_layout(title="Prévision croissance PIB Togo 2024–2030",
-                          height=380, margin=dict(l=0, r=0, t=40, b=0),
-                          yaxis_title="%", xaxis_title="")
+    def pd_bar(cat, title):
+        if cat not in df.columns: return
+        g = df.groupby(cat)["default"].agg(["mean", "sum", "count"]).reset_index()
+        g.columns = [cat, "PD", "Def", "N"]
+        g["PD_pct"] = (g["PD"] * 100).round(2)
+        g = g.sort_values("PD_pct", ascending=True)
+        fig = px.bar(g, x="PD_pct", y=cat, orientation="h",
+                     color="PD_pct", color_continuous_scale="RdYlGn_r",
+                     range_color=[0, max(g["PD_pct"].max(), 1)],
+                     text="PD_pct", title=title,
+                     labels={"PD_pct": "PD (%)", cat: ""},
+                     custom_data=["Def", "N"])
+        fig.update_traces(
+            texttemplate="%{text:.1f}%", textposition="outside",
+            hovertemplate="<b>%{y}</b><br>PD: %{x:.1f}%<br>Défauts: %{customdata[0]}<br>N: %{customdata[1]}<extra></extra>")
+        fig.update_layout(height=max(230, len(g) * 45),
+                          margin=dict(l=0, r=40, t=40, b=0), coloraxis_showscale=False)
         st.plotly_chart(fig, use_container_width=True)
-
-        forecast_df = pd.DataFrame({
-            'Année': future_years,
-            'Prévision (%)': forecasts.round(2),
-            'Borne inf. (%)': ci_lower.round(2),
-            'Borne sup. (%)': ci_upper.round(2)
-        })
-        st.dataframe(forecast_df, use_container_width=True, hide_index=True)
-
-    with tabs[2]:
-        st.markdown(f"**{L['eco_gdp_corr']}**")
-
-        # Build synthetic annual credit volume from loan data by year (approximate)
-        loans_df_copy = loans_df.copy()
-        loans_df_copy['Annee_Octroi'] = pd.to_datetime(loans_df_copy['Date_Octroi'], errors='coerce').dt.year
-
-        # Use GDP per capita as proxy for credit demand
-        merged = gdp_df.merge(pop_df, on='Année')
-        merged['PIB_per_capita_proxy'] = merged['Croissance_PIB'] * merged['Population'] / 1e6
-
-        gdp_recent_plot = gdp_df[gdp_df['Année'] >= 2000].copy()
-        gdp_recent_plot['Credit_Demand_Index'] = (
-            gdp_recent_plot['Croissance_PIB'].rolling(3).mean().fillna(method='bfill') * 15 +
-            np.random.normal(0, 5, len(gdp_recent_plot))
-        )
-
-        fig = make_subplots(specs=[[{"secondary_y": True}]])
-        fig.add_trace(go.Scatter(x=gdp_recent_plot['Année'], y=gdp_recent_plot['Croissance_PIB'],
-                                  mode='lines', name='PIB %', line=dict(color='#1a56db', width=2)),
-                      secondary_y=False)
-        fig.add_trace(go.Scatter(x=gdp_recent_plot['Année'], y=gdp_recent_plot['Credit_Demand_Index'],
-                                  mode='lines+markers', name='Indice demande crédit (estimé)',
-                                  line=dict(color='#0e9f6e', width=2, dash='dot')),
-                      secondary_y=True)
-        fig.update_layout(title=L["eco_gdp_corr"], height=380, margin=dict(l=0, r=0, t=40, b=0))
-        fig.update_yaxes(title_text="PIB %", secondary_y=False)
-        fig.update_yaxes(title_text="Indice crédit", secondary_y=True)
-        st.plotly_chart(fig, use_container_width=True)
-
-        st.markdown("""
-        <div class='info-box'>
-        <strong>Interprétation:</strong> La croissance du PIB constitue un indicateur avancé de la demande de crédit microfinance.
-        Une accélération de la croissance économique (~5–6%) est typiquement associée à une hausse de 15–20% des demandes
-        dans les secteurs commerce et artisanat, et de 10–12% en agriculture.
-        </div>
-        """, unsafe_allow_html=True)
-
-
-# ─────────────────────────────────────────────
-#  PAGE: RISK SCORING
-# ─────────────────────────────────────────────
-elif page == L["nav_risk"]:
-    st.markdown(f"<div class='section-title'>{L['risk_title']}</div>", unsafe_allow_html=True)
-
-    # Compute risk scores
-    sector_risk = loans_df.groupby('Activite').agg(
-        Taux_défaut=('Defaut', 'mean'),
-        Nb_prêts=('ID', 'count'),
-        Montant_moyen=('Montant_Num', 'mean'),
-        Volatilite_montant=('Montant_Num', 'std')
-    ).reset_index()
-    sector_risk['Risk_Score'] = (100 - sector_risk['Taux_défaut'] * 100).round(1)
-
-    region_risk = loans_df.groupby('Region').agg(
-        Taux_défaut=('Defaut', 'mean'),
-        Nb_prêts=('ID', 'count'),
-        Montant_total=('Montant_Num', 'sum'),
-    ).reset_index()
-    region_risk['Risk_Score'] = (100 - region_risk['Taux_défaut'] * 100).round(1)
 
     col1, col2 = st.columns(2)
-    with col1:
-        st.markdown(f"**{L['risk_sector_map']}**")
-        fig = px.bar(sector_risk.sort_values('Risk_Score'),
-                     x='Risk_Score', y='Activite', orientation='h',
-                     color='Risk_Score', color_continuous_scale='RdYlGn',
-                     range_color=[0, 100],
-                     text='Risk_Score',
-                     labels={'Risk_Score': 'Score (/100)', 'Activite': ''})
-        fig.update_traces(texttemplate='%{text:.0f}', textposition='outside')
-        fig.update_layout(height=320, margin=dict(l=0, r=0, t=10, b=0),
-                          coloraxis_showscale=False)
-        st.plotly_chart(fig, use_container_width=True)
+    with col1: pd_bar("sector", L["pd_by_sector"])
+    with col2: pd_bar("region", L["pd_by_region"])
 
-        st.dataframe(sector_risk[['Activite', 'Taux_défaut', 'Nb_prêts', 'Risk_Score']].style.format({
-            'Taux_défaut': '{:.1%}', 'Risk_Score': '{:.0f}'
-        }).background_gradient(subset=['Risk_Score'], cmap='RdYlGn'),
-        use_container_width=True, hide_index=True)
+    if "amount" in df.columns and df["amount"].notna().sum() > 10:
+        df["_amt_q"] = pd.qcut(df["amount"].dropna(), q=5, duplicates="drop",
+                                labels=["Q1 Très petit", "Q2 Petit", "Q3 Moyen", "Q4 Grand", "Q5 Très grand"])
+        col3, col4 = st.columns(2)
+        with col3: pd_bar("_amt_q", L["pd_by_amount"])
+        with col4:
+            if "duration" in df.columns and df["duration"].notna().sum() > 10:
+                df["_dur_q"] = pd.cut(df["duration"], bins=[0, 6, 12, 24, 36, 120],
+                                       labels=["≤6m", "7-12m", "13-24m", "25-36m", "36m+"])
+                pd_bar("_dur_q", L["pd_by_duration"])
 
-    with col2:
-        st.markdown(f"**{L['risk_regional_map']}**")
-        fig = px.bar(region_risk.sort_values('Risk_Score'),
-                     x='Risk_Score', y='Region', orientation='h',
-                     color='Risk_Score', color_continuous_scale='RdYlGn',
-                     range_color=[0, 100],
-                     text='Risk_Score',
-                     labels={'Risk_Score': 'Score (/100)', 'Region': ''})
-        fig.update_traces(texttemplate='%{text:.0f}', textposition='outside')
-        fig.update_layout(height=320, margin=dict(l=0, r=0, t=10, b=0),
-                          coloraxis_showscale=False)
-        st.plotly_chart(fig, use_container_width=True)
+    col5, col6 = st.columns(2)
+    with col5:
+        if "age" in df.columns and df["age"].notna().sum() > 10:
+            df["_age_g"] = pd.cut(df["age"], bins=[0, 25, 35, 45, 55, 100],
+                                   labels=["≤25", "26-35", "36-45", "46-55", "55+"])
+            pd_bar("_age_g", L["pd_by_age"])
+    with col6:
+        pd_bar("gender", L["pd_by_gender"])
 
-        st.dataframe(region_risk[['Region', 'Taux_défaut', 'Nb_prêts', 'Risk_Score']].style.format({
-            'Taux_défaut': '{:.1%}', 'Risk_Score': '{:.0f}'
-        }).background_gradient(subset=['Risk_Score'], cmap='RdYlGn'),
-        use_container_width=True, hide_index=True)
+    st.markdown("<div class='sec-title'>Tableau récapitulatif</div>", unsafe_allow_html=True)
+    cat_avail = [c for c in ["sector", "region", "gender"] if c in df.columns]
+    if cat_avail:
+        dim = st.selectbox("Dimension", cat_avail)
+        tbl = df.groupby(dim)["default"].agg(
+            N="count", Défauts="sum",
+            PD_pct=lambda x: round(x.mean() * 100, 2)).reset_index()
+        tbl["PD_pct"] = tbl["PD_pct"].apply(lambda x: f"{x:.2f}%")
+        st.dataframe(tbl, use_container_width=True, hide_index=True)
 
-    # GDP sensitivity
-    st.markdown(f"<div class='section-title'>{L['risk_gdp_sensitivity']}</div>", unsafe_allow_html=True)
+# ════════════════════════════════════════════
+# PAGE 3 — OLS
+# ════════════════════════════════════════════
+def page_ols():
+    df = require()
+    st.markdown(f"<div class='sec-title'>{L['ols_title']}</div>", unsafe_allow_html=True)
+    num_cols = [c for c in ["amount", "duration", "rate", "age"]
+                if c in df.columns and df[c].notna().sum() > 10]
+    if not num_cols:
+        st.warning("Aucune variable numérique disponible."); return
+    cc1, cc2 = st.columns([1, 2])
+    with cc1:
+        dep = st.selectbox(L["ols_dep"], ["default"] + num_cols)
+    with cc2:
+        indep = st.multiselect(L["ols_indep"],
+                               [c for c in num_cols if c != dep],
+                               default=[c for c in num_cols if c != dep][:4])
+    if not indep:
+        st.info("Sélectionnez au moins une variable indépendante."); return
+    rdf = df[[dep] + indep].dropna()
+    if len(rdf) < 20:
+        st.warning(L["not_enough"]); return
+    Y = rdf[dep].values
 
-    sensitivity_data = {
-        'Secteur': ['Agriculture', 'Commerce', 'Artisanat'],
-        'Sensibilité PIB (β)': [0.42, 0.68, 0.31],
-        'Choc -1% PIB → Δdéfaut': ['+1.2pp', '+2.1pp', '+0.8pp'],
-        'Choc +1% PIB → Δremboursement': ['+1.8pp', '+2.8pp', '+1.1pp'],
-        'Catégorie risque': ['Modéré', 'Élevé', 'Faible'],
-    }
-    sens_df = pd.DataFrame(sensitivity_data)
-
-    def color_risk(val):
-        colors = {'Faible': 'background-color: #d1fae5', 'Modéré': 'background-color: #fff3cd', 'Élevé': 'background-color: #fee2e2'}
-        return colors.get(val, '')
-
+    # Univariate table
+    rows = []
+    for v in indep:
+        X = rdf[v].values
+        sl, ic, r, p, se = stats.linregress(X, Y)
+        t = sl / se if se > 0 else 0
+        ss_r = np.sum((Y - (sl * X + ic)) ** 2)
+        ss_t = np.sum((Y - Y.mean()) ** 2)
+        r2 = 1 - ss_r / ss_t if ss_t > 0 else 0
+        rows.append({"Variable": v, "β": round(sl, 6), "Intercept": round(ic, 4),
+                     "Std.Err": round(se, 6), "t-stat": round(t, 3),
+                     "p-value": round(p, 4), "R²": round(r2, 4), "Sig.": sig_stars(p)})
+    res_df = pd.DataFrame(rows)
+    st.markdown(f"**OLS Bivariée — Y = `{dep}`**")
     st.dataframe(
-        sens_df.style.applymap(color_risk, subset=['Catégorie risque']),
-        use_container_width=True, hide_index=True
-    )
+        res_df.style
+        .applymap(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
+                  else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
+        .background_gradient(subset=["R²"], cmap="Blues"),
+        use_container_width=True, hide_index=True)
+    st.caption("*** p<.001 | ** p<.01 | * p<.05 | . p<.10 | n.s. non significatif")
 
-    # Final risk matrix
-    st.markdown("**🗺️ Matrice risque sectoriel × régional**")
-    pivot_risk = loans_df.groupby(['Activite', 'Region'])['Defaut'].mean().reset_index()
-    pivot_risk_table = pivot_risk.pivot(index='Activite', columns='Region', values='Defaut').fillna(0) * 100
-    fig = px.imshow(pivot_risk_table.round(1),
-                    color_continuous_scale='RdYlGn_r',
-                    text_auto='.1f',
-                    title="Taux de défaut (%) — Secteur × Région",
-                    labels=dict(color="Défaut %"))
-    fig.update_layout(height=300, margin=dict(l=0, r=0, t=40, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    # Multivariate OLS
+    st.markdown("<div class='sec-title'>OLS Multivarié</div>", unsafe_allow_html=True)
+    Xm = np.column_stack([np.ones(len(rdf))] + [rdf[v].values for v in indep])
+    try:
+        beta = np.linalg.lstsq(Xm, Y, rcond=None)[0]
+        Yh = Xm @ beta; res = Y - Yh
+        n, k = len(Y), len(beta)
+        ss_r = np.sum(res ** 2); ss_t = np.sum((Y - Y.mean()) ** 2)
+        r2m = 1 - ss_r / ss_t if ss_t > 0 else 0
+        r2a = 1 - (1 - r2m) * (n - 1) / (n - k - 1) if n > k + 1 else r2m
+        mse = ss_r / (n - k)
+        cov = mse * np.linalg.pinv(Xm.T @ Xm)
+        se_m = np.sqrt(np.maximum(np.diag(cov), 0))
+        t_m = beta / np.where(se_m > 0, se_m, 1e-10)
+        p_m = 2 * (1 - stats.t.cdf(np.abs(t_m), df=n - k))
+        fstat = ((ss_t - ss_r) / (k - 1)) / mse if mse > 0 and k > 1 else 0
+        kc1, kc2, kc3 = st.columns(3)
+        kpi(kc1, "", L["ols_r2"], f"{r2a:.4f}")
+        kpi(kc2, "purple", L["ols_fstat"], f"{fstat:.2f}")
+        kpi(kc3, "teal", L["ols_nobs"], f"{n:,}")
+        mrows = []
+        for i, vn in enumerate(["Intercept"] + indep):
+            mrows.append({"Variable": vn, "β": round(beta[i], 6),
+                          "Std.Error": round(se_m[i], 6), "t-stat": round(t_m[i], 3),
+                          "p-value": round(p_m[i], 4), "Sig.": sig_stars(p_m[i])})
+        mdf = pd.DataFrame(mrows)
+        st.dataframe(
+            mdf.style
+            .applymap(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
+                      else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
+            .background_gradient(subset=["β"], cmap="coolwarm"),
+            use_container_width=True, hide_index=True)
 
-    st.markdown("""
-    <div class='warning-box'>
-    <strong>⚠️ Note méthodologique:</strong> Les scores de risque sont calculés à partir du portefeuille observé (500 dossiers).
-    Pour un déploiement en production, il est recommandé d'intégrer des données macro-sectorielles externes (BCEAO, INSEED Togo)
-    et de calibrer les modèles sur un historique plus long.
-    </div>
-    """, unsafe_allow_html=True)
+        # Residuals & QQ plot
+        rc1, rc2 = st.columns(2)
+        with rc1:
+            fig = px.scatter(x=Yh, y=res, opacity=.5, color_discrete_sequence=["#3b82f6"],
+                             labels={"x": "Valeurs ajustées", "y": "Résidus"},
+                             title="Résidus vs. Valeurs ajustées")
+            fig.add_hline(y=0, line_dash="dash", line_color="red", opacity=.6)
+            fig.update_layout(height=300, margin=dict(l=0, r=0, t=40, b=0))
+            st.plotly_chart(fig, use_container_width=True)
+        with rc2:
+            (osm, osr), (sl2, ic2, _) = stats.probplot(res)
+            fqq = go.Figure([
+                go.Scatter(x=osm, y=osr, mode="markers",
+                           marker=dict(color="#8b5cf6", size=4, opacity=.6), name="Résidus"),
+                go.Scatter(x=[min(osm), max(osm)],
+                           y=[sl2 * min(osm) + ic2, sl2 * max(osm) + ic2],
+                           mode="lines", line=dict(color="red", dash="dash"), name="Normale théorique")
+            ])
+            fqq.update_layout(title="Q-Q Plot des résidus", height=300,
+                               margin=dict(l=0, r=0, t=40, b=0))
+            st.plotly_chart(fqq, use_container_width=True)
 
+        # Scatter per variable
+        st.markdown("<div class='sec-title'>Relations bivariées</div>", unsafe_allow_html=True)
+        vcols = st.columns(min(len(indep), 3))
+        for i, v in enumerate(indep):
+            with vcols[i % 3]:
+                s2, ic3, _, p2, _ = stats.linregress(rdf[v], rdf[dep])
+                xr = np.linspace(rdf[v].min(), rdf[v].max(), 100)
+                fs = go.Figure([
+                    go.Scatter(x=rdf[v], y=rdf[dep], mode="markers",
+                               marker=dict(size=4, opacity=.35, color="#94a3b8")),
+                    go.Scatter(x=xr, y=s2 * xr + ic3, mode="lines",
+                               line=dict(color="#ef4444", width=2),
+                               name=f"β={s2:.4f} {sig_stars(p2)}")
+                ])
+                fs.update_layout(title=f"{dep} ~ {v}", height=260,
+                                  margin=dict(l=0, r=0, t=40, b=0),
+                                  showlegend=True, legend=dict(font_size=9))
+                st.plotly_chart(fs, use_container_width=True)
+    except np.linalg.LinAlgError:
+        st.error("Multicolinéarité détectée — réduisez le nombre de variables.")
+
+# ════════════════════════════════════════════
+# PAGE 4 — CORRELATIONS
+# ════════════════════════════════════════════
+def page_corr():
+    df = require()
+    st.markdown(f"<div class='sec-title'>{L['corr_title']}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='info-box'>{L['corr_desc']}</div>", unsafe_allow_html=True)
+    num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    avail = [c for c in num_cols if df[c].notna().sum() > 10]
+    if len(avail) < 2:
+        st.warning("Pas assez de variables numériques."); return
+    sel = st.multiselect("Variables à inclure", avail, default=avail)
+    if len(sel) < 2:
+        st.info("Sélectionnez au moins 2 variables."); return
+    cdf = df[sel].dropna()
+    cm = cdf.corr()
+    fh = px.imshow(cm, text_auto=".2f", aspect="auto",
+                   color_continuous_scale="RdBu_r", zmin=-1, zmax=1, title=L["corr_title"])
+    fh.update_layout(height=max(350, len(sel) * 60), margin=dict(l=0, r=0, t=40, b=0))
+    st.plotly_chart(fh, use_container_width=True)
+
+    if "default" in sel:
+        st.markdown(f"<div class='sec-title'>{L['corr_top']}</div>", unsafe_allow_html=True)
+        cwd = cm["default"].drop("default").sort_values(key=abs, ascending=False).reset_index()
+        cwd.columns = ["Variable", "r avec défaut"]
+        cwd["Interprétation"] = cwd["r avec défaut"].apply(
+            lambda x: "Fort" if abs(x) > .3 else ("Modéré" if abs(x) > .15 else "Faible"))
+        fb = px.bar(cwd, x="r avec défaut", y="Variable", orientation="h",
+                    color="r avec défaut", color_continuous_scale="RdBu_r", range_color=[-1, 1],
+                    text="r avec défaut", title=L["corr_top"])
+        fb.update_traces(texttemplate="%{text:.3f}", textposition="outside")
+        fb.add_vline(x=0, line_color="black", line_width=1)
+        fb.update_layout(height=max(230, len(cwd) * 50),
+                         margin=dict(l=0, r=60, t=40, b=0), coloraxis_showscale=False)
+        st.plotly_chart(fb, use_container_width=True)
+        st.dataframe(cwd, use_container_width=True, hide_index=True)
+
+    st.markdown(f"<div class='sec-title'>{L['corr_scatter']}</div>", unsafe_allow_html=True)
+    sc1, sc2 = st.columns(2)
+    with sc1: xv = st.selectbox("Variable X", sel, index=0)
+    with sc2: yv = st.selectbox("Variable Y", sel, index=min(1, len(sel) - 1))
+    sdf = df[[xv, yv]].dropna()
+    cv = "default" if "default" in df.columns else None
+    if cv:
+        sdf = sdf.copy()
+        sdf["default"] = df.loc[sdf.index, "default"].astype(str)
+    fsc = px.scatter(sdf, x=xv, y=yv, color="default" if cv else None,
+                     color_discrete_map={"0": "#3b82f6", "1": "#ef4444"},
+                     opacity=.55, trendline="ols", title=f"{yv} ~ {xv}")
+    fsc.update_layout(height=360, margin=dict(l=0, r=0, t=40, b=0))
+    st.plotly_chart(fsc, use_container_width=True)
+
+    # Significance table
+    st.markdown("<div class='sec-title'>Signification des corrélations (Pearson)</div>",
+                unsafe_allow_html=True)
+    sigr = []
+    for i in range(len(sel)):
+        for j in range(i + 1, len(sel)):
+            v1, v2 = sel[i], sel[j]
+            pair = df[[v1, v2]].dropna()
+            if len(pair) < 5: continue
+            rv, pv = stats.pearsonr(pair[v1], pair[v2])
+            sigr.append({"Var 1": v1, "Var 2": v2, "r": round(rv, 4),
+                         "p-value": round(pv, 4), "Sig.": sig_stars(pv), "n": len(pair)})
+    if sigr:
+        st_df = pd.DataFrame(sigr).sort_values("p-value")
+        st.dataframe(
+            st_df.style
+            .applymap(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
+                      else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
+            .background_gradient(subset=["r"], cmap="RdBu_r", vmin=-1, vmax=1),
+            use_container_width=True, hide_index=True)
+
+# ════════════════════════════════════════════
+# PAGE 5 — LOGISTIC REGRESSION
+# ════════════════════════════════════════════
+def page_logit():
+    df = require()
+    st.markdown(f"<div class='sec-title'>{L['logit_title']}</div>", unsafe_allow_html=True)
+    if "default" not in df.columns or df["default"].nunique() < 2:
+        st.warning("Variable défaut manquante ou constante."); return
+    num_cols = [c for c in ["amount", "duration", "rate", "age"]
+                if c in df.columns and df[c].notna().sum() > 20]
+    if not num_cols:
+        st.warning("Aucune variable numérique disponible."); return
+    cfg1, cfg2 = st.columns([2, 1])
+    with cfg1:
+        feats = st.multiselect("Variables explicatives (features)", num_cols, default=num_cols)
+    with cfg2:
+        thr = st.slider(L["logit_thresh"], .1, .9, .5, .05)
+        ts  = st.slider("Taille test set", .1, .4, .2, .05)
+    if not feats:
+        st.info("Sélectionnez au moins une variable."); return
+    rdf = df[feats + ["default"]].dropna()
+    if len(rdf) < 30:
+        st.warning(L["not_enough"]); return
+    Xa = rdf[feats].values; ya = rdf["default"].values
+    try:
+        Xtr, Xte, ytr, yte = train_test_split(Xa, ya, test_size=ts, random_state=42, stratify=ya)
+    except ValueError:
+        Xtr, Xte, ytr, yte = train_test_split(Xa, ya, test_size=ts, random_state=42)
+    sc = StandardScaler()
+    Xtrs = sc.fit_transform(Xtr); Xtes = sc.transform(Xte)
+    mdl = LogisticRegression(max_iter=1000, random_state=42, class_weight="balanced")
+    mdl.fit(Xtrs, ytr)
+    yprob = mdl.predict_proba(Xtes)[:, 1]; ypred = (yprob >= thr).astype(int)
+    st.session_state.logit_model = mdl; st.session_state.scaler = sc
+    st.session_state.feature_cols = feats; st.session_state.X_test = Xte
+    st.session_state.y_test = yte; st.session_state.y_prob = yprob
+    try: auc = roc_auc_score(yte, yprob)
+    except: auc = .5
+    gini = 2 * auc - 1
+    cm_arr = confusion_matrix(yte, ypred)
+    tn, fp, fn, tp = cm_arr.ravel() if cm_arr.shape == (2, 2) else (0, 0, 0, 0)
+    prec = tp / (tp + fp) if tp + fp > 0 else 0
+    rec  = tp / (tp + fn) if tp + fn > 0 else 0
+    acc  = (tp + tn) / len(yte) if len(yte) > 0 else 0
+    # KPIs
+    kk1, kk2, kk3, kk4, kk5 = st.columns(5)
+    kpi(kk1, "purple", L["logit_auc"],   f"{auc:.4f}",  "Discriminance")
+    kpi(kk2, "orange", L["logit_gini"],  f"{gini:.4f}", "2·AUC−1")
+    kpi(kk3, "green",  "Accuracy",       f"{acc:.1%}",  f"seuil {thr}")
+    kpi(kk4, "",       "Précision",      f"{prec:.1%}", "VP/(VP+FP)")
+    kpi(kk5, "red",    "Rappel (Recall)",f"{rec:.1%}",  "VP/(VP+FN)")
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    t1, t2, t3, t4 = st.tabs(["📈 ROC & Calibration", "🎯 Coefficients & Odds-Ratios",
+                                "🗂️ Matrice de confusion", "📊 Distribution des scores"])
+    with t1:
+        rc1, rc2 = st.columns(2)
+        with rc1:
+            fpr_v, tpr_v, _ = roc_curve(yte, yprob)
+            fr = go.Figure([
+                go.Scatter(x=fpr_v, y=tpr_v, mode="lines",
+                           line=dict(color="#3b82f6", width=2.5),
+                           fill="tozeroy", fillcolor="rgba(59,130,246,.1)",
+                           name=f"ROC (AUC={auc:.4f})"),
+                go.Scatter(x=[0, 1], y=[0, 1], mode="lines",
+                           line=dict(dash="dash", color="#94a3b8", width=1), name="Aléatoire")
+            ])
+            fr.add_annotation(x=.65, y=.2,
+                              text=f"AUC = {auc:.4f}<br>Gini = {gini:.4f}",
+                              showarrow=False, bgcolor="white",
+                              bordercolor="#3b82f6", font=dict(size=11))
+            fr.update_layout(title=L["logit_roc"], height=360,
+                             margin=dict(l=0, r=0, t=40, b=0),
+                             xaxis_title="Taux FP (1-Spécificité)",
+                             yaxis_title="Taux VP (Sensibilité)")
+            st.plotly_chart(fr, use_container_width=True)
+        with rc2:
+            if len(yte) >= 20:
+                nb = min(10, max(5, len(yte) // 20))
+                fp_cal, mp = calibration_curve(yte, yprob, n_bins=nb)
+                fc = go.Figure([
+                    go.Scatter(x=mp, y=fp_cal, mode="lines+markers", name="Modèle",
+                               line=dict(color="#8b5cf6", width=2), marker=dict(size=8)),
+                    go.Scatter(x=[0, 1], y=[0, 1], mode="lines",
+                               line=dict(dash="dash", color="#94a3b8"), name="Parfaite")
+                ])
+                fc.update_layout(title=L["logit_calib"], height=360,
+                                 margin=dict(l=0, r=0, t=40, b=0),
+                                 xaxis_title="PD prédite (moy. bin)",
+                                 yaxis_title="Fréquence réelle de défaut")
+                st.plotly_chart(fc, use_container_width=True)
+    with t2:
+        coefs = mdl.coef_[0]; icpt = mdl.intercept_[0]; OR = np.exp(coefs)
+        ptrp = mdl.predict_proba(Xtrs)[:, 1]; W = np.diag(ptrp * (1 - ptrp))
+        try:
+            XtWX = Xtrs.T @ W @ Xtrs
+            cov_l = np.linalg.pinv(XtWX)
+            se_l = np.sqrt(np.maximum(np.diag(cov_l), 0))
+            z_l = coefs / np.where(se_l > 0, se_l, 1e-10)
+            pv_l = 2 * (1 - stats.norm.cdf(np.abs(z_l)))
+        except Exception:
+            se_l = np.zeros(len(coefs)); z_l = np.zeros(len(coefs)); pv_l = np.ones(len(coefs))
+        cdf2 = pd.DataFrame({
+            "Feature": feats, "β": coefs.round(4), "Std.Err": se_l.round(4),
+            "z-stat": z_l.round(3), "p-value": pv_l.round(4),
+            "Sig.": [sig_stars(p) for p in pv_l], "Odds Ratio": OR.round(4),
+            "Effet": ["↑ Risque+" if c > 0 else "↓ Risque−" for c in coefs]
+        }).sort_values("β", key=abs, ascending=False)
+        st.dataframe(
+            cdf2.style
+            .applymap(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
+                      else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
+            .background_gradient(subset=["β"], cmap="RdBu_r"),
+            use_container_width=True, hide_index=True)
+        fco = px.bar(cdf2.sort_values("β"), x="β", y="Feature", orientation="h",
+                     color="β", color_continuous_scale="RdBu_r",
+                     title="Coefficients logistiques standardisés", text="Odds Ratio")
+        fco.update_traces(texttemplate="OR=%{text:.3f}", textposition="outside")
+        fco.add_vline(x=0, line_dash="dash", line_color="black")
+        fco.update_layout(height=max(280, len(feats) * 55),
+                          margin=dict(l=0, r=80, t=40, b=0), coloraxis_showscale=False)
+        st.plotly_chart(fco, use_container_width=True)
+        st.markdown(
+            f"<div class='info-box'><strong>Intercept:</strong> {icpt:.4f}<br>"
+            "OR > 1 → augmente le risque de défaut | OR &lt; 1 → diminue le risque</div>",
+            unsafe_allow_html=True)
+    with t3:
+        tc1, tc2 = st.columns([1, 1])
+        with tc1:
+            flb = ["Sain (0)", "Défaut (1)"]
+            fcm = px.imshow(cm_arr, text_auto=True, aspect="auto",
+                            x=flb, y=flb, color_continuous_scale="Blues",
+                            title=L["logit_cm"], labels=dict(x="Prédit", y="Réel", color="N"))
+            fcm.update_layout(height=320, margin=dict(l=0, r=0, t=40, b=0))
+            st.plotly_chart(fcm, use_container_width=True)
+        with tc2:
+            rpt = classification_report(yte, ypred, target_names=flb, output_dict=True)
+            st.markdown(f"**{L['logit_report']}**")
+            st.dataframe(pd.DataFrame(rpt).T.round(3), use_container_width=True)
+    with t4:
+        sdf2 = pd.DataFrame({"PD estimée": yprob, "Réel": yte.astype(str)})
+        fd = px.histogram(sdf2, x="PD estimée", color="Réel", nbins=30, barmode="overlay",
+                          color_discrete_map={"0": "#3b82f6", "1": "#ef4444"}, opacity=.7,
+                          title=L["logit_score"])
+        fd.add_vline(x=thr, line_dash="dash", line_color="black",
+                     annotation_text=f"Seuil={thr}", annotation_position="top right")
+        fd.update_layout(height=340, margin=dict(l=0, r=0, t=40, b=0))
+        st.plotly_chart(fd, use_container_width=True)
+        if len(yprob) >= 10:
+            sca = pd.DataFrame({"s": yprob, "d": yte})
+            n_dec = min(10, max(3, len(sca) // 3))
+            sca["decile"] = pd.qcut(sca["s"], q=n_dec,
+                                    labels=[f"D{i}" for i in range(1, n_dec + 1)],
+                                    duplicates="drop")
+            dtbl = sca.groupby("decile", observed=True).agg(
+                N=("d", "count"), Déf=("d", "sum"),
+                PD_réelle=("d", "mean"), PD_moy=("s", "mean")).reset_index()
+            dtbl["PD_réelle"] = (dtbl["PD_réelle"] * 100).round(2)
+            dtbl["PD_moy"]    = (dtbl["PD_moy"]    * 100).round(2)
+            fdc = px.bar(dtbl, x="decile", y="PD_réelle", title="PD réelle par décile de score",
+                         color="PD_réelle", color_continuous_scale="RdYlGn_r", text="PD_réelle")
+            fdc.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
+            fdc.update_layout(height=300, margin=dict(l=0, r=0, t=40, b=0), coloraxis_showscale=False)
+            st.plotly_chart(fdc, use_container_width=True)
+            st.dataframe(dtbl, use_container_width=True, hide_index=True)
+
+# ════════════════════════════════════════════
+# PAGE 6 — EXPORT
+# ════════════════════════════════════════════
+def page_export():
+    df = require()
+    st.markdown(f"<div class='sec-title'>{L['export_title']}</div>", unsafe_allow_html=True)
+    n = len(df); pdg = df["default"].mean() * 100 if "default" in df.columns else 0
+    ec1, ec2, ec3 = st.columns(3)
+    kpi(ec1, "", "Total prêts", f"{n:,}")
+    kpi(ec2, "red", "PD globale", f"{pdg:.2f}%")
+    ms = "✅ Modèle entraîné" if st.session_state.logit_model else "⚠️ Non entraîné — voir Régression Logistique"
+    kpi(ec3, "green" if st.session_state.logit_model else "orange", "Modèle logistique", ms)
+    st.markdown("<br>", unsafe_allow_html=True)
+    edf = df.copy()
+    if st.session_state.logit_model and st.session_state.feature_cols:
+        try:
+            fs = st.session_state.feature_cols
+            Xall = edf[fs].fillna(edf[fs].median())
+            Xsc = st.session_state.scaler.transform(Xall.values)
+            edf["PD_score"] = st.session_state.logit_model.predict_proba(Xsc)[:, 1].round(4)
+            edf["Classe_risque"] = pd.cut(edf["PD_score"], bins=[0, .15, .30, .50, 1.0],
+                                           labels=["Faible", "Modéré", "Élevé", "Très élevé"])
+            st.markdown(
+                "<div class='success-box'>✅ Scores PD calculés pour l'ensemble du portefeuille "
+                "(colonnes <strong>PD_score</strong> et <strong>Classe_risque</strong>)</div>",
+                unsafe_allow_html=True)
+            fe = px.histogram(edf, x="PD_score", color="Classe_risque", nbins=30,
+                              title="Distribution PD — portefeuille complet",
+                              color_discrete_map={"Faible": "#10b981", "Modéré": "#f59e0b",
+                                                   "Élevé": "#f97316", "Très élevé": "#ef4444"})
+            fe.update_layout(height=300, margin=dict(l=0, r=0, t=40, b=0))
+            st.plotly_chart(fe, use_container_width=True)
+        except Exception as e:
+            st.warning(f"Scoring impossible : {e}")
+    dl1, dl2 = st.columns(2)
+    with dl1:
+        st.download_button(label=L["export_dl_csv"],
+                           data=edf.to_csv(index=False).encode("utf-8-sig"),
+                           file_name="portefeuille_scored.csv", mime="text/csv",
+                           use_container_width=True)
+    with dl2:
+        lines = ["RAPPORT ANALYTIQUE — CreditMacro Risk Engine", "=" * 50,
+                 f"Nombre de prêts : {n}", f"PD globale observée : {pdg:.2f}%", ""]
+        if "sector" in df.columns:
+            lines.append("PD par secteur:")
+            for kv, vv in df.groupby("sector")["default"].mean().items():
+                lines.append(f"  {kv}: {vv * 100:.1f}%")
+        if "region" in df.columns:
+            lines.append("\nPD par région:")
+            for kv, vv in df.groupby("region")["default"].mean().items():
+                lines.append(f"  {kv}: {vv * 100:.1f}%")
+        if st.session_state.logit_model and st.session_state.y_prob is not None:
+            try:
+                auc2 = roc_auc_score(st.session_state.y_test, st.session_state.y_prob)
+                lines += ["", f"Modèle logistique — AUC: {auc2:.4f}  Gini: {2 * auc2 - 1:.4f}",
+                          f"Features : {', '.join(st.session_state.feature_cols)}"]
+            except Exception:
+                pass
+        st.download_button(label=L["export_dl_sum"],
+                           data="\n".join(lines).encode("utf-8"),
+                           file_name="rapport_analytique.txt", mime="text/plain",
+                           use_container_width=True)
+    st.markdown("<div class='sec-title'>Aperçu du portefeuille scoré</div>", unsafe_allow_html=True)
+    st.dataframe(edf.head(25), use_container_width=True)
+
+# ════════════════════════════════════════════
+# ROUTER
+# ════════════════════════════════════════════
+if   page == L["nav_upload"]: page_upload()
+elif page == L["nav_pd"]:     page_pd()
+elif page == L["nav_ols"]:    page_ols()
+elif page == L["nav_corr"]:   page_corr()
+elif page == L["nav_logit"]:  page_logit()
+elif page == L["nav_export"]: page_export()
