@@ -1,0 +1,501 @@
+﻿ID,Mois,Date_Octroi,Nom_Client,Sexe,Age,Ville,Region,Activite, Montant_Prete_FCFA ,Duree_Mois, Taux_Interet , Montant_Rembourse_FCFA ,Statut,Interets_Dus_FCFA,Montant_Total_Du, Montant_Restant ,Taux_Remboursement,Categorie_Montant
+P0001,11,2025-11-25,Kwami Kokoussouvi,M,30,Lomé,Kara,Commerce," 750,000 F CFA ",18, 10.00 ," 862,499 F CFA ",EN COURS,"112,500 F CFA","862,500 F CFA", 1 F CFA ,100%,Grand
+P0002,8,2025-08-25,Ayokonvi Badou,F,29,Lomé,Maritime,Commerce," 75,000 F CFA ",24, 10.00 ," 90,000 F CFA ",EN RETARD,"15,000 F CFA","90,000 F CFA", - F CFA ,100%,Petit
+P0003,10,2025-10-11,Ibrahim Kokoum,M,43,Bassar,Maritime,Artisanat," 75,000 F CFA ",18, 15.00 , - F CFA ,EN RETARD,"16,875 F CFA","91,875 F CFA"," 91,875 F CFA ",0%,Petit
+P0004,8,2025-08-15,Sossou Kokouwokoun,F,53,Dapaong,Plateau,Commerce," 75,000 F CFA ",18, 15.00 ," 91,875 F CFA ",REMBOURSE,"16,875 F CFA","91,875 F CFA", - F CFA ,100%,Petit
+P0005,10,2024-10-04,Folly Setondji,M,34,Badou,Savane,Commerce," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",REMBOURSE,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0006,7,2025-07-16,Sena Bakary,M,42,Cinkassé,Kara,Artisanat," 300,000 F CFA ",18, 12.00 ," 354,000 F CFA ",EN RETARD,"54,000 F CFA","354,000 F CFA", - F CFA ,100%,Moyen
+P0007,8,2025-08-30,Ayokou Kokougovi,F,26,Aného,Savane,Artisanat," 100,000 F CFA ",24, 15.00 ," 130,000 F CFA ",EN COURS,"30,000 F CFA","130,000 F CFA", - F CFA ,100%,Moyen
+P0008,7,2025-07-30,Adjakounvi Kossi,F,39,Blitta,Plateau,Artisanat," 750,000 F CFA ",24, 15.00 , - F CFA ,EN RETARD,"225,000 F CFA","975,000 F CFA"," 975,000 F CFA ",0%,Grand
+P0009,3,2025-03-17,Mensahnvi Koffigan,F,25,Blitta,Maritime,Artisanat," 150,000 F CFA ",18, 10.00 ," 172,500 F CFA ",REMBOURSE,"22,500 F CFA","172,500 F CFA", - F CFA ,100%,Moyen
+P0010,4,2025-04-07,Dzigbe Aliou,F,62,Lomé,Savane,Agriculture," 200,000 F CFA ",24, 10.00 , - F CFA ,REMBOURSE,"40,000 F CFA","240,000 F CFA"," 240,000 F CFA ",0%,Moyen
+P0011,12,2024-12-17,Adzoa Wallyvi,F,56,Lomé,Plateau,Commerce," 200,000 F CFA ",24, 8.00 ," 231,999 F CFA ",REMBOURSE,"32,000 F CFA","232,000 F CFA", 1 F CFA ,100%,Moyen
+P0012,10,2024-10-08,Kokouvi Kokoudavi,F,40,Atakpamé,Kara,Commerce," 500,000 F CFA ",36, 8.00 ," 620,000 F CFA ",EN RETARD,"120,000 F CFA","620,000 F CFA", - F CFA ,100%,Moyen
+P0013,8,2024-08-01,Badou Akakpo,M,42,Dapaong,Centrale,Commerce," 150,000 F CFA ",24, 15.00 ," 195,000 F CFA ",EN COURS,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0014,9,2024-09-05,Boko Kokoufo,M,55,Tandjoaré,Kara,Agriculture," 100,000 F CFA ",6, 10.00 ," 105,000 F CFA ",EN COURS,"5,000 F CFA","105,000 F CFA", - F CFA ,100%,Moyen
+P0015,2,2025-02-22,Koumavi Kodjovivi,M,64,Cinkassé,Plateau,Commerce," 50,000 F CFA ",24, 15.00 ," 65,000 F CFA ",REMBOURSE,"15,000 F CFA","65,000 F CFA", - F CFA ,100%,Petit
+P0016,9,2025-09-03,Ablavi Kouna,F,63,Blitta,Maritime,Artisanat," 500,000 F CFA ",36, 12.00 , - F CFA ,EN RETARD,"180,000 F CFA","680,000 F CFA"," 680,000 F CFA ",0%,Moyen
+P0017,2,2025-02-28,Wally Kokoulikoun,M,42,Lomé,Plateau,Artisanat," 50,000 F CFA ",24, 8.00 ," 57,999 F CFA ",REMBOURSE,"8,000 F CFA","58,000 F CFA", 1 F CFA ,100%,Petit
+P0018,5,2025-05-12,Gbadoe Togbenu,F,34,Badou,Centrale,Agriculture," 75,000 F CFA ",12, 8.00 ," 81,000 F CFA ",EN COURS,"6,000 F CFA","81,000 F CFA", - F CFA ,100%,Petit
+P0019,10,2024-10-30,Ablavi Setondjikoun,F,54,Kétao,Kara,Commerce," 75,000 F CFA ",24, 8.00 ," 87,000 F CFA ",EN COURS,"12,000 F CFA","87,000 F CFA", - F CFA ,100%,Petit
+P0020,6,2025-06-24,Adzou Razak,F,57,Sokodé,Centrale,Commerce," 75,000 F CFA ",18, 8.00 ," 84,000 F CFA ",EN COURS,"9,000 F CFA","84,000 F CFA", - F CFA ,100%,Petit
+P0021,5,2025-05-28,Adjakou Kossivikoun,M,38,Badou,Centrale,Agriculture," 75,000 F CFA ",36, 10.00 ," 97,500 F CFA ",EN RETARD,"22,500 F CFA","97,500 F CFA", - F CFA ,100%,Petit
+P0022,4,2025-04-29,Mensah Ibrahim,F,42,Tabligbo,Plateau,Agriculture," 300,000 F CFA ",18, 12.00 ," 354,000 F CFA ",EN RETARD,"54,000 F CFA","354,000 F CFA", - F CFA ,100%,Moyen
+P0023,10,2024-10-21,Tchakoukou Kpessou,F,20,Notse,Maritime,Artisanat," 50,000 F CFA ",6, 12.00 ," 53,000 F CFA ",REMBOURSE,"3,000 F CFA","53,000 F CFA", - F CFA ,100%,Petit
+P0024,11,2025-11-08,Agbodjan Kokoum,M,59,Kétao,Savane,Artisanat," 75,000 F CFA ",18, 12.00 ," 88,500 F CFA ",REMBOURSE,"13,500 F CFA","88,500 F CFA", - F CFA ,100%,Petit
+P0025,6,2025-06-11,Issa Kokouho,M,42,Kpalimé,Maritime,Agriculture," 100,000 F CFA ",24, 10.00 ," 120,000 F CFA ",REMBOURSE,"20,000 F CFA","120,000 F CFA", - F CFA ,100%,Moyen
+P0026,10,2024-10-14,Medegan Kokouli,M,23,Notse,Plateau,Artisanat," 500,000 F CFA ",18, 15.00 ," 612,500 F CFA ",EN COURS,"112,500 F CFA","612,500 F CFA", - F CFA ,100%,Moyen
+P0027,7,2025-07-09,Kpogovi Kokoudokoun,F,40,Sokodé,Savane,Agriculture," 500,000 F CFA ",24, 10.00 ," 600,000 F CFA ",EN RETARD,"100,000 F CFA","600,000 F CFA", - F CFA ,100%,Moyen
+P0028,9,2025-09-22,Kokouko Kokougo,M,22,Vogan,Savane,Commerce," 500,000 F CFA ",6, 15.00 ," 537,500 F CFA ",EN RETARD,"37,500 F CFA","537,500 F CFA", - F CFA ,100%,Moyen
+P0029,8,2024-08-16,Issa Batisso,M,51,Sotouboua,Savane,Agriculture," 750,000 F CFA ",36, 10.00 ," 975,000 F CFA ",EN COURS,"225,000 F CFA","975,000 F CFA", - F CFA ,100%,Grand
+P0030,11,2024-11-24,Gnonlonfoun Wallyvi,M,32,Kétao,Savane,Agriculture," 150,000 F CFA ",36, 12.00 , - F CFA ,EN RETARD,"54,000 F CFA","204,000 F CFA"," 204,000 F CFA ",0%,Moyen
+P0031,7,2025-07-21,Bakary Kokoufo,M,69,Lomé,Maritime,Commerce," 100,000 F CFA ",6, 12.00 ," 106,000 F CFA ",REMBOURSE,"6,000 F CFA","106,000 F CFA", - F CFA ,100%,Moyen
+P0032,8,2024-08-25,Mawuenyega Kokougokoun,M,28,Kétao,Maritime,Artisanat," 50,000 F CFA ",18, 8.00 , - F CFA ,REMBOURSE,"6,000 F CFA","56,000 F CFA"," 56,000 F CFA ",0%,Petit
+P0033,8,2024-08-12,Kwassi Kokoussouvi,M,48,Niamtougou,Savane,Agriculture," 300,000 F CFA ",6, 8.00 ," 312,000 F CFA ",REMBOURSE,"12,000 F CFA","312,000 F CFA", - F CFA ,100%,Moyen
+P0034,9,2025-09-11,Kossi Kokoume,F,42,Sokodé,Maritime,Commerce," 50,000 F CFA ",36, 8.00 ," 62,000 F CFA ",EN COURS,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0035,12,2024-12-18,Sena Kokoussou,M,52,Lomé,Maritime,Artisanat," 50,000 F CFA ",24, 8.00 ," 57,999 F CFA ",EN RETARD,"8,000 F CFA","58,000 F CFA", 1 F CFA ,100%,Petit
+P0036,10,2025-10-08,Awunyonvi Setondjikoun,F,34,Kara,Plateau,Artisanat," 1,000,000 F CFA ",24, 15.00 ," 1,300,000 F CFA ",REMBOURSE,"300,000 F CFA","1,300,000 F CFA", - F CFA ,100%,Grand
+P0037,7,2025-07-22,Ayanvi Awunyo,F,39,Atakpamé,Maritime,Artisanat," 750,000 F CFA ",18, 10.00 ," 862,499 F CFA ",EN RETARD,"112,500 F CFA","862,500 F CFA", 1 F CFA ,100%,Grand
+P0038,2,2025-02-08,Bakary Kossivikoun,M,35,Niamtougou,Centrale,Commerce," 75,000 F CFA ",12, 10.00 ," 82,500 F CFA ",EN RETARD,"7,500 F CFA","82,500 F CFA", - F CFA ,100%,Petit
+P0039,6,2025-06-06,Yaovi Kokoude,M,58,Tchamba,Kara,Commerce," 75,000 F CFA ",24, 15.00 ," 97,500 F CFA ",REMBOURSE,"22,500 F CFA","97,500 F CFA", - F CFA ,100%,Petit
+P0040,11,2025-11-22,Sossou Nassirouvi,M,68,Sokodé,Centrale,Agriculture," 50,000 F CFA ",6, 15.00 ," 53,750 F CFA ",EN RETARD,"3,750 F CFA","53,750 F CFA", - F CFA ,100%,Petit
+P0041,8,2024-08-10,Teyi Kokougokoun,M,31,Dapaong,Savane,Commerce," 500,000 F CFA ",24, 8.00 ," 580,000 F CFA ",REMBOURSE,"80,000 F CFA","580,000 F CFA", - F CFA ,100%,Moyen
+P0042,10,2025-10-31,Tchakouvi Issa,F,42,Notse,Centrale,Artisanat," 100,000 F CFA ",18, 12.00 ," 118,000 F CFA ",EN COURS,"18,000 F CFA","118,000 F CFA", - F CFA ,100%,Moyen
+P0043,3,2025-03-15,Dzigbekou Kokoudevi,F,42,Mango,Savane,Artisanat," 300,000 F CFA ",12, 12.00 , - F CFA ,REMBOURSE,"36,000 F CFA","336,000 F CFA"," 336,000 F CFA ",0%,Moyen
+P0044,7,2025-07-29,Kokouko Nassirou,M,42,Vogan,Kara,Artisanat," 75,000 F CFA ",24, 15.00 ," 97,500 F CFA ",EN RETARD,"22,500 F CFA","97,500 F CFA", - F CFA ,100%,Petit
+P0045,2,2025-02-11,Boko Kokouli,M,42,Tandjoaré,Maritime,Artisanat," 500,000 F CFA ",18, 8.00 ," 560,000 F CFA ",REMBOURSE,"60,000 F CFA","560,000 F CFA", - F CFA ,100%,Moyen
+P0046,8,2025-08-05,Kodjo Garbavi,M,33,Lomé,Maritime,Commerce," 1,000,000 F CFA ",18, 10.00 ," 1,150,000 F CFA ",EN COURS,"150,000 F CFA","1,150,000 F CFA", - F CFA ,100%,Grand
+P0047,10,2025-10-19,Ayokonvi Medegankoun,F,58,Tsévié,Savane,Agriculture," 75,000 F CFA ",24, 12.00 ," 93,000 F CFA ",REMBOURSE,"18,000 F CFA","93,000 F CFA", - F CFA ,100%,Petit
+P0048,11,2025-11-29,Agbodjan Salifouvi,M,62,Notse,Savane,Commerce," 200,000 F CFA ",6, 15.00 ," 215,000 F CFA ",EN RETARD,"15,000 F CFA","215,000 F CFA", - F CFA ,100%,Moyen
+P0049,11,2024-11-25,Ekouévi Kokoufo,F,66,Lomé,Savane,Artisanat," 300,000 F CFA ",18, 8.00 ," 336,000 F CFA ",EN RETARD,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0050,8,2024-08-23,Assogba Garba,M,58,Bassar,Maritime,Commerce," 150,000 F CFA ",36, 10.00 ," 195,000 F CFA ",REMBOURSE,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0051,9,2025-09-17,Gbehouenou Kokouwo,M,42,Vogan,Plateau,Agriculture," 500,000 F CFA ",12, 8.00 , - F CFA ,EN RETARD,"40,000 F CFA","540,000 F CFA"," 540,000 F CFA ",0%,Moyen
+P0052,12,2024-12-05,Amoussounvi Kokoudavi,F,57,Blitta,Plateau,Agriculture," 300,000 F CFA ",36, 15.00 ," 435,000 F CFA ",EN COURS,"135,000 F CFA","435,000 F CFA", - F CFA ,100%,Moyen
+P0053,9,2024-09-27,Ayevivi Kokoudakoun,F,23,Niamtougou,Centrale,Artisanat," 50,000 F CFA ",18, 15.00 ," 61,250 F CFA ",EN COURS,"11,250 F CFA","61,250 F CFA", - F CFA ,100%,Petit
+P0054,7,2025-07-01,Afavi Kokoufovi,F,18,Kara,Centrale,Commerce," 500,000 F CFA ",18, 15.00 ," 612,500 F CFA ",EN RETARD,"112,500 F CFA","612,500 F CFA", - F CFA ,100%,Moyen
+P0055,8,2025-08-24,Amou Moussavi,F,42,Lomé,Maritime,Commerce," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",REMBOURSE,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0056,4,2025-04-22,Gnonou Dramani,M,48,Bassar,Savane,Agriculture," 300,000 F CFA ",24, 12.00 ," 372,000 F CFA ",EN RETARD,"72,000 F CFA","372,000 F CFA", - F CFA ,100%,Moyen
+P0057,8,2024-08-17,Amoussou Dossouvi,M,56,Sokodé,Savane,Commerce," 300,000 F CFA ",12, 12.00 ," 336,000 F CFA ",EN RETARD,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0058,1,2025-01-04,Mensahnvi Medeganvi,F,24,Sokodé,Savane,Commerce," 300,000 F CFA ",24, 12.00 ," 372,000 F CFA ",REMBOURSE,"72,000 F CFA","372,000 F CFA", - F CFA ,100%,Moyen
+P0059,11,2025-11-23,Kokounvi Kokoudevi,F,63,Sokodé,Centrale,Artisanat," 50,000 F CFA ",12, 15.00 ," 57,499 F CFA ",EN RETARD,"7,500 F CFA","57,500 F CFA", 1 F CFA ,100%,Petit
+P0060,5,2025-05-22,Gbehouenou Setondjivi,M,42,Lomé,Plateau,Agriculture," 750,000 F CFA ",6, 12.00 ," 795,000 F CFA ",EN RETARD,"45,000 F CFA","795,000 F CFA", - F CFA ,100%,Grand
+P0061,8,2024-08-28,Folly Dossouvi,M,42,Notse,Kara,Artisanat," 75,000 F CFA ",18, 8.00 , - F CFA ,EN RETARD,"9,000 F CFA","84,000 F CFA"," 84,000 F CFA ",0%,Petit
+P0062,1,2025-01-05,Agbodjan Kokoubovi,M,49,Lomé,Centrale,Artisanat," 200,000 F CFA ",18, 10.00 ," 229,999 F CFA ",EN COURS,"30,000 F CFA","230,000 F CFA", 1 F CFA ,100%,Moyen
+P0063,3,2025-03-25,Kokoubo Seydou,M,28,Lomé,Plateau,Artisanat," 100,000 F CFA ",36, 8.00 ," 124,000 F CFA ",EN COURS,"24,000 F CFA","124,000 F CFA", - F CFA ,100%,Moyen
+P0064,4,2025-04-26,Kokoulo Kounavi,M,51,Lomé,Maritime,Agriculture," 100,000 F CFA ",18, 8.00 ," 112,000 F CFA ",REMBOURSE,"12,000 F CFA","112,000 F CFA", - F CFA ,100%,Moyen
+P0065,7,2025-07-15,Gnonlonfoun Adjakou,M,59,Kpalimé,Maritime,Agriculture," 1,000,000 F CFA ",12, 10.00 ," 1,100,000 F CFA ",EN COURS,"100,000 F CFA","1,100,000 F CFA", - F CFA ,100%,Grand
+P0066,11,2024-11-15,Mawuenyega Batissou,M,18,Notse,Centrale,Commerce," 100,000 F CFA ",24, 10.00 ," 120,000 F CFA ",EN COURS,"20,000 F CFA","120,000 F CFA", - F CFA ,100%,Moyen
+P0067,1,2025-01-22,Sena Ousmanevi,M,53,Lomé,Kara,Agriculture," 200,000 F CFA ",6, 8.00 ," 208,000 F CFA ",EN COURS,"8,000 F CFA","208,000 F CFA", - F CFA ,100%,Moyen
+P0068,10,2025-10-26,Kokouvi Koffigankoun,F,37,Lomé,Centrale,Agriculture," 500,000 F CFA ",24, 8.00 , - F CFA ,EN COURS,"80,000 F CFA","580,000 F CFA"," 580,000 F CFA ",0%,Moyen
+P0069,4,2025-04-02,Kokoussou Seydou,M,57,Tsévié,Savane,Agriculture," 1,000,000 F CFA ",36, 8.00 ," 1,240,000 F CFA ",REMBOURSE,"240,000 F CFA","1,240,000 F CFA", - F CFA ,100%,Grand
+P0070,9,2024-09-22,Adjakounvi Kokoukovi,F,18,Aného,Maritime,Artisanat," 150,000 F CFA ",24, 15.00 ," 195,000 F CFA ",EN RETARD,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0071,2,2025-02-07,Komi Setondji,M,36,Tabligbo,Plateau,Artisanat," 500,000 F CFA ",36, 8.00 ," 620,000 F CFA ",EN RETARD,"120,000 F CFA","620,000 F CFA", - F CFA ,100%,Moyen
+P0072,1,2025-01-21,Awunyo Kokouho,M,42,Kara,Plateau,Artisanat," 200,000 F CFA ",36, 10.00 ," 260,000 F CFA ",EN COURS,"60,000 F CFA","260,000 F CFA", - F CFA ,100%,Moyen
+P0073,6,2025-06-16,Kokoudo Kodjovi,M,70,Niamtougou,Plateau,Agriculture," 50,000 F CFA ",12, 10.00 ," 55,000 F CFA ",EN COURS,"5,000 F CFA","55,000 F CFA", - F CFA ,100%,Petit
+P0074,8,2024-08-08,Kpessou Medeganvi,M,36,Badou,Maritime,Commerce," 75,000 F CFA ",24, 10.00 ," 90,000 F CFA ",EN COURS,"15,000 F CFA","90,000 F CFA", - F CFA ,100%,Petit
+P0075,11,2025-11-05,Essinvi Koumavi,F,42,Blitta,Plateau,Artisanat," 100,000 F CFA ",6, 12.00 , - F CFA ,EN RETARD,"6,000 F CFA","106,000 F CFA"," 106,000 F CFA ",0%,Moyen
+P0076,3,2025-03-09,Afanvi Kokouvivi,F,25,Lomé,Maritime,Agriculture," 50,000 F CFA ",12, 8.00 ," 54,000 F CFA ",EN RETARD,"4,000 F CFA","54,000 F CFA", - F CFA ,100%,Petit
+P0077,10,2025-10-25,Kokougo Kounavi,M,48,Aného,Plateau,Artisanat," 200,000 F CFA ",12, 10.00 ," 220,000 F CFA ",EN COURS,"20,000 F CFA","220,000 F CFA", - F CFA ,100%,Moyen
+P0078,10,2024-10-05,Mensahnvi Akakpovi,F,42,Cinkassé,Plateau,Artisanat," 75,000 F CFA ",18, 12.00 ," 88,500 F CFA ",EN COURS,"13,500 F CFA","88,500 F CFA", - F CFA ,100%,Petit
+P0079,8,2024-08-29,Adzovi Kokoudavi,F,28,Kara,Maritime,Commerce," 75,000 F CFA ",18, 10.00 ," 86,250 F CFA ",REMBOURSE,"11,250 F CFA","86,250 F CFA", - F CFA ,100%,Petit
+P0080,2,2025-02-03,Kokounvi Badouvi,F,50,Niamtougou,Savane,Commerce," 750,000 F CFA ",18, 15.00 ," 918,750 F CFA ",EN COURS,"168,750 F CFA","918,750 F CFA", - F CFA ,100%,Grand
+P0081,6,2025-06-07,Moussa Moussavi,M,36,Aného,Savane,Commerce," 75,000 F CFA ",12, 8.00 ," 81,000 F CFA ",REMBOURSE,"6,000 F CFA","81,000 F CFA", - F CFA ,100%,Petit
+P0082,8,2024-08-02,Agbodjan Fadouvi,F,60,Notse,Maritime,Commerce," 50,000 F CFA ",6, 15.00 , - F CFA ,EN RETARD,"3,750 F CFA","53,750 F CFA"," 53,750 F CFA ",0%,Petit
+P0083,10,2025-10-28,Gnonou Kokouwokoun,M,32,Bassar,Centrale,Agriculture," 750,000 F CFA ",12, 10.00 , - F CFA ,EN RETARD,"75,000 F CFA","825,000 F CFA"," 825,000 F CFA ",0%,Grand
+P0084,10,2024-10-24,Kodjovi Salifouvi,M,30,Sokodé,Centrale,Agriculture," 200,000 F CFA ",24, 12.00 , - F CFA ,EN COURS,"48,000 F CFA","248,000 F CFA"," 248,000 F CFA ",0%,Moyen
+P0085,10,2025-10-15,Gbadoekou Kokouwovi,F,42,Lomé,Maritime,Agriculture," 1,000,000 F CFA ",36, 10.00 , - F CFA ,EN COURS,"300,000 F CFA","1,300,000 F CFA"," 1,300,000 F CFA ",0%,Grand
+P0086,12,2025-12-11,Awunyo Amoussou,M,64,Cinkassé,Savane,Agriculture," 300,000 F CFA ",12, 8.00 ," 324,000 F CFA ",REMBOURSE,"24,000 F CFA","324,000 F CFA", - F CFA ,100%,Moyen
+P0087,7,2025-07-03,Akua Ekoué,F,48,Lomé,Plateau,Agriculture," 750,000 F CFA ",18, 15.00 ," 918,750 F CFA ",EN COURS,"168,750 F CFA","918,750 F CFA", - F CFA ,100%,Grand
+P0088,11,2025-11-01,Teyi Kodjovi,M,59,Lomé,Centrale,Agriculture," 50,000 F CFA ",6, 8.00 ," 52,000 F CFA ",EN RETARD,"2,000 F CFA","52,000 F CFA", - F CFA ,100%,Petit
+P0089,8,2024-08-30,Kokougo Badouvi,M,34,Sotouboua,Centrale,Artisanat," 500,000 F CFA ",36, 10.00 ," 650,000 F CFA ",EN RETARD,"150,000 F CFA","650,000 F CFA", - F CFA ,100%,Moyen
+P0090,11,2024-11-16,Issa Kodjovi,M,42,Niamtougou,Savane,Agriculture," 150,000 F CFA ",6, 10.00 ," 157,500 F CFA ",EN COURS,"7,500 F CFA","157,500 F CFA", - F CFA ,100%,Moyen
+P0091,2,2025-02-18,Dramani Bakary,M,60,Lomé,Plateau,Artisanat," 75,000 F CFA ",6, 8.00 ," 78,000 F CFA ",EN RETARD,"3,000 F CFA","78,000 F CFA", - F CFA ,100%,Petit
+P0092,9,2024-09-23,Setondji Kokoulokoun,M,58,Kétao,Centrale,Agriculture," 150,000 F CFA ",24, 12.00 ," 186,000 F CFA ",EN COURS,"36,000 F CFA","186,000 F CFA", - F CFA ,100%,Moyen
+P0093,9,2025-09-18,Adjakou Ekoué,F,42,Blitta,Maritime,Artisanat," 75,000 F CFA ",6, 10.00 ," 78,750 F CFA ",EN RETARD,"3,750 F CFA","78,750 F CFA", - F CFA ,100%,Petit
+P0094,11,2024-11-02,Akakpo Kokouli,M,37,Tchamba,Savane,Agriculture," 150,000 F CFA ",18, 10.00 , - F CFA ,EN RETARD,"22,500 F CFA","172,500 F CFA"," 172,500 F CFA ",0%,Moyen
+P0095,2,2025-02-09,Kpatcha Tchass,M,54,Notse,Savane,Artisanat," 50,000 F CFA ",12, 15.00 ," 57,499 F CFA ",EN COURS,"7,500 F CFA","57,500 F CFA", 1 F CFA ,100%,Petit
+P0096,5,2025-05-23,Wally Koffi,M,42,Kpalimé,Savane,Artisanat," 300,000 F CFA ",18, 10.00 ," 345,000 F CFA ",EN COURS,"45,000 F CFA","345,000 F CFA", - F CFA ,100%,Moyen
+P0097,9,2024-09-28,Ablou Moussavi,F,42,Sotouboua,Savane,Agriculture," 150,000 F CFA ",6, 10.00 ," 157,500 F CFA ",EN COURS,"7,500 F CFA","157,500 F CFA", - F CFA ,100%,Moyen
+P0098,9,2024-09-11,Ayao Gnonouvi,F,53,Vogan,Savane,Commerce," 200,000 F CFA ",24, 10.00 ," 240,000 F CFA ",EN COURS,"40,000 F CFA","240,000 F CFA", - F CFA ,100%,Moyen
+P0099,8,2024-08-21,Agbeko Amavi,M,45,Vogan,Savane,Agriculture," 75,000 F CFA ",6, 8.00 ," 78,000 F CFA ",REMBOURSE,"3,000 F CFA","78,000 F CFA", - F CFA ,100%,Petit
+P0100,5,2025-05-31,Esso Razak,M,51,Notse,Kara,Artisanat," 200,000 F CFA ",24, 8.00 , - F CFA ,EN COURS,"32,000 F CFA","232,000 F CFA"," 232,000 F CFA ",0%,Moyen
+P0101,8,2024-08-31,Koffigan Tchass,M,27,Kara,Savane,Commerce," 75,000 F CFA ",36, 10.00 ," 97,500 F CFA ",REMBOURSE,"22,500 F CFA","97,500 F CFA", - F CFA ,100%,Petit
+P0102,1,2025-01-31,Dzigbe Larba,F,54,Cinkassé,Maritime,Agriculture," 50,000 F CFA ",6, 10.00 ," 52,500 F CFA ",REMBOURSE,"2,500 F CFA","52,500 F CFA", - F CFA ,100%,Petit
+P0103,7,2025-07-11,Kokoum Esso,M,26,Tandjoaré,Plateau,Artisanat," 200,000 F CFA ",18, 12.00 , - F CFA ,EN RETARD,"36,000 F CFA","236,000 F CFA"," 236,000 F CFA ",0%,Moyen
+P0104,3,2025-03-10,Adzou Kokoulivi,F,63,Cinkassé,Plateau,Agriculture," 150,000 F CFA ",36, 12.00 ," 204,000 F CFA ",EN COURS,"54,000 F CFA","204,000 F CFA", - F CFA ,100%,Moyen
+P0105,12,2025-12-02,Afavi Garbavi,F,59,Vogan,Savane,Commerce," 150,000 F CFA ",18, 12.00 ," 177,000 F CFA ",EN RETARD,"27,000 F CFA","177,000 F CFA", - F CFA ,100%,Moyen
+P0106,10,2025-10-02,Dzigbodi Kokouvi,F,35,Vogan,Centrale,Agriculture," 750,000 F CFA ",24, 8.00 ," 869,999 F CFA ",EN RETARD,"120,000 F CFA","870,000 F CFA", 1 F CFA ,100%,Grand
+P0107,8,2025-08-27,Abla Tchass,F,45,Bassar,Kara,Commerce," 750,000 F CFA ",12, 15.00 ," 862,499 F CFA ",EN RETARD,"112,500 F CFA","862,500 F CFA", 1 F CFA ,100%,Grand
+P0108,4,2025-04-12,Amavi Tchass,M,32,Sokodé,Maritime,Commerce," 100,000 F CFA ",18, 10.00 ," 114,999 F CFA ",EN RETARD,"15,000 F CFA","115,000 F CFA", 1 F CFA ,100%,Moyen
+P0109,4,2025-04-13,Ekouékou Kossivi,F,46,Kara,Centrale,Commerce," 75,000 F CFA ",12, 15.00 , - F CFA ,EN COURS,"11,250 F CFA","86,250 F CFA"," 86,250 F CFA ",0%,Petit
+P0110,9,2024-09-01,Kossikou Kokoukovi,F,42,Kara,Savane,Agriculture," 50,000 F CFA ",36, 10.00 ," 65,000 F CFA ",REMBOURSE,"15,000 F CFA","65,000 F CFA", - F CFA ,100%,Petit
+P0111,8,2025-08-16,Dzigbe Setondjivi,F,65,Lomé,Kara,Artisanat," 50,000 F CFA ",24, 12.00 ," 62,000 F CFA ",REMBOURSE,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0112,6,2025-06-12,Tchakoukou Kokoussoukoun,F,66,Kpalimé,Maritime,Artisanat," 50,000 F CFA ",36, 10.00 , - F CFA ,EN RETARD,"15,000 F CFA","65,000 F CFA"," 65,000 F CFA ",0%,Petit
+P0113,2,2025-02-02,Ekoué Kokoudekoun,M,27,Lomé,Maritime,Artisanat," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",EN COURS,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0114,3,2025-03-03,Boko Amavi,M,65,Kpalimé,Plateau,Commerce," 100,000 F CFA ",36, 15.00 ," 145,000 F CFA ",EN COURS,"45,000 F CFA","145,000 F CFA", - F CFA ,100%,Moyen
+P0115,12,2025-12-12,Kossi Mensah,M,35,Tabligbo,Maritime,Commerce," 500,000 F CFA ",12, 15.00 ," 575,000 F CFA ",EN COURS,"75,000 F CFA","575,000 F CFA", - F CFA ,100%,Moyen
+P0116,6,2025-06-01,Ayokou Kokoulokoun,F,63,Lomé,Maritime,Commerce," 75,000 F CFA ",24, 10.00 ," 90,000 F CFA ",EN COURS,"15,000 F CFA","90,000 F CFA", - F CFA ,100%,Petit
+P0117,3,2025-03-02,Togbenu Kokougo,M,41,Lomé,Plateau,Artisanat," 75,000 F CFA ",24, 10.00 , - F CFA ,EN COURS,"15,000 F CFA","90,000 F CFA"," 90,000 F CFA ",0%,Petit
+P0118,4,2025-04-28,Gbadoevi Kokoukokoun,F,57,Kpalimé,Plateau,Artisanat," 50,000 F CFA ",24, 8.00 ," 57,999 F CFA ",EN RETARD,"8,000 F CFA","58,000 F CFA", 1 F CFA ,100%,Petit
+P0119,2,2025-02-19,Ayekou Kokougovi,F,36,Tandjoaré,Savane,Commerce," 1,000,000 F CFA ",12, 10.00 , - F CFA ,EN RETARD,"100,000 F CFA","1,100,000 F CFA"," 1,100,000 F CFA ",0%,Grand
+P0120,12,2024-12-29,Kpogo Medegankoun,M,20,Vogan,Savane,Artisanat," 100,000 F CFA ",12, 10.00 , - F CFA ,EN COURS,"10,000 F CFA","110,000 F CFA"," 110,000 F CFA ",0%,Moyen
+P0121,6,2025-06-02,Kouami Gbadoe,M,34,Kpalimé,Maritime,Commerce," 750,000 F CFA ",24, 15.00 ," 975,000 F CFA ",EN COURS,"225,000 F CFA","975,000 F CFA", - F CFA ,100%,Grand
+P0122,10,2025-10-20,Kokouwo Kokouko,M,34,Blitta,Centrale,Artisanat," 150,000 F CFA ",24, 8.00 ," 174,000 F CFA ",EN COURS,"24,000 F CFA","174,000 F CFA", - F CFA ,100%,Moyen
+P0123,2,2025-02-04,Bakary Kokouzokoun,M,66,Bassar,Plateau,Agriculture," 500,000 F CFA ",24, 8.00 ," 580,000 F CFA ",EN RETARD,"80,000 F CFA","580,000 F CFA", - F CFA ,100%,Moyen
+P0124,4,2025-04-10,Kpogovi Kokounokoun,F,47,Tsévié,Plateau,Agriculture," 100,000 F CFA ",6, 10.00 ," 105,000 F CFA ",EN COURS,"5,000 F CFA","105,000 F CFA", - F CFA ,100%,Moyen
+P0125,12,2024-12-07,Kokoude Aliouvi,M,43,Sotouboua,Centrale,Artisanat," 1,000,000 F CFA ",24, 12.00 , - F CFA ,REMBOURSE,"240,000 F CFA","1,240,000 F CFA"," 1,240,000 F CFA ",0%,Grand
+P0126,3,2025-03-18,Gnonou Hamidou,M,60,Dapaong,Centrale,Artisanat," 50,000 F CFA ",24, 12.00 ," 62,000 F CFA ",REMBOURSE,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0127,8,2024-08-26,Amoussou Kokouko,F,39,Dapaong,Centrale,Commerce," 200,000 F CFA ",36, 12.00 ," 272,000 F CFA ",EN COURS,"72,000 F CFA","272,000 F CFA", - F CFA ,100%,Moyen
+P0128,8,2025-08-28,Ablavi Dossoukoun,F,65,Lomé,Savane,Artisanat," 1,000,000 F CFA ",18, 8.00 , - F CFA ,REMBOURSE,"120,000 F CFA","1,120,000 F CFA"," 1,120,000 F CFA ",0%,Grand
+P0129,5,2025-05-24,Akoussou Agbodjan,F,60,Cinkassé,Centrale,Agriculture," 300,000 F CFA ",12, 10.00 ," 330,000 F CFA ",EN COURS,"30,000 F CFA","330,000 F CFA", - F CFA ,100%,Moyen
+P0130,9,2024-09-02,Koffigan Larba,M,69,Tchamba,Savane,Agriculture," 1,000,000 F CFA ",36, 12.00 ," 1,360,000 F CFA ",EN RETARD,"360,000 F CFA","1,360,000 F CFA", - F CFA ,100%,Grand
+P0131,5,2025-05-13,Mawuli Nassirouvi,M,51,Aného,Kara,Commerce," 750,000 F CFA ",24, 12.00 ," 930,000 F CFA ",EN COURS,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0132,8,2025-08-06,Essi Kodjovi,F,66,Dapaong,Kara,Commerce," 150,000 F CFA ",24, 15.00 ," 195,000 F CFA ",EN COURS,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0133,2,2025-02-24,Gbadoen Fadouvi,F,39,Bassar,Plateau,Agriculture," 300,000 F CFA ",36, 15.00 ," 435,000 F CFA ",EN COURS,"135,000 F CFA","435,000 F CFA", - F CFA ,100%,Moyen
+P0134,10,2025-10-04,Wally Garba,M,57,Lomé,Maritime,Artisanat," 750,000 F CFA ",24, 15.00 ," 975,000 F CFA ",REMBOURSE,"225,000 F CFA","975,000 F CFA", - F CFA ,100%,Grand
+P0135,12,2024-12-15,Gnonlonfoun Ousmanevi,M,29,Lomé,Plateau,Commerce," 750,000 F CFA ",36, 10.00 ," 975,000 F CFA ",REMBOURSE,"225,000 F CFA","975,000 F CFA", - F CFA ,100%,Grand
+P0136,8,2025-08-01,Kokougo Kokoulokoun,M,42,Lomé,Plateau,Artisanat," 50,000 F CFA ",6, 12.00 ," 53,000 F CFA ",EN COURS,"3,000 F CFA","53,000 F CFA", - F CFA ,100%,Petit
+P0137,10,2025-10-27,Kpogo Kokoubovi,M,42,Kpalimé,Plateau,Commerce," 750,000 F CFA ",24, 8.00 ," 869,999 F CFA ",EN COURS,"120,000 F CFA","870,000 F CFA", 1 F CFA ,100%,Grand
+P0138,12,2025-12-08,Kokou Kokouko,M,44,Aného,Centrale,Commerce," 200,000 F CFA ",36, 15.00 ," 290,000 F CFA ",EN RETARD,"90,000 F CFA","290,000 F CFA", - F CFA ,100%,Moyen
+P0139,6,2025-06-29,Kpessou Kossivivi,M,29,Cinkassé,Maritime,Commerce," 100,000 F CFA ",6, 12.00 , - F CFA ,REMBOURSE,"6,000 F CFA","106,000 F CFA"," 106,000 F CFA ",0%,Moyen
+P0140,5,2025-05-15,Koumavi Gbadoe,M,19,Blitta,Maritime,Artisanat," 100,000 F CFA ",6, 10.00 ," 105,000 F CFA ",EN RETARD,"5,000 F CFA","105,000 F CFA", - F CFA ,100%,Moyen
+P0141,5,2025-05-25,Kokoume Ekoué,M,65,Sokodé,Centrale,Artisanat," 50,000 F CFA ",36, 15.00 ," 72,500 F CFA ",EN RETARD,"22,500 F CFA","72,500 F CFA", - F CFA ,100%,Petit
+P0142,5,2025-05-07,Kouna Kokoukokoun,M,67,Tchamba,Maritime,Agriculture," 100,000 F CFA ",18, 12.00 ," 118,000 F CFA ",EN RETARD,"18,000 F CFA","118,000 F CFA", - F CFA ,100%,Moyen
+P0143,10,2025-10-16,Adzoa Kokoumkoun,F,42,Blitta,Centrale,Agriculture," 75,000 F CFA ",36, 12.00 ," 102,000 F CFA ",REMBOURSE,"27,000 F CFA","102,000 F CFA", - F CFA ,100%,Petit
+P0144,3,2025-03-12,Tchakou Gnonou,M,50,Blitta,Maritime,Artisanat," 50,000 F CFA ",36, 8.00 ," 62,000 F CFA ",EN COURS,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0145,7,2025-07-24,Koumavi Gnonoukoun,M,52,Lomé,Centrale,Agriculture," 100,000 F CFA ",24, 12.00 , - F CFA ,EN COURS,"24,000 F CFA","124,000 F CFA"," 124,000 F CFA ",0%,Moyen
+P0146,9,2025-09-27,Folly Koffiganvi,M,55,Tandjoaré,Kara,Commerce," 50,000 F CFA ",24, 12.00 ," 62,000 F CFA ",EN COURS,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0147,2,2025-02-25,Kokoussou Seydouvi,M,48,Kpalimé,Kara,Artisanat," 500,000 F CFA ",36, 12.00 ," 680,000 F CFA ",EN COURS,"180,000 F CFA","680,000 F CFA", - F CFA ,100%,Moyen
+P0148,8,2025-08-22,Abla Nassirouvi,F,42,Aného,Centrale,Artisanat," 1,000,000 F CFA ",6, 15.00 ," 1,075,000 F CFA ",EN RETARD,"75,000 F CFA","1,075,000 F CFA", - F CFA ,100%,Grand
+P0149,1,2025-01-11,Koffikou Kokoulo,F,42,Tandjoaré,Savane,Agriculture," 50,000 F CFA ",6, 8.00 ," 52,000 F CFA ",EN COURS,"2,000 F CFA","52,000 F CFA", - F CFA ,100%,Petit
+P0150,10,2024-10-09,Kokoulo Sossou,M,69,Cinkassé,Savane,Agriculture," 500,000 F CFA ",36, 15.00 ," 725,000 F CFA ",REMBOURSE,"225,000 F CFA","725,000 F CFA", - F CFA ,100%,Moyen
+P0151,3,2025-03-27,Kokoudo Kokoume,M,53,Tandjoaré,Savane,Agriculture," 1,000,000 F CFA ",6, 12.00 ," 1,060,000 F CFA ",EN COURS,"60,000 F CFA","1,060,000 F CFA", - F CFA ,100%,Grand
+P0152,11,2024-11-27,Adjakounvi Wally,F,52,Badou,Savane,Artisanat," 750,000 F CFA ",36, 12.00 ," 1,020,000 F CFA ",REMBOURSE,"270,000 F CFA","1,020,000 F CFA", - F CFA ,100%,Grand
+P0153,10,2024-10-02,Kokouko Kokougokoun,M,30,Sotouboua,Kara,Commerce," 1,000,000 F CFA ",6, 8.00 ," 1,040,000 F CFA ",EN COURS,"40,000 F CFA","1,040,000 F CFA", - F CFA ,100%,Grand
+P0154,10,2025-10-09,Ami Tchass,F,35,Tchamba,Savane,Artisanat," 50,000 F CFA ",18, 10.00 ," 57,499 F CFA ",EN RETARD,"7,500 F CFA","57,500 F CFA", 1 F CFA ,100%,Petit
+P0155,7,2025-07-12,Badou Koffiganvi,M,53,Mango,Plateau,Commerce," 50,000 F CFA ",6, 12.00 ," 53,000 F CFA ",EN RETARD,"3,000 F CFA","53,000 F CFA", - F CFA ,100%,Petit
+P0156,8,2025-08-23,Tchakou Kokoumkoun,F,42,Niamtougou,Maritime,Artisanat," 50,000 F CFA ",12, 12.00 ," 56,000 F CFA ",EN COURS,"6,000 F CFA","56,000 F CFA", - F CFA ,100%,Petit
+P0157,11,2024-11-19,Akoussou Ibrahim,F,36,Atakpamé,Centrale,Commerce," 75,000 F CFA ",36, 8.00 ," 93,000 F CFA ",EN COURS,"18,000 F CFA","93,000 F CFA", - F CFA ,100%,Petit
+P0158,9,2025-09-30,Ayao Razakvi,F,42,Aného,Centrale,Artisanat," 75,000 F CFA ",36, 8.00 ," 93,000 F CFA ",EN RETARD,"18,000 F CFA","93,000 F CFA", - F CFA ,100%,Petit
+P0159,12,2024-12-30,Amivi Kokouganvi,F,59,Lomé,Plateau,Agriculture," 500,000 F CFA ",6, 10.00 ," 525,000 F CFA ",EN RETARD,"25,000 F CFA","525,000 F CFA", - F CFA ,100%,Moyen
+P0160,2,2025-02-26,Ayokou Seydou,F,57,Kara,Plateau,Commerce," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",REMBOURSE,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0161,1,2025-01-06,Koffi Wallyvi,M,28,Niamtougou,Maritime,Agriculture," 200,000 F CFA ",36, 10.00 , - F CFA ,EN COURS,"60,000 F CFA","260,000 F CFA"," 260,000 F CFA ",0%,Moyen
+P0162,4,2025-04-30,Adjakou Akakpovi,M,41,Lomé,Plateau,Commerce," 750,000 F CFA ",18, 10.00 ," 862,499 F CFA ",EN COURS,"112,500 F CFA","862,500 F CFA", 1 F CFA ,100%,Grand
+P0163,5,2025-05-18,Kpogo Kokoussoukoun,F,47,Tchamba,Kara,Commerce," 200,000 F CFA ",24, 15.00 ," 260,000 F CFA ",EN RETARD,"60,000 F CFA","260,000 F CFA", - F CFA ,100%,Moyen
+P0164,1,2025-01-16,Adzou Dossou,F,58,Lomé,Centrale,Commerce," 300,000 F CFA ",12, 15.00 ," 345,000 F CFA ",EN COURS,"45,000 F CFA","345,000 F CFA", - F CFA ,100%,Moyen
+P0165,9,2024-09-03,Ayevivi Wallyvi,F,66,Lomé,Plateau,Agriculture," 150,000 F CFA ",18, 8.00 , - F CFA ,EN RETARD,"18,000 F CFA","168,000 F CFA"," 168,000 F CFA ",0%,Moyen
+P0166,9,2024-09-17,Kossinvi Kpessou,F,39,Sotouboua,Plateau,Agriculture," 750,000 F CFA ",18, 8.00 ," 840,000 F CFA ",EN COURS,"90,000 F CFA","840,000 F CFA", - F CFA ,100%,Grand
+P0167,1,2025-01-26,Kodjovi Koumavivi,M,23,Lomé,Maritime,Artisanat," 75,000 F CFA ",36, 10.00 , - F CFA ,EN COURS,"22,500 F CFA","97,500 F CFA"," 97,500 F CFA ",0%,Petit
+P0168,1,2025-01-18,Awunyo Wally,M,66,Lomé,Maritime,Agriculture," 750,000 F CFA ",12, 12.00 ," 840,000 F CFA ",EN RETARD,"90,000 F CFA","840,000 F CFA", - F CFA ,100%,Grand
+P0169,3,2025-03-22,Kossi Issavi,M,25,Kara,Savane,Artisanat," 500,000 F CFA ",12, 12.00 ," 560,000 F CFA ",EN RETARD,"60,000 F CFA","560,000 F CFA", - F CFA ,100%,Moyen
+P0170,12,2024-12-23,Ayekou Teyikoun,F,32,Lomé,Maritime,Commerce," 75,000 F CFA ",36, 15.00 ," 108,750 F CFA ",EN RETARD,"33,750 F CFA","108,750 F CFA", - F CFA ,100%,Petit
+P0171,3,2025-03-28,Kwamivi Kokoulikoun,M,49,Tsévié,Kara,Commerce," 750,000 F CFA ",18, 10.00 ," 862,499 F CFA ",EN COURS,"112,500 F CFA","862,500 F CFA", 1 F CFA ,100%,Grand
+P0172,7,2025-07-31,Adzoa Kokougokoun,F,23,Mango,Kara,Agriculture," 100,000 F CFA ",24, 12.00 ," 124,000 F CFA ",REMBOURSE,"24,000 F CFA","124,000 F CFA", - F CFA ,100%,Moyen
+P0173,9,2025-09-13,Adzoanvi Issa,F,36,Vogan,Maritime,Agriculture," 100,000 F CFA ",24, 8.00 ," 115,999 F CFA ",REMBOURSE,"16,000 F CFA","116,000 F CFA", 1 F CFA ,100%,Moyen
+P0174,10,2024-10-22,Kodjovi Amavi,M,18,Tabligbo,Maritime,Artisanat," 100,000 F CFA ",12, 10.00 ," 110,000 F CFA ",REMBOURSE,"10,000 F CFA","110,000 F CFA", - F CFA ,100%,Moyen
+P0175,11,2025-11-07,Dzigbou Setondji,F,38,Kara,Plateau,Agriculture," 300,000 F CFA ",18, 10.00 ," 345,000 F CFA ",REMBOURSE,"45,000 F CFA","345,000 F CFA", - F CFA ,100%,Moyen
+P0176,9,2024-09-07,Yaovi Kokoulovi,M,42,Blitta,Savane,Artisanat," 100,000 F CFA ",24, 8.00 ," 115,999 F CFA ",EN COURS,"16,000 F CFA","116,000 F CFA", 1 F CFA ,100%,Moyen
+P0177,5,2025-05-14,Kokougo Kokouda,M,27,Bassar,Maritime,Agriculture," 100,000 F CFA ",36, 12.00 ," 136,000 F CFA ",EN RETARD,"36,000 F CFA","136,000 F CFA", - F CFA ,100%,Moyen
+P0178,9,2025-09-08,Kokoussou Issa,M,42,Sotouboua,Savane,Artisanat," 500,000 F CFA ",12, 8.00 ," 540,000 F CFA ",REMBOURSE,"40,000 F CFA","540,000 F CFA", - F CFA ,100%,Moyen
+P0179,2,2025-02-10,Kokouho Amoussou,M,42,Tchamba,Plateau,Agriculture," 150,000 F CFA ",36, 15.00 ," 217,500 F CFA ",EN COURS,"67,500 F CFA","217,500 F CFA", - F CFA ,100%,Moyen
+P0180,11,2025-11-04,Kokoudo Bakary,M,65,Badou,Maritime,Artisanat," 50,000 F CFA ",18, 12.00 ," 59,000 F CFA ",EN COURS,"9,000 F CFA","59,000 F CFA", - F CFA ,100%,Petit
+P0181,8,2025-08-03,Fadou Kokoumekoun,M,43,Kpalimé,Centrale,Artisanat," 500,000 F CFA ",36, 12.00 , - F CFA ,REMBOURSE,"180,000 F CFA","680,000 F CFA"," 680,000 F CFA ",0%,Moyen
+P0182,8,2024-08-24,Adzoanvi Kokoufo,F,25,Kara,Kara,Artisanat," 75,000 F CFA ",12, 15.00 ," 86,250 F CFA ",EN COURS,"11,250 F CFA","86,250 F CFA", - F CFA ,100%,Petit
+P0183,11,2024-11-22,Kokouli Larba,M,28,Sokodé,Maritime,Agriculture," 1,000,000 F CFA ",24, 12.00 , - F CFA ,REMBOURSE,"240,000 F CFA","1,240,000 F CFA"," 1,240,000 F CFA ",0%,Grand
+P0184,6,2025-06-09,Kokougo Kounakoun,M,65,Kétao,Maritime,Artisanat," 750,000 F CFA ",18, 12.00 , - F CFA ,EN COURS,"135,000 F CFA","885,000 F CFA"," 885,000 F CFA ",0%,Grand
+P0185,8,2025-08-04,Sossounvi Kokoulivi,F,38,Blitta,Savane,Commerce," 100,000 F CFA ",36, 15.00 ," 145,000 F CFA ",EN RETARD,"45,000 F CFA","145,000 F CFA", - F CFA ,100%,Moyen
+P0186,8,2025-08-10,Ousmane Dramani,M,35,Badou,Savane,Commerce," 50,000 F CFA ",18, 10.00 ," 57,499 F CFA ",EN COURS,"7,500 F CFA","57,500 F CFA", 1 F CFA ,100%,Petit
+P0187,12,2025-12-03,Gnonlonfoun Seydouvi,M,42,Aného,Plateau,Commerce," 75,000 F CFA ",36, 8.00 , - F CFA ,EN COURS,"18,000 F CFA","93,000 F CFA"," 93,000 F CFA ",0%,Petit
+P0188,4,2025-04-03,Koffinvi Kokouwokoun,F,32,Tabligbo,Plateau,Agriculture," 300,000 F CFA ",24, 10.00 ," 360,000 F CFA ",EN COURS,"60,000 F CFA","360,000 F CFA", - F CFA ,100%,Moyen
+P0189,10,2025-10-29,Adjakou Kokoum,M,52,Lomé,Maritime,Commerce," 75,000 F CFA ",24, 10.00 ," 90,000 F CFA ",REMBOURSE,"15,000 F CFA","90,000 F CFA", - F CFA ,100%,Petit
+P0190,11,2025-11-12,Koffikou Kokougankoun,F,57,Lomé,Savane,Agriculture," 750,000 F CFA ",12, 15.00 ," 862,499 F CFA ",REMBOURSE,"112,500 F CFA","862,500 F CFA", 1 F CFA ,100%,Grand
+P0191,8,2024-08-22,Afavi Kokouwo,F,63,Kétao,Savane,Agriculture," 100,000 F CFA ",18, 8.00 , - F CFA ,EN COURS,"12,000 F CFA","112,000 F CFA"," 112,000 F CFA ",0%,Moyen
+P0192,5,2025-05-17,Awunyovi Kokoude,F,55,Tandjoaré,Centrale,Artisanat," 100,000 F CFA ",18, 10.00 ," 114,999 F CFA ",EN COURS,"15,000 F CFA","115,000 F CFA", 1 F CFA ,100%,Moyen
+P0193,1,2025-01-14,Ayanvi Kokougankoun,F,38,Kara,Plateau,Artisanat," 500,000 F CFA ",36, 8.00 ," 620,000 F CFA ",EN RETARD,"120,000 F CFA","620,000 F CFA", - F CFA ,100%,Moyen
+P0194,10,2024-10-28,Amoussou Koffi,F,57,Sokodé,Savane,Commerce," 500,000 F CFA ",18, 10.00 , - F CFA ,EN RETARD,"75,000 F CFA","575,000 F CFA"," 575,000 F CFA ",0%,Moyen
+P0195,2,2025-02-13,Kokouvi Kokoukoun,F,32,Lomé,Kara,Commerce," 150,000 F CFA ",6, 8.00 ," 156,000 F CFA ",EN COURS,"6,000 F CFA","156,000 F CFA", - F CFA ,100%,Moyen
+P0196,6,2025-06-03,Koffikou Kokoufovi,F,68,Lomé,Kara,Artisanat," 500,000 F CFA ",24, 10.00 , - F CFA ,EN RETARD,"100,000 F CFA","600,000 F CFA"," 600,000 F CFA ",0%,Moyen
+P0197,4,2025-04-08,Awunyokou Akakpovi,F,38,Bassar,Centrale,Agriculture," 150,000 F CFA ",36, 12.00 ," 204,000 F CFA ",EN RETARD,"54,000 F CFA","204,000 F CFA", - F CFA ,100%,Moyen
+P0198,3,2025-03-04,Amivi Teyikoun,F,51,Kpalimé,Centrale,Commerce," 750,000 F CFA ",36, 15.00 ," 1,087,500 F CFA ",REMBOURSE,"337,500 F CFA","1,087,500 F CFA", - F CFA ,100%,Grand
+P0199,9,2025-09-23,Ayokou Koffi,F,18,Blitta,Savane,Commerce," 100,000 F CFA ",18, 12.00 , - F CFA ,EN COURS,"18,000 F CFA","118,000 F CFA"," 118,000 F CFA ",0%,Moyen
+P0200,10,2024-10-27,Sena Nassirouvi,M,35,Blitta,Savane,Agriculture," 100,000 F CFA ",18, 8.00 ," 112,000 F CFA ",REMBOURSE,"12,000 F CFA","112,000 F CFA", - F CFA ,100%,Moyen
+P0201,3,2025-03-08,Kokouvi Sossou,F,66,Lomé,Savane,Artisanat," 300,000 F CFA ",18, 10.00 ," 345,000 F CFA ",EN RETARD,"45,000 F CFA","345,000 F CFA", - F CFA ,100%,Moyen
+P0202,10,2024-10-19,Kokoum Amavi,M,62,Dapaong,Centrale,Commerce," 1,000,000 F CFA ",36, 15.00 , - F CFA ,EN RETARD,"450,000 F CFA","1,450,000 F CFA"," 1,450,000 F CFA ",0%,Grand
+P0203,8,2025-08-31,Adzoa Medegankoun,F,64,Cinkassé,Kara,Commerce," 750,000 F CFA ",6, 12.00 ," 795,000 F CFA ",EN RETARD,"45,000 F CFA","795,000 F CFA", - F CFA ,100%,Grand
+P0204,8,2025-08-17,Koffi Kokoukovi,M,23,Aného,Savane,Commerce," 300,000 F CFA ",24, 10.00 ," 360,000 F CFA ",EN COURS,"60,000 F CFA","360,000 F CFA", - F CFA ,100%,Moyen
+P0205,10,2024-10-25,Kokougan Kokougokoun,M,28,Lomé,Plateau,Agriculture," 500,000 F CFA ",6, 12.00 ," 530,000 F CFA ",EN COURS,"30,000 F CFA","530,000 F CFA", - F CFA ,100%,Moyen
+P0206,9,2025-09-09,Ayoko Moussavi,F,39,Lomé,Maritime,Agriculture," 500,000 F CFA ",18, 12.00 ," 590,000 F CFA ",EN COURS,"90,000 F CFA","590,000 F CFA", - F CFA ,100%,Moyen
+P0207,8,2024-08-03,Ablanvi Bakary,F,26,Tandjoaré,Centrale,Artisanat," 750,000 F CFA ",24, 12.00 ," 930,000 F CFA ",EN COURS,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0208,3,2025-03-05,Adzoa Kokoudavi,F,20,Bassar,Kara,Agriculture," 750,000 F CFA ",18, 8.00 , - F CFA ,REMBOURSE,"90,000 F CFA","840,000 F CFA"," 840,000 F CFA ",0%,Grand
+P0209,10,2025-10-03,Ekouénvi Razakvi,F,35,Sotouboua,Maritime,Agriculture," 75,000 F CFA ",12, 12.00 ," 84,000 F CFA ",REMBOURSE,"9,000 F CFA","84,000 F CFA", - F CFA ,100%,Petit
+P0210,10,2024-10-23,Akou Kokoubokoun,F,65,Blitta,Savane,Commerce," 750,000 F CFA ",12, 10.00 ," 825,000 F CFA ",EN RETARD,"75,000 F CFA","825,000 F CFA", - F CFA ,100%,Grand
+P0211,11,2025-11-17,Kokouvi Kossivivi,F,44,Badou,Centrale,Agriculture," 75,000 F CFA ",6, 8.00 ," 78,000 F CFA ",EN RETARD,"3,000 F CFA","78,000 F CFA", - F CFA ,100%,Petit
+P0212,9,2024-09-06,Mensahou Koumavivi,F,37,Tchamba,Centrale,Agriculture," 1,000,000 F CFA ",6, 10.00 ," 1,050,000 F CFA ",EN COURS,"50,000 F CFA","1,050,000 F CFA", - F CFA ,100%,Grand
+P0213,2,2025-02-05,Badou Kokouzo,M,46,Vogan,Centrale,Agriculture," 300,000 F CFA ",12, 12.00 ," 336,000 F CFA ",EN RETARD,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0214,10,2025-10-07,Komi Kokoulikoun,M,36,Atakpamé,Plateau,Commerce," 75,000 F CFA ",36, 10.00 ," 97,500 F CFA ",EN COURS,"22,500 F CFA","97,500 F CFA", - F CFA ,100%,Petit
+P0215,10,2024-10-31,Adzoanvi Ibrahimvi,F,20,Lomé,Kara,Artisanat," 300,000 F CFA ",36, 15.00 ," 435,000 F CFA ",EN RETARD,"135,000 F CFA","435,000 F CFA", - F CFA ,100%,Moyen
+P0216,8,2025-08-11,Ibrahim Kokougovi,M,42,Mango,Plateau,Artisanat," 200,000 F CFA ",24, 8.00 ," 231,999 F CFA ",EN COURS,"32,000 F CFA","232,000 F CFA", 1 F CFA ,100%,Moyen
+P0217,2,2025-02-15,Ablanvi Koffi,F,23,Lomé,Maritime,Artisanat," 150,000 F CFA ",24, 8.00 ," 174,000 F CFA ",REMBOURSE,"24,000 F CFA","174,000 F CFA", - F CFA ,100%,Moyen
+P0218,3,2025-03-01,Sossoukou Bakaryvi,F,55,Kpalimé,Centrale,Commerce," 300,000 F CFA ",6, 8.00 , - F CFA ,EN COURS,"12,000 F CFA","312,000 F CFA"," 312,000 F CFA ",0%,Moyen
+P0219,11,2024-11-21,Dzigbe Kokouvi,F,59,Tchamba,Plateau,Agriculture," 1,000,000 F CFA ",36, 15.00 ," 1,450,000 F CFA ",REMBOURSE,"450,000 F CFA","1,450,000 F CFA", - F CFA ,100%,Grand
+P0220,6,2025-06-25,Adjakouvi Kokoude,F,42,Dapaong,Maritime,Commerce," 150,000 F CFA ",24, 12.00 ," 186,000 F CFA ",EN COURS,"36,000 F CFA","186,000 F CFA", - F CFA ,100%,Moyen
+P0221,11,2025-11-26,Akou Adjakou,F,50,Lomé,Maritime,Agriculture," 75,000 F CFA ",24, 12.00 ," 93,000 F CFA ",EN COURS,"18,000 F CFA","93,000 F CFA", - F CFA ,100%,Petit
+P0222,7,2025-07-27,Kouna Moussavi,M,55,Sotouboua,Centrale,Artisanat," 100,000 F CFA ",12, 10.00 ," 110,000 F CFA ",EN RETARD,"10,000 F CFA","110,000 F CFA", - F CFA ,100%,Moyen
+P0223,12,2024-12-03,Kossikou Ekoué,F,34,Lomé,Maritime,Commerce," 50,000 F CFA ",36, 8.00 ," 62,000 F CFA ",REMBOURSE,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0224,9,2025-09-24,Ayokonvi Kokou,F,45,Sotouboua,Kara,Agriculture," 200,000 F CFA ",12, 12.00 ," 224,000 F CFA ",EN RETARD,"24,000 F CFA","224,000 F CFA", - F CFA ,100%,Moyen
+P0225,12,2024-12-25,Sossounvi Kokoudokoun,F,22,Tchamba,Centrale,Agriculture," 150,000 F CFA ",36, 15.00 ," 217,500 F CFA ",EN COURS,"67,500 F CFA","217,500 F CFA", - F CFA ,100%,Moyen
+P0226,4,2025-04-18,Issa Setondjikoun,M,27,Kpalimé,Plateau,Commerce," 1,000,000 F CFA ",12, 10.00 ," 1,100,000 F CFA ",EN RETARD,"100,000 F CFA","1,100,000 F CFA", - F CFA ,100%,Grand
+P0227,9,2024-09-26,Akakpo Aliouvi,M,63,Tabligbo,Savane,Commerce," 750,000 F CFA ",12, 8.00 ," 810,000 F CFA ",REMBOURSE,"60,000 F CFA","810,000 F CFA", - F CFA ,100%,Grand
+P0228,12,2024-12-24,Sena Kokouwo,M,37,Sotouboua,Centrale,Commerce," 750,000 F CFA ",6, 8.00 , - F CFA ,EN COURS,"30,000 F CFA","780,000 F CFA"," 780,000 F CFA ",0%,Grand
+P0229,12,2024-12-01,Dzigbodinvi Kokoumekoun,F,18,Niamtougou,Savane,Agriculture," 750,000 F CFA ",6, 15.00 ," 806,250 F CFA ",REMBOURSE,"56,250 F CFA","806,250 F CFA", - F CFA ,100%,Grand
+P0230,9,2025-09-14,Essi Kokouzokoun,F,55,Niamtougou,Savane,Commerce," 1,000,000 F CFA ",6, 12.00 ," 1,060,000 F CFA ",EN RETARD,"60,000 F CFA","1,060,000 F CFA", - F CFA ,100%,Grand
+P0231,3,2025-03-16,Mensahou Badou,F,42,Atakpamé,Savane,Artisanat," 1,000,000 F CFA ",24, 12.00 ," 1,240,000 F CFA ",REMBOURSE,"240,000 F CFA","1,240,000 F CFA", - F CFA ,100%,Grand
+P0232,12,2024-12-06,Tchakou Kokoulovi,F,35,Tchamba,Plateau,Commerce," 300,000 F CFA ",36, 12.00 ," 408,000 F CFA ",EN RETARD,"108,000 F CFA","408,000 F CFA", - F CFA ,100%,Moyen
+P0233,9,2025-09-15,Tchakounvi Dossoukoun,F,39,Atakpamé,Kara,Agriculture," 200,000 F CFA ",24, 10.00 , - F CFA ,EN COURS,"40,000 F CFA","240,000 F CFA"," 240,000 F CFA ",0%,Moyen
+P0234,9,2025-09-01,Mawuenyega Kokoude,M,20,Dapaong,Savane,Commerce," 750,000 F CFA ",18, 15.00 ," 918,750 F CFA ",EN RETARD,"168,750 F CFA","918,750 F CFA", - F CFA ,100%,Grand
+P0235,12,2024-12-09,Ekouévi Gnonou,F,51,Tsévié,Kara,Commerce," 150,000 F CFA ",18, 15.00 ," 183,750 F CFA ",EN COURS,"33,750 F CFA","183,750 F CFA", - F CFA ,100%,Moyen
+P0236,11,2025-11-21,Kouna Kossivivi,M,52,Badou,Maritime,Artisanat," 150,000 F CFA ",12, 12.00 ," 168,000 F CFA ",EN COURS,"18,000 F CFA","168,000 F CFA", - F CFA ,100%,Moyen
+P0237,2,2025-02-27,Tchakouvi Koffiganvi,F,30,Kétao,Centrale,Commerce," 100,000 F CFA ",6, 15.00 ," 107,500 F CFA ",REMBOURSE,"7,500 F CFA","107,500 F CFA", - F CFA ,100%,Moyen
+P0238,11,2024-11-01,Kokoulo Salifou,M,47,Lomé,Maritime,Agriculture," 50,000 F CFA ",24, 10.00 ," 60,000 F CFA ",REMBOURSE,"10,000 F CFA","60,000 F CFA", - F CFA ,100%,Petit
+P0239,9,2024-09-18,Sossouvi Kokou,F,42,Atakpamé,Savane,Commerce," 500,000 F CFA ",12, 12.00 , - F CFA ,REMBOURSE,"60,000 F CFA","560,000 F CFA"," 560,000 F CFA ",0%,Moyen
+P0240,6,2025-06-04,Hounnankpon Kokoukovi,M,42,Kpalimé,Savane,Artisanat," 750,000 F CFA ",6, 8.00 ," 780,000 F CFA ",EN COURS,"30,000 F CFA","780,000 F CFA", - F CFA ,100%,Grand
+P0241,11,2024-11-14,Garba Aliouvi,M,41,Tabligbo,Maritime,Commerce," 300,000 F CFA ",18, 15.00 ," 367,500 F CFA ",EN COURS,"67,500 F CFA","367,500 F CFA", - F CFA ,100%,Moyen
+P0242,8,2025-08-29,Adzoanvi Kokoudavi,F,42,Mango,Centrale,Commerce," 300,000 F CFA ",12, 12.00 ," 336,000 F CFA ",EN RETARD,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0243,9,2024-09-25,Kokoulo Kpogo,M,39,Blitta,Plateau,Artisanat," 750,000 F CFA ",24, 15.00 ," 975,000 F CFA ",EN COURS,"225,000 F CFA","975,000 F CFA", - F CFA ,100%,Grand
+P0244,5,2025-05-26,Amoussou Moussa,M,58,Niamtougou,Plateau,Artisanat," 150,000 F CFA ",12, 8.00 ," 162,000 F CFA ",EN RETARD,"12,000 F CFA","162,000 F CFA", - F CFA ,100%,Moyen
+P0245,11,2024-11-10,Kokoudo Teyivi,M,47,Blitta,Plateau,Commerce," 500,000 F CFA ",36, 10.00 ," 650,000 F CFA ",REMBOURSE,"150,000 F CFA","650,000 F CFA", - F CFA ,100%,Moyen
+P0246,2,2025-02-14,Agbodjannvi Kokoulo,F,69,Lomé,Savane,Commerce," 75,000 F CFA ",12, 15.00 ," 86,250 F CFA ",EN COURS,"11,250 F CFA","86,250 F CFA", - F CFA ,100%,Petit
+P0247,5,2025-05-08,Gbeassor Kokouvivi,M,69,Vogan,Centrale,Commerce," 150,000 F CFA ",36, 10.00 ," 195,000 F CFA ",EN COURS,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0248,10,2025-10-23,Djimon Hamidou,M,30,Sotouboua,Savane,Artisanat," 150,000 F CFA ",12, 8.00 , - F CFA ,EN COURS,"12,000 F CFA","162,000 F CFA"," 162,000 F CFA ",0%,Moyen
+P0249,11,2024-11-05,Koumavi Kokougo,M,51,Tabligbo,Kara,Artisanat," 500,000 F CFA ",18, 10.00 , - F CFA ,EN RETARD,"75,000 F CFA","575,000 F CFA"," 575,000 F CFA ",0%,Moyen
+P0250,4,2025-04-14,Akuanvi Fadouvi,F,35,Vogan,Plateau,Commerce," 75,000 F CFA ",12, 10.00 ," 82,500 F CFA ",EN RETARD,"7,500 F CFA","82,500 F CFA", - F CFA ,100%,Petit
+P0251,9,2024-09-19,Sossoukou Kokoude,F,38,Atakpamé,Kara,Commerce," 150,000 F CFA ",12, 10.00 ," 165,000 F CFA ",REMBOURSE,"15,000 F CFA","165,000 F CFA", - F CFA ,100%,Moyen
+P0252,8,2025-08-19,Badou Kokoumvi,M,46,Aného,Savane,Commerce," 300,000 F CFA ",12, 12.00 ," 336,000 F CFA ",EN COURS,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0253,11,2025-11-24,Aliou Kokouzokoun,M,42,Kétao,Maritime,Agriculture," 500,000 F CFA ",18, 12.00 ," 590,000 F CFA ",EN COURS,"90,000 F CFA","590,000 F CFA", - F CFA ,100%,Moyen
+P0254,9,2024-09-15,Aminvi Kpessouvi,F,24,Niamtougou,Kara,Artisanat," 200,000 F CFA ",24, 12.00 ," 248,000 F CFA ",EN RETARD,"48,000 F CFA","248,000 F CFA", - F CFA ,100%,Moyen
+P0255,6,2025-06-19,Essou Kokoulokoun,F,59,Lomé,Savane,Artisanat," 75,000 F CFA ",12, 15.00 ," 86,250 F CFA ",EN RETARD,"11,250 F CFA","86,250 F CFA", - F CFA ,100%,Petit
+P0256,1,2025-01-07,Kpogonvi Kokougan,F,64,Tchamba,Centrale,Agriculture," 50,000 F CFA ",6, 12.00 ," 53,000 F CFA ",REMBOURSE,"3,000 F CFA","53,000 F CFA", - F CFA ,100%,Petit
+P0257,9,2025-09-29,Dramani Tchakou,M,32,Niamtougou,Centrale,Commerce," 200,000 F CFA ",36, 10.00 ," 260,000 F CFA ",EN COURS,"60,000 F CFA","260,000 F CFA", - F CFA ,100%,Moyen
+P0258,8,2025-08-20,Kokouli Kilanivi,M,26,Notse,Plateau,Commerce," 1,000,000 F CFA ",24, 8.00 ," 1,160,000 F CFA ",EN COURS,"160,000 F CFA","1,160,000 F CFA", - F CFA ,100%,Grand
+P0259,10,2025-10-13,Tchakou Kokouho,M,60,Tabligbo,Maritime,Agriculture," 750,000 F CFA ",36, 10.00 ," 975,000 F CFA ",EN RETARD,"225,000 F CFA","975,000 F CFA", - F CFA ,100%,Grand
+P0260,7,2025-07-26,Komlan Kossivikoun,M,42,Cinkassé,Plateau,Artisanat," 100,000 F CFA ",6, 12.00 ," 106,000 F CFA ",EN RETARD,"6,000 F CFA","106,000 F CFA", - F CFA ,100%,Moyen
+P0261,5,2025-05-10,Boko Kpessouvi,M,70,Kétao,Centrale,Artisanat," 50,000 F CFA ",18, 10.00 ," 57,499 F CFA ",REMBOURSE,"7,500 F CFA","57,500 F CFA", 1 F CFA ,100%,Petit
+P0262,11,2024-11-06,Akoussou Sossou,F,45,Dapaong,Plateau,Artisanat," 75,000 F CFA ",6, 10.00 ," 78,750 F CFA ",EN COURS,"3,750 F CFA","78,750 F CFA", - F CFA ,100%,Petit
+P0263,8,2025-08-26,Essi Sossou,F,36,Notse,Kara,Artisanat," 1,000,000 F CFA ",6, 8.00 ," 1,040,000 F CFA ",EN RETARD,"40,000 F CFA","1,040,000 F CFA", - F CFA ,100%,Grand
+P0264,1,2025-01-19,Ousmane Kokoudo,M,29,Lomé,Savane,Agriculture," 300,000 F CFA ",24, 12.00 ," 372,000 F CFA ",REMBOURSE,"72,000 F CFA","372,000 F CFA", - F CFA ,100%,Moyen
+P0265,7,2025-07-17,Adzokoto Garba,F,70,Notse,Maritime,Commerce," 1,000,000 F CFA ",24, 8.00 ," 1,160,000 F CFA ",EN RETARD,"160,000 F CFA","1,160,000 F CFA", - F CFA ,100%,Grand
+P0266,10,2025-10-30,Kossivi Kokoufovi,M,57,Blitta,Savane,Commerce," 200,000 F CFA ",36, 8.00 ," 248,000 F CFA ",EN RETARD,"48,000 F CFA","248,000 F CFA", - F CFA ,100%,Moyen
+P0267,4,2025-04-04,Tchakou Kpogo,F,35,Tsévié,Savane,Artisanat," 50,000 F CFA ",36, 8.00 ," 62,000 F CFA ",REMBOURSE,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0268,6,2025-06-14,Kokoubo Setondjivi,M,42,Cinkassé,Plateau,Artisanat," 75,000 F CFA ",6, 15.00 , - F CFA ,EN RETARD,"5,625 F CFA","80,625 F CFA"," 80,625 F CFA ",0%,Petit
+P0269,10,2024-10-29,Kokougan Nassirouvi,M,30,Niamtougou,Savane,Agriculture," 500,000 F CFA ",6, 15.00 ," 537,500 F CFA ",EN COURS,"37,500 F CFA","537,500 F CFA", - F CFA ,100%,Moyen
+P0270,10,2025-10-21,Amavi Kokougankoun,M,53,Bassar,Plateau,Artisanat," 300,000 F CFA ",24, 15.00 , - F CFA ,EN RETARD,"90,000 F CFA","390,000 F CFA"," 390,000 F CFA ",0%,Moyen
+P0271,1,2025-01-20,Ayanvi Kokoumvi,F,27,Kpalimé,Maritime,Commerce," 500,000 F CFA ",24, 8.00 ," 580,000 F CFA ",EN COURS,"80,000 F CFA","580,000 F CFA", - F CFA ,100%,Moyen
+P0272,5,2025-05-21,Koffi Esso,M,42,Lomé,Centrale,Commerce," 750,000 F CFA ",6, 12.00 ," 795,000 F CFA ",REMBOURSE,"45,000 F CFA","795,000 F CFA", - F CFA ,100%,Grand
+P0273,10,2024-10-12,Sossouvi Kokoufovi,F,42,Lomé,Kara,Artisanat," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",EN RETARD,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0274,3,2025-03-21,Ekoué Koumavivi,F,67,Dapaong,Centrale,Agriculture," 1,000,000 F CFA ",6, 15.00 ," 1,075,000 F CFA ",EN RETARD,"75,000 F CFA","1,075,000 F CFA", - F CFA ,100%,Grand
+P0275,9,2024-09-10,Kokou Razak,M,42,Tchamba,Savane,Agriculture," 200,000 F CFA ",6, 8.00 ," 208,000 F CFA ",EN COURS,"8,000 F CFA","208,000 F CFA", - F CFA ,100%,Moyen
+P0276,1,2025-01-27,Issa Teyi,M,61,Notse,Maritime,Agriculture," 1,000,000 F CFA ",6, 12.00 , - F CFA ,EN RETARD,"60,000 F CFA","1,060,000 F CFA"," 1,060,000 F CFA ",0%,Grand
+P0277,12,2025-12-04,Agbeko Gbadoe,M,65,Kara,Centrale,Artisanat," 50,000 F CFA ",12, 15.00 ," 57,499 F CFA ",EN RETARD,"7,500 F CFA","57,500 F CFA", 1 F CFA ,100%,Petit
+P0278,9,2024-09-20,Adjakou Kpogo,F,38,Lomé,Savane,Artisanat," 50,000 F CFA ",36, 12.00 , - F CFA ,EN RETARD,"18,000 F CFA","68,000 F CFA"," 68,000 F CFA ",0%,Petit
+P0279,2,2025-02-23,Kokouko Esso,M,42,Tandjoaré,Maritime,Commerce," 750,000 F CFA ",18, 15.00 ," 918,750 F CFA ",REMBOURSE,"168,750 F CFA","918,750 F CFA", - F CFA ,100%,Grand
+P0280,8,2024-08-19,Essivi Ibrahimvi,F,25,Atakpamé,Centrale,Artisanat," 50,000 F CFA ",6, 10.00 ," 52,500 F CFA ",REMBOURSE,"2,500 F CFA","52,500 F CFA", - F CFA ,100%,Petit
+P0281,1,2025-01-13,Awunyo Salifouvi,F,19,Vogan,Savane,Commerce," 1,000,000 F CFA ",6, 8.00 ," 1,040,000 F CFA ",EN COURS,"40,000 F CFA","1,040,000 F CFA", - F CFA ,100%,Grand
+P0282,12,2025-12-10,Assogba Kokoudekoun,M,49,Lomé,Kara,Agriculture," 150,000 F CFA ",12, 15.00 , - F CFA ,REMBOURSE,"22,500 F CFA","172,500 F CFA"," 172,500 F CFA ",0%,Moyen
+P0283,2,2025-02-01,Kpogokou Salifou,F,68,Bassar,Kara,Commerce," 100,000 F CFA ",24, 8.00 ," 115,999 F CFA ",EN COURS,"16,000 F CFA","116,000 F CFA", 1 F CFA ,100%,Moyen
+P0284,5,2025-05-05,Ayoko Kokouli,F,42,Bassar,Plateau,Agriculture," 1,000,000 F CFA ",6, 8.00 ," 1,040,000 F CFA ",REMBOURSE,"40,000 F CFA","1,040,000 F CFA", - F CFA ,100%,Grand
+P0285,8,2025-08-12,Kossivi Bakary,M,51,Sokodé,Plateau,Agriculture," 300,000 F CFA ",12, 8.00 ," 324,000 F CFA ",EN RETARD,"24,000 F CFA","324,000 F CFA", - F CFA ,100%,Moyen
+P0286,8,2024-08-07,Yaovi Akakpovi,M,45,Lomé,Savane,Agriculture," 500,000 F CFA ",36, 15.00 , - F CFA ,EN COURS,"225,000 F CFA","725,000 F CFA"," 725,000 F CFA ",0%,Moyen
+P0287,7,2025-07-18,Amivi Esso,F,42,Sokodé,Maritime,Artisanat," 50,000 F CFA ",12, 10.00 ," 55,000 F CFA ",REMBOURSE,"5,000 F CFA","55,000 F CFA", - F CFA ,100%,Petit
+P0288,11,2024-11-30,Sossou Kokoubokoun,F,22,Niamtougou,Kara,Agriculture," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",REMBOURSE,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0289,4,2025-04-05,Boko Koumavi,M,42,Niamtougou,Savane,Artisanat," 1,000,000 F CFA ",6, 8.00 , - F CFA ,REMBOURSE,"40,000 F CFA","1,040,000 F CFA"," 1,040,000 F CFA ",0%,Grand
+P0290,11,2025-11-13,Ami Kokouko,F,22,Kétao,Plateau,Artisanat," 200,000 F CFA ",6, 10.00 ," 210,000 F CFA ",EN RETARD,"10,000 F CFA","210,000 F CFA", - F CFA ,100%,Moyen
+P0291,5,2025-05-19,Kokouvi Akakpo,F,28,Blitta,Plateau,Artisanat," 1,000,000 F CFA ",24, 10.00 ," 1,200,000 F CFA ",EN RETARD,"200,000 F CFA","1,200,000 F CFA", - F CFA ,100%,Grand
+P0292,12,2024-12-19,Kouami Kounakoun,M,67,Vogan,Plateau,Agriculture," 75,000 F CFA ",6, 12.00 ," 79,500 F CFA ",REMBOURSE,"4,500 F CFA","79,500 F CFA", - F CFA ,100%,Petit
+P0293,1,2025-01-28,Akua Kokouwovi,F,18,Cinkassé,Plateau,Artisanat," 300,000 F CFA ",12, 12.00 ," 336,000 F CFA ",REMBOURSE,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0294,9,2024-09-09,Amavi Kodjovivi,M,67,Kara,Centrale,Artisanat," 75,000 F CFA ",24, 10.00 ," 90,000 F CFA ",EN RETARD,"15,000 F CFA","90,000 F CFA", - F CFA ,100%,Petit
+P0295,10,2024-10-16,Nassirou Hamidou,M,42,Lomé,Maritime,Artisanat," 500,000 F CFA ",18, 8.00 ," 560,000 F CFA ",EN COURS,"60,000 F CFA","560,000 F CFA", - F CFA ,100%,Moyen
+P0296,9,2025-09-25,Kokoum Ekoué,M,28,Atakpamé,Maritime,Agriculture," 500,000 F CFA ",24, 12.00 ," 620,000 F CFA ",EN COURS,"120,000 F CFA","620,000 F CFA", - F CFA ,100%,Moyen
+P0297,9,2025-09-16,Ablanvi Hamidou,F,42,Lomé,Maritime,Commerce," 200,000 F CFA ",12, 8.00 ," 216,000 F CFA ",REMBOURSE,"16,000 F CFA","216,000 F CFA", - F CFA ,100%,Moyen
+P0298,10,2024-10-20,Koffi Aliouvi,M,69,Atakpamé,Maritime,Artisanat," 50,000 F CFA ",6, 10.00 , - F CFA ,EN RETARD,"2,500 F CFA","52,500 F CFA"," 52,500 F CFA ",0%,Petit
+P0299,8,2025-08-09,Gnonou Moussavi,M,46,Bassar,Plateau,Commerce," 150,000 F CFA ",18, 15.00 ," 183,750 F CFA ",EN COURS,"33,750 F CFA","183,750 F CFA", - F CFA ,100%,Moyen
+P0300,7,2025-07-13,Teyi Garbavi,M,46,Cinkassé,Maritime,Agriculture," 150,000 F CFA ",36, 15.00 , - F CFA ,REMBOURSE,"67,500 F CFA","217,500 F CFA"," 217,500 F CFA ",0%,Moyen
+P0301,4,2025-04-06,Kouna Kossivikoun,M,42,Kara,Centrale,Agriculture," 100,000 F CFA ",24, 15.00 , - F CFA ,REMBOURSE,"30,000 F CFA","130,000 F CFA"," 130,000 F CFA ",0%,Moyen
+P0302,3,2025-03-19,Sossoukou Razakvi,F,47,Lomé,Plateau,Commerce," 200,000 F CFA ",24, 8.00 ," 231,999 F CFA ",EN COURS,"32,000 F CFA","232,000 F CFA", 1 F CFA ,100%,Moyen
+P0303,11,2024-11-17,Koffivi Wally,F,18,Sokodé,Maritime,Artisanat," 75,000 F CFA ",18, 10.00 ," 86,250 F CFA ",EN RETARD,"11,250 F CFA","86,250 F CFA", - F CFA ,100%,Petit
+P0304,6,2025-06-30,Esso Kokougokoun,M,53,Sokodé,Kara,Commerce," 100,000 F CFA ",6, 12.00 ," 106,000 F CFA ",EN COURS,"6,000 F CFA","106,000 F CFA", - F CFA ,100%,Moyen
+P0305,5,2025-05-09,Kokou Kokoumekoun,M,41,Vogan,Maritime,Artisanat," 1,000,000 F CFA ",12, 10.00 ," 1,100,000 F CFA ",EN RETARD,"100,000 F CFA","1,100,000 F CFA", - F CFA ,100%,Grand
+P0306,11,2024-11-11,Gnonlonfoun Kokouvi,M,35,Tabligbo,Savane,Artisanat," 150,000 F CFA ",24, 15.00 ," 195,000 F CFA ",EN RETARD,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0307,12,2024-12-26,Kwamivi Kokoufovi,M,58,Badou,Maritime,Artisanat," 750,000 F CFA ",6, 10.00 ," 787,500 F CFA ",EN RETARD,"37,500 F CFA","787,500 F CFA", - F CFA ,100%,Grand
+P0308,2,2025-02-06,Adjakouvi Dramani,F,38,Kara,Plateau,Artisanat," 75,000 F CFA ",6, 8.00 ," 78,000 F CFA ",EN COURS,"3,000 F CFA","78,000 F CFA", - F CFA ,100%,Petit
+P0309,5,2025-05-01,Akou Togbenuvi,F,39,Tandjoaré,Maritime,Commerce," 100,000 F CFA ",12, 15.00 , - F CFA ,EN COURS,"15,000 F CFA","115,000 F CFA"," 115,000 F CFA ",0%,Moyen
+P0310,10,2024-10-15,Esso Ousmanevi,M,47,Lomé,Plateau,Artisanat," 300,000 F CFA ",36, 8.00 ," 372,000 F CFA ",EN RETARD,"72,000 F CFA","372,000 F CFA", - F CFA ,100%,Moyen
+P0311,12,2024-12-12,Ayoko Kokoufokoun,F,64,Cinkassé,Plateau,Artisanat," 75,000 F CFA ",6, 8.00 ," 78,000 F CFA ",EN RETARD,"3,000 F CFA","78,000 F CFA", - F CFA ,100%,Petit
+P0312,5,2025-05-27,Awunyo Amavi,F,34,Aného,Maritime,Commerce," 1,000,000 F CFA ",36, 10.00 ," 1,300,000 F CFA ",EN COURS,"300,000 F CFA","1,300,000 F CFA", - F CFA ,100%,Grand
+P0313,10,2024-10-13,Akua Setondjivi,F,24,Sotouboua,Savane,Agriculture," 500,000 F CFA ",24, 8.00 , - F CFA ,REMBOURSE,"80,000 F CFA","580,000 F CFA"," 580,000 F CFA ",0%,Moyen
+P0314,9,2025-09-12,Kodjo Hamidou,M,42,Blitta,Kara,Commerce," 300,000 F CFA ",18, 12.00 , - F CFA ,EN RETARD,"54,000 F CFA","354,000 F CFA"," 354,000 F CFA ",0%,Moyen
+P0315,8,2025-08-18,Adjakou Kokounokoun,F,43,Kara,Kara,Commerce," 50,000 F CFA ",24, 10.00 ," 60,000 F CFA ",EN COURS,"10,000 F CFA","60,000 F CFA", - F CFA ,100%,Petit
+P0316,12,2024-12-10,Dossou Koffigankoun,M,70,Tchamba,Kara,Commerce," 750,000 F CFA ",36, 8.00 ," 930,000 F CFA ",EN RETARD,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0317,11,2024-11-03,Akakpo Mensah,M,68,Mango,Centrale,Artisanat," 500,000 F CFA ",12, 15.00 ," 575,000 F CFA ",REMBOURSE,"75,000 F CFA","575,000 F CFA", - F CFA ,100%,Moyen
+P0318,6,2025-06-23,Kodjovi Koffi,M,42,Tchamba,Plateau,Commerce," 750,000 F CFA ",18, 8.00 ," 840,000 F CFA ",EN COURS,"90,000 F CFA","840,000 F CFA", - F CFA ,100%,Grand
+P0319,2,2025-02-12,Kokougan Kpogo,M,21,Bassar,Maritime,Commerce," 150,000 F CFA ",18, 8.00 ," 168,000 F CFA ",REMBOURSE,"18,000 F CFA","168,000 F CFA", - F CFA ,100%,Moyen
+P0320,1,2025-01-23,Awunyo Setondjikoun,M,18,Badou,Kara,Commerce," 50,000 F CFA ",6, 12.00 ," 53,000 F CFA ",EN COURS,"3,000 F CFA","53,000 F CFA", - F CFA ,100%,Petit
+P0321,6,2025-06-17,Kokou Togbenuvi,M,40,Tandjoaré,Plateau,Artisanat," 200,000 F CFA ",6, 8.00 ," 208,000 F CFA ",EN COURS,"8,000 F CFA","208,000 F CFA", - F CFA ,100%,Moyen
+P0322,12,2024-12-31,Gnonlonfoun Kokouwokoun,M,18,Niamtougou,Maritime,Agriculture," 1,000,000 F CFA ",24, 12.00 , - F CFA ,REMBOURSE,"240,000 F CFA","1,240,000 F CFA"," 1,240,000 F CFA ",0%,Grand
+P0323,12,2024-12-16,Kodjo Kodjovi,M,70,Notse,Maritime,Artisanat," 75,000 F CFA ",18, 15.00 ," 91,875 F CFA ",REMBOURSE,"16,875 F CFA","91,875 F CFA", - F CFA ,100%,Petit
+P0324,5,2025-05-20,Nassirou Kokoulo,M,60,Lomé,Maritime,Artisanat," 1,000,000 F CFA ",6, 12.00 ," 1,060,000 F CFA ",EN COURS,"60,000 F CFA","1,060,000 F CFA", - F CFA ,100%,Grand
+P0325,11,2025-11-14,Kokouzo Kokoubo,M,28,Kara,Maritime,Artisanat," 1,000,000 F CFA ",24, 15.00 , - F CFA ,EN RETARD,"300,000 F CFA","1,300,000 F CFA"," 1,300,000 F CFA ",0%,Grand
+P0326,2,2025-02-17,Kokouzo Teyivi,M,47,Tchamba,Plateau,Agriculture," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",EN COURS,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0327,10,2024-10-17,Afanvi Ousmanevi,F,54,Bassar,Maritime,Artisanat," 1,000,000 F CFA ",18, 15.00 ," 1,225,000 F CFA ",REMBOURSE,"225,000 F CFA","1,225,000 F CFA", - F CFA ,100%,Grand
+P0328,12,2024-12-14,Mensahnvi Hamidou,F,49,Mango,Plateau,Commerce," 300,000 F CFA ",24, 8.00 ," 348,000 F CFA ",EN COURS,"48,000 F CFA","348,000 F CFA", - F CFA ,100%,Moyen
+P0329,12,2024-12-08,Amivi Ekoué,F,55,Badou,Savane,Commerce," 200,000 F CFA ",6, 10.00 ," 210,000 F CFA ",EN RETARD,"10,000 F CFA","210,000 F CFA", - F CFA ,100%,Moyen
+P0330,6,2025-06-18,Dossou Kossivi,M,31,Tchamba,Plateau,Commerce," 500,000 F CFA ",12, 15.00 , - F CFA ,EN RETARD,"75,000 F CFA","575,000 F CFA"," 575,000 F CFA ",0%,Moyen
+P0331,10,2024-10-06,Koffi Kokoulivi,M,42,Lomé,Centrale,Commerce," 1,000,000 F CFA ",6, 15.00 ," 1,075,000 F CFA ",EN RETARD,"75,000 F CFA","1,075,000 F CFA", - F CFA ,100%,Grand
+P0332,12,2024-12-27,Kokouli Kokougovi,M,56,Tchamba,Plateau,Agriculture," 500,000 F CFA ",36, 8.00 ," 620,000 F CFA ",EN COURS,"120,000 F CFA","620,000 F CFA", - F CFA ,100%,Moyen
+P0333,1,2025-01-08,Ablou Kossi,F,64,Sotouboua,Kara,Artisanat," 150,000 F CFA ",12, 10.00 ," 165,000 F CFA ",EN COURS,"15,000 F CFA","165,000 F CFA", - F CFA ,100%,Moyen
+P0334,11,2024-11-23,Issa Bakary,M,62,Vogan,Kara,Commerce," 75,000 F CFA ",36, 15.00 ," 108,750 F CFA ",EN COURS,"33,750 F CFA","108,750 F CFA", - F CFA ,100%,Petit
+P0335,11,2025-11-11,Kokoubo Kokoulovi,M,32,Bassar,Plateau,Agriculture," 50,000 F CFA ",18, 15.00 ," 61,250 F CFA ",REMBOURSE,"11,250 F CFA","61,250 F CFA", - F CFA ,100%,Petit
+P0336,8,2024-08-20,Kokouno Kokoufokoun,M,65,Tchamba,Savane,Commerce," 150,000 F CFA ",6, 10.00 ," 157,500 F CFA ",EN RETARD,"7,500 F CFA","157,500 F CFA", - F CFA ,100%,Moyen
+P0337,12,2024-12-20,Kwami Kokoudovi,M,62,Atakpamé,Plateau,Agriculture," 750,000 F CFA ",24, 12.00 ," 930,000 F CFA ",EN RETARD,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0338,8,2024-08-04,Ayokou Tchakou,F,18,Aného,Savane,Agriculture," 100,000 F CFA ",12, 10.00 ," 110,000 F CFA ",EN COURS,"10,000 F CFA","110,000 F CFA", - F CFA ,100%,Moyen
+P0339,5,2025-05-30,Sossou Wally,M,44,Lomé,Savane,Commerce," 150,000 F CFA ",36, 10.00 ," 195,000 F CFA ",REMBOURSE,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0340,9,2025-09-10,Adjakoukou Aliouvi,F,27,Atakpamé,Maritime,Artisanat," 50,000 F CFA ",36, 8.00 ," 62,000 F CFA ",REMBOURSE,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0341,10,2025-10-12,Sossou Badou,F,42,Tsévié,Kara,Agriculture," 1,000,000 F CFA ",12, 12.00 ," 1,120,000 F CFA ",EN RETARD,"120,000 F CFA","1,120,000 F CFA", - F CFA ,100%,Grand
+P0342,12,2025-12-05,Kossi Larbavi,M,42,Vogan,Plateau,Commerce," 75,000 F CFA ",24, 12.00 ," 93,000 F CFA ",REMBOURSE,"18,000 F CFA","93,000 F CFA", - F CFA ,100%,Petit
+P0343,9,2024-09-13,Kpogokou Kokoudo,F,66,Atakpamé,Maritime,Agriculture," 150,000 F CFA ",6, 10.00 ," 157,500 F CFA ",EN RETARD,"7,500 F CFA","157,500 F CFA", - F CFA ,100%,Moyen
+P0344,10,2025-10-22,Kossivi Kokougo,M,49,Sotouboua,Savane,Artisanat," 750,000 F CFA ",36, 8.00 ," 930,000 F CFA ",EN RETARD,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0345,11,2025-11-06,Gbadoen Kokoudavi,F,35,Tabligbo,Centrale,Agriculture," 100,000 F CFA ",36, 10.00 ," 130,000 F CFA ",EN RETARD,"30,000 F CFA","130,000 F CFA", - F CFA ,100%,Moyen
+P0346,5,2025-05-29,Dzigbe Amoussou,F,42,Atakpamé,Maritime,Agriculture," 100,000 F CFA ",36, 15.00 ," 145,000 F CFA ",EN RETARD,"45,000 F CFA","145,000 F CFA", - F CFA ,100%,Moyen
+P0347,9,2025-09-28,Mensahkou Tchassvi,F,60,Aného,Plateau,Artisanat," 50,000 F CFA ",12, 15.00 , - F CFA ,EN RETARD,"7,500 F CFA","57,500 F CFA"," 57,500 F CFA ",0%,Petit
+P0348,8,2025-08-08,Kokougan Nassirouvi,M,58,Vogan,Plateau,Artisanat," 100,000 F CFA ",6, 15.00 ," 107,500 F CFA ",EN RETARD,"7,500 F CFA","107,500 F CFA", - F CFA ,100%,Moyen
+P0349,11,2025-11-19,Ayokonvi Kokougovi,F,31,Cinkassé,Plateau,Commerce," 75,000 F CFA ",6, 12.00 ," 79,500 F CFA ",EN COURS,"4,500 F CFA","79,500 F CFA", - F CFA ,100%,Petit
+P0350,10,2024-10-10,Afanvi Nassirou,F,31,Mango,Maritime,Agriculture," 50,000 F CFA ",36, 10.00 ," 65,000 F CFA ",EN COURS,"15,000 F CFA","65,000 F CFA", - F CFA ,100%,Petit
+P0351,11,2025-11-27,Dossou Gbadoe,M,58,Badou,Plateau,Agriculture," 100,000 F CFA ",12, 8.00 ," 108,000 F CFA ",REMBOURSE,"8,000 F CFA","108,000 F CFA", - F CFA ,100%,Moyen
+P0352,12,2024-12-21,Gbadoevi Kokouvi,F,67,Lomé,Savane,Agriculture," 75,000 F CFA ",6, 12.00 ," 79,500 F CFA ",EN COURS,"4,500 F CFA","79,500 F CFA", - F CFA ,100%,Petit
+P0353,10,2024-10-18,Kokoude Larbavi,M,69,Kara,Savane,Artisanat," 75,000 F CFA ",18, 8.00 ," 84,000 F CFA ",EN COURS,"9,000 F CFA","84,000 F CFA", - F CFA ,100%,Petit
+P0354,10,2025-10-10,Essikou Kokoussoukoun,F,27,Kétao,Maritime,Artisanat," 1,000,000 F CFA ",36, 8.00 ," 1,240,000 F CFA ",EN COURS,"240,000 F CFA","1,240,000 F CFA", - F CFA ,100%,Grand
+P0355,12,2025-12-13,Adjakou Fadou,F,69,Lomé,Maritime,Artisanat," 750,000 F CFA ",36, 8.00 ," 930,000 F CFA ",EN COURS,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0356,11,2025-11-30,Ayekou Gnonouvi,F,42,Sotouboua,Plateau,Agriculture," 500,000 F CFA ",18, 8.00 ," 560,000 F CFA ",EN COURS,"60,000 F CFA","560,000 F CFA", - F CFA ,100%,Moyen
+P0357,11,2024-11-18,Amikou Ousmane,F,27,Tabligbo,Savane,Commerce," 100,000 F CFA ",12, 10.00 ," 110,000 F CFA ",REMBOURSE,"10,000 F CFA","110,000 F CFA", - F CFA ,100%,Moyen
+P0358,1,2025-01-15,Tchakou Gbadoe,F,42,Aného,Plateau,Artisanat," 200,000 F CFA ",6, 8.00 ," 208,000 F CFA ",REMBOURSE,"8,000 F CFA","208,000 F CFA", - F CFA ,100%,Moyen
+P0359,1,2025-01-02,Adzoanvi Kokoubokoun,F,35,Lomé,Plateau,Agriculture," 150,000 F CFA ",12, 8.00 ," 162,000 F CFA ",EN COURS,"12,000 F CFA","162,000 F CFA", - F CFA ,100%,Moyen
+P0360,10,2025-10-01,Koffigan Kokouwovi,M,58,Kpalimé,Savane,Artisanat," 300,000 F CFA ",6, 8.00 ," 312,000 F CFA ",EN RETARD,"12,000 F CFA","312,000 F CFA", - F CFA ,100%,Moyen
+P0361,6,2025-06-22,Komi Tchakou,M,39,Sotouboua,Maritime,Agriculture," 200,000 F CFA ",12, 12.00 ," 224,000 F CFA ",EN RETARD,"24,000 F CFA","224,000 F CFA", - F CFA ,100%,Moyen
+P0362,5,2025-05-02,Ayokonvi Kokoume,F,42,Sotouboua,Kara,Commerce," 500,000 F CFA ",6, 12.00 , - F CFA ,EN COURS,"30,000 F CFA","530,000 F CFA"," 530,000 F CFA ",0%,Moyen
+P0363,7,2025-07-07,Adjakou Kokoussou,F,61,Bassar,Plateau,Artisanat," 300,000 F CFA ",6, 8.00 ," 312,000 F CFA ",REMBOURSE,"12,000 F CFA","312,000 F CFA", - F CFA ,100%,Moyen
+P0364,1,2025-01-03,Salifou Kokougovi,M,48,Aného,Maritime,Artisanat," 75,000 F CFA ",12, 8.00 , - F CFA ,EN COURS,"6,000 F CFA","81,000 F CFA"," 81,000 F CFA ",0%,Petit
+P0365,7,2025-07-05,Kossi Gbehouenouvi,M,35,Sokodé,Savane,Commerce," 300,000 F CFA ",6, 10.00 ," 315,000 F CFA ",EN COURS,"15,000 F CFA","315,000 F CFA", - F CFA ,100%,Moyen
+P0366,10,2024-10-07,Kouami Dramani,M,26,Kétao,Maritime,Agriculture," 75,000 F CFA ",18, 12.00 ," 88,500 F CFA ",REMBOURSE,"13,500 F CFA","88,500 F CFA", - F CFA ,100%,Petit
+P0367,4,2025-04-17,Kokoume Kokoulo,M,46,Lomé,Savane,Commerce," 500,000 F CFA ",24, 8.00 ," 580,000 F CFA ",REMBOURSE,"80,000 F CFA","580,000 F CFA", - F CFA ,100%,Moyen
+P0368,9,2024-09-04,Tchakouvi Dossoukoun,F,34,Blitta,Plateau,Artisanat," 75,000 F CFA ",6, 15.00 ," 80,625 F CFA ",REMBOURSE,"5,625 F CFA","80,625 F CFA", - F CFA ,100%,Petit
+P0369,10,2025-10-17,Komlan Kounavi,M,18,Aného,Maritime,Agriculture," 50,000 F CFA ",12, 8.00 ," 54,000 F CFA ",REMBOURSE,"4,000 F CFA","54,000 F CFA", - F CFA ,100%,Petit
+P0370,9,2025-09-20,Kokou Fadou,M,42,Bassar,Centrale,Agriculture," 200,000 F CFA ",36, 10.00 ," 260,000 F CFA ",REMBOURSE,"60,000 F CFA","260,000 F CFA", - F CFA ,100%,Moyen
+P0371,9,2024-09-29,Kpogonvi Ousmane,F,24,Tandjoaré,Maritime,Agriculture," 150,000 F CFA ",12, 15.00 ," 172,500 F CFA ",EN RETARD,"22,500 F CFA","172,500 F CFA", - F CFA ,100%,Moyen
+P0372,9,2024-09-12,Koffigan Ousmane,M,42,Cinkassé,Plateau,Artisanat," 75,000 F CFA ",24, 12.00 ," 93,000 F CFA ",EN COURS,"18,000 F CFA","93,000 F CFA", - F CFA ,100%,Petit
+P0373,9,2025-09-19,Ablou Kokoukovi,F,37,Kpalimé,Centrale,Commerce," 75,000 F CFA ",12, 12.00 ," 84,000 F CFA ",REMBOURSE,"9,000 F CFA","84,000 F CFA", - F CFA ,100%,Petit
+P0374,3,2025-03-13,Boko Kokoubovi,M,38,Atakpamé,Centrale,Artisanat," 1,000,000 F CFA ",12, 10.00 , - F CFA ,EN RETARD,"100,000 F CFA","1,100,000 F CFA"," 1,100,000 F CFA ",0%,Grand
+P0375,1,2025-01-01,Essikou Bakaryvi,F,22,Cinkassé,Savane,Commerce," 500,000 F CFA ",36, 15.00 ," 725,000 F CFA ",REMBOURSE,"225,000 F CFA","725,000 F CFA", - F CFA ,100%,Moyen
+P0376,11,2024-11-26,Wally Kokougovi,M,47,Tchamba,Maritime,Artisanat," 75,000 F CFA ",6, 15.00 ," 80,625 F CFA ",EN RETARD,"5,625 F CFA","80,625 F CFA", - F CFA ,100%,Petit
+P0377,10,2024-10-03,Ayokonvi Kouna,F,38,Lomé,Kara,Agriculture," 300,000 F CFA ",6, 15.00 ," 322,500 F CFA ",EN RETARD,"22,500 F CFA","322,500 F CFA", - F CFA ,100%,Moyen
+P0378,11,2024-11-29,Kokouho Moussa,M,29,Mango,Savane,Artisanat," 75,000 F CFA ",24, 10.00 , - F CFA ,EN COURS,"15,000 F CFA","90,000 F CFA"," 90,000 F CFA ",0%,Petit
+P0379,11,2024-11-20,Sena Kokoubokoun,M,62,Tabligbo,Savane,Agriculture," 150,000 F CFA ",12, 12.00 ," 168,000 F CFA ",REMBOURSE,"18,000 F CFA","168,000 F CFA", - F CFA ,100%,Moyen
+P0380,9,2025-09-26,Kodjo Akakpovi,M,32,Dapaong,Centrale,Agriculture," 300,000 F CFA ",18, 8.00 ," 336,000 F CFA ",EN COURS,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0381,1,2025-01-17,Akou Koffigankoun,F,42,Blitta,Plateau,Commerce," 75,000 F CFA ",24, 12.00 ," 93,000 F CFA ",EN RETARD,"18,000 F CFA","93,000 F CFA", - F CFA ,100%,Petit
+P0382,8,2024-08-11,Amikou Kounavi,F,42,Blitta,Plateau,Agriculture," 50,000 F CFA ",24, 12.00 ," 62,000 F CFA ",EN COURS,"12,000 F CFA","62,000 F CFA", - F CFA ,100%,Petit
+P0383,11,2024-11-12,Amavi Kokounokoun,M,63,Kétao,Centrale,Commerce," 300,000 F CFA ",6, 12.00 ," 318,000 F CFA ",EN RETARD,"18,000 F CFA","318,000 F CFA", - F CFA ,100%,Moyen
+P0384,6,2025-06-10,Kouami Kokoulovi,M,61,Cinkassé,Maritime,Commerce," 150,000 F CFA ",6, 10.00 ," 157,500 F CFA ",EN RETARD,"7,500 F CFA","157,500 F CFA", - F CFA ,100%,Moyen
+P0385,10,2025-10-14,Essou Dramani,F,51,Kara,Maritime,Commerce," 750,000 F CFA ",12, 15.00 ," 862,499 F CFA ",EN COURS,"112,500 F CFA","862,500 F CFA", 1 F CFA ,100%,Grand
+P0386,10,2025-10-24,Wally Kokouwovi,M,32,Tandjoaré,Maritime,Commerce," 750,000 F CFA ",18, 8.00 ," 840,000 F CFA ",EN RETARD,"90,000 F CFA","840,000 F CFA", - F CFA ,100%,Grand
+P0387,9,2024-09-21,Nassirou Kokougan,M,69,Lomé,Savane,Commerce," 750,000 F CFA ",24, 10.00 ," 900,000 F CFA ",EN COURS,"150,000 F CFA","900,000 F CFA", - F CFA ,100%,Grand
+P0388,8,2025-08-21,Adjakou Gnonouvi,F,64,Aného,Plateau,Commerce," 300,000 F CFA ",24, 10.00 ," 360,000 F CFA ",EN RETARD,"60,000 F CFA","360,000 F CFA", - F CFA ,100%,Moyen
+P0389,3,2025-03-11,Yaovi Togbenu,M,67,Aného,Centrale,Commerce," 75,000 F CFA ",24, 12.00 ," 93,000 F CFA ",EN RETARD,"18,000 F CFA","93,000 F CFA", - F CFA ,100%,Petit
+P0390,11,2025-11-09,Kpogo Kokoudovi,F,48,Blitta,Kara,Agriculture," 200,000 F CFA ",18, 8.00 ," 224,000 F CFA ",EN RETARD,"24,000 F CFA","224,000 F CFA", - F CFA ,100%,Moyen
+P0391,8,2024-08-18,Batisso Kossivi,M,42,Niamtougou,Kara,Commerce," 500,000 F CFA ",36, 12.00 ," 680,000 F CFA ",EN COURS,"180,000 F CFA","680,000 F CFA", - F CFA ,100%,Moyen
+P0392,6,2025-06-20,Essikou Kokouho,F,24,Dapaong,Maritime,Agriculture," 750,000 F CFA ",12, 10.00 , - F CFA ,EN COURS,"75,000 F CFA","825,000 F CFA"," 825,000 F CFA ",0%,Grand
+P0393,8,2024-08-13,Djimon Batisso,M,46,Sokodé,Maritime,Agriculture," 1,000,000 F CFA ",6, 15.00 ," 1,075,000 F CFA ",EN RETARD,"75,000 F CFA","1,075,000 F CFA", - F CFA ,100%,Grand
+P0394,1,2025-01-24,Amou Kokounovi,F,55,Mango,Plateau,Agriculture," 50,000 F CFA ",6, 15.00 , - F CFA ,EN COURS,"3,750 F CFA","53,750 F CFA"," 53,750 F CFA ",0%,Petit
+P0395,8,2025-08-02,Mensahkou Kokoudekoun,F,23,Kétao,Maritime,Commerce," 100,000 F CFA ",24, 10.00 ," 120,000 F CFA ",EN COURS,"20,000 F CFA","120,000 F CFA", - F CFA ,100%,Moyen
+P0396,6,2025-06-21,Komi Kokoufo,M,70,Lomé,Savane,Commerce," 50,000 F CFA ",24, 10.00 , - F CFA ,EN COURS,"10,000 F CFA","60,000 F CFA"," 60,000 F CFA ",0%,Petit
+P0397,7,2025-07-23,Kokoume Kokouko,M,42,Tabligbo,Centrale,Commerce," 150,000 F CFA ",36, 10.00 ," 195,000 F CFA ",EN COURS,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0398,4,2025-04-15,Kokouzo Kokouko,M,25,Badou,Plateau,Commerce," 50,000 F CFA ",36, 12.00 ," 68,000 F CFA ",EN RETARD,"18,000 F CFA","68,000 F CFA", - F CFA ,100%,Petit
+P0399,11,2025-11-10,Afavi Garbavi,F,68,Bassar,Plateau,Agriculture," 300,000 F CFA ",24, 12.00 ," 372,000 F CFA ",EN COURS,"72,000 F CFA","372,000 F CFA", - F CFA ,100%,Moyen
+P0400,12,2024-12-02,Dzigbodi Seydou,F,68,Kétao,Maritime,Commerce," 500,000 F CFA ",6, 10.00 ," 525,000 F CFA ",EN COURS,"25,000 F CFA","525,000 F CFA", - F CFA ,100%,Moyen
+P0401,9,2025-09-02,Ayoko Kokoufovi,F,20,Sotouboua,Kara,Artisanat," 500,000 F CFA ",24, 8.00 ," 580,000 F CFA ",EN RETARD,"80,000 F CFA","580,000 F CFA", - F CFA ,100%,Moyen
+P0402,8,2024-08-05,Adjakou Kokougovi,F,31,Dapaong,Savane,Commerce," 75,000 F CFA ",12, 10.00 ," 82,500 F CFA ",EN RETARD,"7,500 F CFA","82,500 F CFA", - F CFA ,100%,Petit
+P0403,12,2025-12-01,Amoussouvi Kokougovi,F,42,Sotouboua,Plateau,Artisanat," 500,000 F CFA ",18, 12.00 , - F CFA ,EN COURS,"90,000 F CFA","590,000 F CFA"," 590,000 F CFA ",0%,Moyen
+P0404,1,2025-01-29,Gbadoe Moussavi,F,39,Cinkassé,Plateau,Artisanat," 500,000 F CFA ",12, 8.00 ," 540,000 F CFA ",REMBOURSE,"40,000 F CFA","540,000 F CFA", - F CFA ,100%,Moyen
+P0405,3,2025-03-29,Salifou Hamidou,M,60,Tabligbo,Plateau,Artisanat," 150,000 F CFA ",24, 15.00 ," 195,000 F CFA ",REMBOURSE,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0406,11,2025-11-15,Sossouvi Kokoussoukoun,F,61,Kétao,Centrale,Commerce," 200,000 F CFA ",6, 8.00 ," 208,000 F CFA ",EN COURS,"8,000 F CFA","208,000 F CFA", - F CFA ,100%,Moyen
+P0407,4,2025-04-09,Kpogonvi Kokoulikoun,F,27,Tsévié,Maritime,Agriculture," 200,000 F CFA ",36, 8.00 ," 248,000 F CFA ",EN COURS,"48,000 F CFA","248,000 F CFA", - F CFA ,100%,Moyen
+P0408,7,2025-07-10,Koffi Nassirouvi,M,21,Kara,Plateau,Artisanat," 1,000,000 F CFA ",12, 15.00 , - F CFA ,EN COURS,"150,000 F CFA","1,150,000 F CFA"," 1,150,000 F CFA ",0%,Grand
+P0409,5,2025-05-11,Ayokonvi Kokougo,F,27,Sotouboua,Kara,Artisanat," 300,000 F CFA ",36, 12.00 , - F CFA ,EN COURS,"108,000 F CFA","408,000 F CFA"," 408,000 F CFA ",0%,Moyen
+P0410,4,2025-04-23,Yaovi Gnonou,M,36,Sotouboua,Savane,Agriculture," 50,000 F CFA ",6, 12.00 ," 53,000 F CFA ",REMBOURSE,"3,000 F CFA","53,000 F CFA", - F CFA ,100%,Petit
+P0411,1,2025-01-30,Sossouvi Kossivikoun,F,65,Aného,Savane,Agriculture," 75,000 F CFA ",18, 8.00 ," 84,000 F CFA ",REMBOURSE,"9,000 F CFA","84,000 F CFA", - F CFA ,100%,Petit
+P0412,7,2025-07-06,Moussa Kodjovi,M,27,Blitta,Savane,Artisanat," 500,000 F CFA ",24, 10.00 ," 600,000 F CFA ",REMBOURSE,"100,000 F CFA","600,000 F CFA", - F CFA ,100%,Moyen
+P0413,3,2025-03-26,Kokougo Kokoudovi,M,50,Bassar,Centrale,Artisanat," 150,000 F CFA ",6, 15.00 ," 161,250 F CFA ",EN COURS,"11,250 F CFA","161,250 F CFA", - F CFA ,100%,Moyen
+P0414,4,2025-04-19,Agbodjan Ibrahim,F,60,Lomé,Maritime,Commerce," 200,000 F CFA ",18, 8.00 ," 224,000 F CFA ",EN COURS,"24,000 F CFA","224,000 F CFA", - F CFA ,100%,Moyen
+P0415,6,2025-06-26,Tchakou Setondji,M,42,Sokodé,Savane,Commerce," 100,000 F CFA ",36, 15.00 ," 145,000 F CFA ",EN RETARD,"45,000 F CFA","145,000 F CFA", - F CFA ,100%,Moyen
+P0416,6,2025-06-28,Kokoume Kokougankoun,M,56,Aného,Maritime,Commerce," 75,000 F CFA ",6, 8.00 ," 78,000 F CFA ",REMBOURSE,"3,000 F CFA","78,000 F CFA", - F CFA ,100%,Petit
+P0417,3,2025-03-30,Kokoubo Kokoumkoun,M,42,Tabligbo,Centrale,Agriculture," 1,000,000 F CFA ",24, 8.00 ," 1,160,000 F CFA ",EN RETARD,"160,000 F CFA","1,160,000 F CFA", - F CFA ,100%,Grand
+P0418,1,2025-01-09,Koffivi Kokou,F,57,Aného,Savane,Commerce," 1,000,000 F CFA ",36, 12.00 ," 1,360,000 F CFA ",EN RETARD,"360,000 F CFA","1,360,000 F CFA", - F CFA ,100%,Grand
+P0419,3,2025-03-07,Akakpo Larbavi,M,33,Tchamba,Plateau,Agriculture," 75,000 F CFA ",18, 8.00 , - F CFA ,EN COURS,"9,000 F CFA","84,000 F CFA"," 84,000 F CFA ",0%,Petit
+P0420,11,2024-11-28,Amoussounvi Nassirouvi,F,56,Kétao,Maritime,Agriculture," 75,000 F CFA ",18, 8.00 ," 84,000 F CFA ",EN COURS,"9,000 F CFA","84,000 F CFA", - F CFA ,100%,Petit
+P0421,10,2024-10-26,Tchakouvi Kokougo,F,52,Lomé,Savane,Artisanat," 300,000 F CFA ",6, 12.00 ," 318,000 F CFA ",EN COURS,"18,000 F CFA","318,000 F CFA", - F CFA ,100%,Moyen
+P0422,7,2025-07-08,Ibrahim Koumavi,M,67,Blitta,Savane,Artisanat," 500,000 F CFA ",18, 10.00 ," 575,000 F CFA ",EN RETARD,"75,000 F CFA","575,000 F CFA", - F CFA ,100%,Moyen
+P0423,10,2024-10-01,Tchakou Ousmane,M,27,Lomé,Maritime,Agriculture," 750,000 F CFA ",12, 8.00 , - F CFA ,REMBOURSE,"60,000 F CFA","810,000 F CFA"," 810,000 F CFA ",0%,Grand
+P0424,11,2025-11-02,Komlan Kokouwo,M,64,Tsévié,Kara,Artisanat," 75,000 F CFA ",36, 12.00 ," 102,000 F CFA ",REMBOURSE,"27,000 F CFA","102,000 F CFA", - F CFA ,100%,Petit
+P0425,12,2025-12-06,Kossikou Kokoukovi,F,30,Lomé,Plateau,Agriculture," 500,000 F CFA ",36, 15.00 ," 725,000 F CFA ",EN RETARD,"225,000 F CFA","725,000 F CFA", - F CFA ,100%,Moyen
+P0426,11,2024-11-04,Kpogovi Kounavi,F,47,Sokodé,Plateau,Agriculture," 300,000 F CFA ",18, 8.00 ," 336,000 F CFA ",EN COURS,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0427,4,2025-04-27,Mensahvi Koffigan,F,60,Dapaong,Plateau,Artisanat," 200,000 F CFA ",12, 12.00 ," 224,000 F CFA ",EN COURS,"24,000 F CFA","224,000 F CFA", - F CFA ,100%,Moyen
+P0428,9,2025-09-05,Adzoa Kokouzokoun,F,42,Tchamba,Kara,Commerce," 150,000 F CFA ",24, 15.00 ," 195,000 F CFA ",REMBOURSE,"45,000 F CFA","195,000 F CFA", - F CFA ,100%,Moyen
+P0429,11,2025-11-20,Razak Kokouwo,M,36,Kétao,Plateau,Commerce," 750,000 F CFA ",24, 8.00 , - F CFA ,EN COURS,"120,000 F CFA","870,000 F CFA"," 870,000 F CFA ",0%,Grand
+P0430,11,2025-11-18,Kokoum Koffiganvi,M,62,Atakpamé,Centrale,Artisanat," 50,000 F CFA ",36, 15.00 ," 72,500 F CFA ",EN COURS,"22,500 F CFA","72,500 F CFA", - F CFA ,100%,Petit
+P0431,4,2025-04-24,Akuanvi Tchakou,F,28,Lomé,Centrale,Artisanat," 100,000 F CFA ",12, 15.00 ," 114,999 F CFA ",EN COURS,"15,000 F CFA","115,000 F CFA", 1 F CFA ,100%,Moyen
+P0432,6,2025-06-15,Kokougan Koffi,M,42,Cinkassé,Savane,Agriculture," 1,000,000 F CFA ",12, 8.00 ," 1,080,000 F CFA ",EN COURS,"80,000 F CFA","1,080,000 F CFA", - F CFA ,100%,Grand
+P0433,6,2025-06-13,Adjakou Bakary,M,62,Dapaong,Savane,Agriculture," 1,000,000 F CFA ",12, 10.00 ," 1,100,000 F CFA ",EN RETARD,"100,000 F CFA","1,100,000 F CFA", - F CFA ,100%,Grand
+P0434,5,2025-05-16,Togbenu Setondjikoun,M,68,Mango,Savane,Commerce," 200,000 F CFA ",12, 8.00 , - F CFA ,EN RETARD,"16,000 F CFA","216,000 F CFA"," 216,000 F CFA ",0%,Moyen
+P0435,10,2025-10-05,Djimon Nassirou,M,63,Tabligbo,Plateau,Commerce," 200,000 F CFA ",12, 10.00 , - F CFA ,EN COURS,"20,000 F CFA","220,000 F CFA"," 220,000 F CFA ",0%,Moyen
+P0436,2,2025-02-20,Kokougan Fadou,M,54,Kétao,Plateau,Agriculture," 100,000 F CFA ",12, 10.00 , - F CFA ,EN COURS,"10,000 F CFA","110,000 F CFA"," 110,000 F CFA ",0%,Moyen
+P0437,7,2025-07-14,Adjakoukou Tchassvi,F,42,Tandjoaré,Maritime,Artisanat," 1,000,000 F CFA ",24, 15.00 ," 1,300,000 F CFA ",EN COURS,"300,000 F CFA","1,300,000 F CFA", - F CFA ,100%,Grand
+P0438,12,2025-12-09,Kouna Kokouhovi,M,59,Tabligbo,Maritime,Commerce," 75,000 F CFA ",12, 10.00 , - F CFA ,REMBOURSE,"7,500 F CFA","82,500 F CFA"," 82,500 F CFA ",0%,Petit
+P0439,6,2025-06-05,Adjakoukou Issa,F,27,Badou,Maritime,Artisanat," 100,000 F CFA ",18, 10.00 ," 114,999 F CFA ",REMBOURSE,"15,000 F CFA","115,000 F CFA", 1 F CFA ,100%,Moyen
+P0440,12,2025-12-07,Mawuenyega Koffiganvi,M,55,Lomé,Savane,Commerce," 500,000 F CFA ",18, 12.00 ," 590,000 F CFA ",EN COURS,"90,000 F CFA","590,000 F CFA", - F CFA ,100%,Moyen
+P0441,7,2025-07-25,Agbeko Gnonouvi,M,32,Niamtougou,Savane,Commerce," 750,000 F CFA ",24, 12.00 ," 930,000 F CFA ",REMBOURSE,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0442,5,2025-05-06,Kpogo Kokoume,F,35,Notse,Savane,Commerce," 100,000 F CFA ",12, 12.00 ," 112,000 F CFA ",REMBOURSE,"12,000 F CFA","112,000 F CFA", - F CFA ,100%,Moyen
+P0443,4,2025-04-21,Sena Gbehouenou,M,40,Lomé,Maritime,Agriculture," 500,000 F CFA ",36, 10.00 , - F CFA ,EN COURS,"150,000 F CFA","650,000 F CFA"," 650,000 F CFA ",0%,Moyen
+P0444,9,2025-09-21,Amou Batisso,F,42,Cinkassé,Savane,Commerce," 75,000 F CFA ",36, 15.00 ," 108,750 F CFA ",EN COURS,"33,750 F CFA","108,750 F CFA", - F CFA ,100%,Petit
+P0445,3,2025-03-14,Koffi Kokoubo,M,65,Notse,Centrale,Artisanat," 1,000,000 F CFA ",12, 15.00 , - F CFA ,REMBOURSE,"150,000 F CFA","1,150,000 F CFA"," 1,150,000 F CFA ",0%,Grand
+P0446,9,2025-09-06,Kokouzo Kokoudo,M,43,Lomé,Plateau,Commerce," 500,000 F CFA ",12, 8.00 ," 540,000 F CFA ",EN COURS,"40,000 F CFA","540,000 F CFA", - F CFA ,100%,Moyen
+P0447,9,2024-09-16,Sossou Moussavi,M,65,Kara,Savane,Artisanat," 75,000 F CFA ",18, 12.00 ," 88,500 F CFA ",EN RETARD,"13,500 F CFA","88,500 F CFA", - F CFA ,100%,Petit
+P0448,10,2025-10-18,Kossinvi Gnonou,F,62,Notse,Savane,Commerce," 500,000 F CFA ",6, 8.00 ," 520,000 F CFA ",EN RETARD,"20,000 F CFA","520,000 F CFA", - F CFA ,100%,Moyen
+P0449,9,2024-09-14,Awunyo Kokougan,M,64,Sotouboua,Centrale,Agriculture," 750,000 F CFA ",36, 15.00 ," 1,087,500 F CFA ",REMBOURSE,"337,500 F CFA","1,087,500 F CFA", - F CFA ,100%,Grand
+P0450,1,2025-01-10,Kossivi Kokoufovi,F,19,Notse,Centrale,Artisanat," 150,000 F CFA ",36, 12.00 , - F CFA ,EN COURS,"54,000 F CFA","204,000 F CFA"," 204,000 F CFA ",0%,Moyen
+P0451,11,2024-11-13,Koumavi Kokoumekoun,M,27,Sotouboua,Kara,Commerce," 100,000 F CFA ",18, 10.00 , - F CFA ,REMBOURSE,"15,000 F CFA","115,000 F CFA"," 115,000 F CFA ",0%,Moyen
+P0452,9,2024-09-24,Kokoude Teyivi,M,60,Bassar,Maritime,Artisanat," 1,000,000 F CFA ",6, 12.00 , - F CFA ,EN RETARD,"60,000 F CFA","1,060,000 F CFA"," 1,060,000 F CFA ",0%,Grand
+P0453,8,2024-08-15,Ami Kokoum,F,52,Badou,Maritime,Agriculture," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",REMBOURSE,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0454,9,2024-09-30,Kokoum Kossivikoun,M,69,Sokodé,Savane,Artisanat," 750,000 F CFA ",36, 8.00 ," 930,000 F CFA ",EN RETARD,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0455,3,2025-03-23,Tchass Hamidou,M,51,Lomé,Maritime,Commerce," 500,000 F CFA ",36, 10.00 ," 650,000 F CFA ",EN COURS,"150,000 F CFA","650,000 F CFA", - F CFA ,100%,Moyen
+P0456,12,2024-12-22,Kodjo Nassirouvi,M,66,Tsévié,Savane,Agriculture," 75,000 F CFA ",24, 8.00 ," 87,000 F CFA ",EN RETARD,"12,000 F CFA","87,000 F CFA", - F CFA ,100%,Petit
+P0457,11,2024-11-07,Dzigbe Kossivikoun,F,53,Sotouboua,Savane,Agriculture," 50,000 F CFA ",24, 10.00 ," 60,000 F CFA ",REMBOURSE,"10,000 F CFA","60,000 F CFA", - F CFA ,100%,Petit
+P0458,3,2025-03-31,Kokouho Kokouzovi,M,22,Dapaong,Plateau,Artisanat," 750,000 F CFA ",18, 15.00 , - F CFA ,EN RETARD,"168,750 F CFA","918,750 F CFA"," 918,750 F CFA ",0%,Grand
+P0459,8,2025-08-07,Aminvi Koumavivi,F,23,Bassar,Kara,Artisanat," 750,000 F CFA ",6, 12.00 ," 795,000 F CFA ",EN COURS,"45,000 F CFA","795,000 F CFA", - F CFA ,100%,Grand
+P0460,4,2025-04-20,Koffi Kokounokoun,M,36,Sokodé,Savane,Commerce," 100,000 F CFA ",36, 10.00 ," 130,000 F CFA ",EN RETARD,"30,000 F CFA","130,000 F CFA", - F CFA ,100%,Moyen
+P0461,11,2024-11-08,Kpogo Kokoulovi,M,40,Cinkassé,Savane,Commerce," 50,000 F CFA ",6, 10.00 ," 52,500 F CFA ",REMBOURSE,"2,500 F CFA","52,500 F CFA", - F CFA ,100%,Petit
+P0462,1,2025-01-12,Dramani Teyikoun,M,18,Vogan,Maritime,Artisanat," 1,000,000 F CFA ",36, 12.00 ," 1,360,000 F CFA ",EN RETARD,"360,000 F CFA","1,360,000 F CFA", - F CFA ,100%,Grand
+P0463,7,2025-07-04,Larba Gbehouenouvi,M,29,Atakpamé,Centrale,Commerce," 500,000 F CFA ",6, 15.00 , - F CFA ,REMBOURSE,"37,500 F CFA","537,500 F CFA"," 537,500 F CFA ",0%,Moyen
+P0464,12,2024-12-28,Kokouzo Larbavi,M,42,Lomé,Savane,Artisanat," 150,000 F CFA ",36, 15.00 ," 217,500 F CFA ",EN COURS,"67,500 F CFA","217,500 F CFA", - F CFA ,100%,Moyen
+P0465,10,2024-10-11,Amou Essivi,F,20,Bassar,Plateau,Agriculture," 500,000 F CFA ",36, 15.00 , - F CFA ,EN RETARD,"225,000 F CFA","725,000 F CFA"," 725,000 F CFA ",0%,Moyen
+P0466,3,2025-03-06,Adzovi Esso,F,57,Cinkassé,Savane,Commerce," 500,000 F CFA ",36, 12.00 ," 680,000 F CFA ",REMBOURSE,"180,000 F CFA","680,000 F CFA", - F CFA ,100%,Moyen
+P0467,8,2025-08-14,Sossoukou Razak,F,42,Lomé,Centrale,Commerce," 750,000 F CFA ",18, 8.00 ," 840,000 F CFA ",REMBOURSE,"90,000 F CFA","840,000 F CFA", - F CFA ,100%,Grand
+P0468,3,2025-03-20,Dzigbe Kokoukoun,F,42,Kpalimé,Savane,Artisanat," 50,000 F CFA ",12, 8.00 , - F CFA ,REMBOURSE,"4,000 F CFA","54,000 F CFA"," 54,000 F CFA ",0%,Petit
+P0469,10,2025-10-06,Adjakouvi Kokoufovi,F,20,Kpalimé,Savane,Agriculture," 50,000 F CFA ",24, 8.00 ," 57,999 F CFA ",EN RETARD,"8,000 F CFA","58,000 F CFA", 1 F CFA ,100%,Petit
+P0470,1,2025-01-25,Ayevivi Dramanivi,F,70,Lomé,Centrale,Agriculture," 1,000,000 F CFA ",24, 12.00 ," 1,240,000 F CFA ",EN COURS,"240,000 F CFA","1,240,000 F CFA", - F CFA ,100%,Grand
+P0471,8,2025-08-13,Agbeko Medegankoun,M,21,Bassar,Savane,Artisanat," 150,000 F CFA ",24, 10.00 ," 180,000 F CFA ",EN RETARD,"30,000 F CFA","180,000 F CFA", - F CFA ,100%,Moyen
+P0472,12,2024-12-13,Agbodjan Ousmanevi,F,57,Blitta,Centrale,Agriculture," 100,000 F CFA ",6, 15.00 ," 107,500 F CFA ",EN COURS,"7,500 F CFA","107,500 F CFA", - F CFA ,100%,Moyen
+P0473,11,2024-11-09,Fadou Setondji,M,18,Niamtougou,Savane,Artisanat," 100,000 F CFA ",6, 12.00 ," 106,000 F CFA ",EN COURS,"6,000 F CFA","106,000 F CFA", - F CFA ,100%,Moyen
+P0474,7,2025-07-02,Sossoukou Kpogo,F,23,Cinkassé,Maritime,Commerce," 300,000 F CFA ",24, 15.00 ," 390,000 F CFA ",EN COURS,"90,000 F CFA","390,000 F CFA", - F CFA ,100%,Moyen
+P0475,7,2025-07-28,Nassirou Salifou,M,27,Lomé,Plateau,Artisanat," 200,000 F CFA ",36, 15.00 ," 290,000 F CFA ",EN RETARD,"90,000 F CFA","290,000 F CFA", - F CFA ,100%,Moyen
+P0476,11,2025-11-16,Adzokoto Kokoubovi,F,32,Lomé,Plateau,Commerce," 750,000 F CFA ",6, 12.00 ," 795,000 F CFA ",REMBOURSE,"45,000 F CFA","795,000 F CFA", - F CFA ,100%,Grand
+P0477,7,2025-07-19,Esso Kokougankoun,M,42,Cinkassé,Plateau,Agriculture," 750,000 F CFA ",36, 12.00 ," 1,020,000 F CFA ",REMBOURSE,"270,000 F CFA","1,020,000 F CFA", - F CFA ,100%,Grand
+P0478,11,2025-11-28,Kokoudo Bakary,M,18,Lome,Plateau,Commerce," 300,000 F CFA ",24, 10.00 ," 360,000 F CFA ",EN RETARD,"60,000 F CFA","360,000 F CFA", - F CFA ,100%,Moyen
+P0479,7,2025-07-20,Awunyo Ibrahim,F,29,Mango,Maritime,Commerce," 750,000 F CFA ",12, 15.00 ," 862,499 F CFA ",REMBOURSE,"112,500 F CFA","862,500 F CFA", 1 F CFA ,100%,Grand
+P0480,2,2025-02-16,Kpogonvi Kokoudokoun,F,65,Sokodé,Savane,Artisanat," 200,000 F CFA ",18, 12.00 ," 236,000 F CFA ",REMBOURSE,"36,000 F CFA","236,000 F CFA", - F CFA ,100%,Moyen
+P0481,11,2025-11-03,Agbodjankou Awunyo,F,66,Atakpamé,Plateau,Agriculture," 75,000 F CFA ",36, 15.00 ," 108,750 F CFA ",EN RETARD,"33,750 F CFA","108,750 F CFA", - F CFA ,100%,Petit
+P0482,2,2025-02-21,Mensahou Gbadoe,F,42,Blitta,Plateau,Artisanat," 50,000 F CFA ",24, 10.00 , - F CFA ,REMBOURSE,"10,000 F CFA","60,000 F CFA"," 60,000 F CFA ",0%,Petit
+P0483,5,2025-05-03,Koffinvi Batisso,F,64,Blitta,Kara,Artisanat," 1,000,000 F CFA ",6, 8.00 ," 1,040,000 F CFA ",EN RETARD,"40,000 F CFA","1,040,000 F CFA", - F CFA ,100%,Grand
+P0484,9,2024-09-08,Awunyovi Kokougankoun,F,32,Atakpamé,Centrale,Artisanat," 500,000 F CFA ",12, 15.00 ," 575,000 F CFA ",EN RETARD,"75,000 F CFA","575,000 F CFA", - F CFA ,100%,Moyen
+P0485,9,2025-09-07,Medegan Kokoufokoun,M,51,Tsévié,Maritime,Agriculture," 200,000 F CFA ",24, 15.00 ," 260,000 F CFA ",REMBOURSE,"60,000 F CFA","260,000 F CFA", - F CFA ,100%,Moyen
+P0486,5,2025-05-04,Tchakou Kokoufo,M,65,Tandjoaré,Plateau,Artisanat," 750,000 F CFA ",6, 8.00 ," 780,000 F CFA ",EN COURS,"30,000 F CFA","780,000 F CFA", - F CFA ,100%,Grand
+P0487,4,2025-04-25,Kokoum Dossouvi,M,70,Aného,Centrale,Commerce," 100,000 F CFA ",24, 12.00 ," 124,000 F CFA ",EN COURS,"24,000 F CFA","124,000 F CFA", - F CFA ,100%,Moyen
+P0488,12,2024-12-11,Mensahou Koffiganvi,F,68,Tabligbo,Savane,Artisanat," 500,000 F CFA ",36, 15.00 ," 725,000 F CFA ",EN RETARD,"225,000 F CFA","725,000 F CFA", - F CFA ,100%,Moyen
+P0489,12,2024-12-04,Kossivi Kilanivi,F,33,Tchamba,Savane,Commerce," 50,000 F CFA ",36, 12.00 , - F CFA ,EN COURS,"18,000 F CFA","68,000 F CFA"," 68,000 F CFA ",0%,Petit
+P0490,4,2025-04-01,Kokoufo Kounakoun,M,44,Tsévié,Savane,Commerce," 1,000,000 F CFA ",18, 15.00 ," 1,225,000 F CFA ",EN RETARD,"225,000 F CFA","1,225,000 F CFA", - F CFA ,100%,Grand
+P0491,8,2024-08-06,Koffigan Kokoubovi,M,22,Vogan,Maritime,Agriculture," 1,000,000 F CFA ",6, 12.00 , - F CFA ,EN COURS,"60,000 F CFA","1,060,000 F CFA"," 1,060,000 F CFA ",0%,Grand
+P0492,9,2025-09-04,Kokouho Gnonou,M,42,Blitta,Plateau,Artisanat," 1,000,000 F CFA ",6, 12.00 , - F CFA ,EN COURS,"60,000 F CFA","1,060,000 F CFA"," 1,060,000 F CFA ",0%,Grand
+P0493,6,2025-06-08,Gbadoen Kokougokoun,F,58,Cinkassé,Plateau,Artisanat," 500,000 F CFA ",6, 8.00 ," 520,000 F CFA ",EN COURS,"20,000 F CFA","520,000 F CFA", - F CFA ,100%,Moyen
+P0494,4,2025-04-16,Afavi Kokoumkoun,F,42,Tsévié,Maritime,Commerce," 75,000 F CFA ",6, 12.00 ," 79,500 F CFA ",REMBOURSE,"4,500 F CFA","79,500 F CFA", - F CFA ,100%,Petit
+P0495,4,2025-04-11,Kossivi Fadouvi,M,22,Lomé,Savane,Commerce," 300,000 F CFA ",18, 8.00 ," 336,000 F CFA ",REMBOURSE,"36,000 F CFA","336,000 F CFA", - F CFA ,100%,Moyen
+P0496,8,2024-08-09,Sossouvi Kokoudakoun,F,39,Tandjoaré,Savane,Artisanat," 750,000 F CFA ",36, 12.00 ," 1,020,000 F CFA ",EN COURS,"270,000 F CFA","1,020,000 F CFA", - F CFA ,100%,Grand
+P0497,3,2025-03-24,Essou Kokoudekoun,F,48,Sokodé,Plateau,Artisanat," 500,000 F CFA ",24, 12.00 ," 620,000 F CFA ",EN COURS,"120,000 F CFA","620,000 F CFA", - F CFA ,100%,Moyen
+P0498,6,2025-06-27,Kokouno Ibrahim,M,44,Notse,Plateau,Artisanat," 500,000 F CFA ",36, 15.00 ," 725,000 F CFA ",REMBOURSE,"225,000 F CFA","725,000 F CFA", - F CFA ,100%,Moyen
+P0499,8,2024-08-27,Aminvi Ibrahim,F,36,Dapaong,Savane,Agriculture," 750,000 F CFA ",24, 12.00 ," 930,000 F CFA ",EN COURS,"180,000 F CFA","930,000 F CFA", - F CFA ,100%,Grand
+P0500,8,2024-08-14,Issa Kounakoun,M,33,Kpalimé,Plateau,Artisanat," 100,000 F CFA ",24, 12.00 ," 124,000 F CFA ",EN RETARD,"24,000 F CFA","124,000 F CFA", - F CFA ,100%,Moyen
