@@ -124,5 +124,5 @@ MIT License — Libre utilisation pour fins académiques et professionnelles.
 
 ## 👤 Auteur
 
-Développé pour la communauté des analystes crédit en microfinance en Afrique de l'Ouest francophone.  
-*Contributions bienvenues via Pull Request.*
+Développé par SOWAH Kemil Alberto, étudiant en fin de parcours finance comptabilité, Université de Lomé (IUT-G)
+Tout apport et amélioration est le bienvenu
