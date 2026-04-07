@@ -434,7 +434,7 @@ def page_ols():
         mdf = pd.DataFrame(mrows)
         st.dataframe(
             mdf.style
-            .applymap(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
+            .map(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
                       else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
             .background_gradient(subset=["β"], cmap="coolwarm"),
             use_container_width=True, hide_index=True)
