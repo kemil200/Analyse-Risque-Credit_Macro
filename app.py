@@ -550,7 +550,7 @@ def page_corr():
         st_df = pd.DataFrame(sigr).sort_values("p-value")
         st.dataframe(
             st_df.style
-            .applymap(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
+            .map(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
                       else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
             .background_gradient(subset=["r"], cmap="RdBu_r", vmin=-1, vmax=1),
             use_container_width=True, hide_index=True)
