@@ -665,7 +665,7 @@ def page_logit():
         }).sort_values("β", key=abs, ascending=False)
         st.dataframe(
             cdf2.style
-            .applymap(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
+            .map(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
                       else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
             .background_gradient(subset=["β"], cmap="RdBu_r"),
             use_container_width=True, hide_index=True)
