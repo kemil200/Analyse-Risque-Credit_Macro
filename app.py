@@ -44,8 +44,8 @@ st.markdown("""
 T = {
     "fr": dict(
         title="🏦 CreditMacro · Risk Engine", subtitle="Analyse de risque crédit microfinance",
-        nav_upload="📂 Chargement", nav_pd="📉 Probabilité de Défaut", nav_ols="📐 Régression OLS",
-        nav_corr="🔗 Corrélations", nav_logit="🧮 Régression Logistique", nav_export="📄 Export",
+        nav_upload="Chargement", nav_pd="Probabilité de Défaut", nav_ols="Régression OLS",
+        nav_corr="Corrélations", nav_logit="Régression Logistique", nav_export="Export",
         upload_title="Chargez votre portefeuille de prêts", upload_desc="CSV ou Excel · Toute institution de microfinance",
         col_map="Mapping des colonnes", col_map_desc="Associez vos colonnes aux champs analytiques",
         col_default="Colonne statut / défaut", col_amount="Montant du prêt", col_duration="Durée (mois)",
@@ -70,8 +70,8 @@ T = {
     ),
     "en": dict(
         title="🏦 CreditMacro · Risk Engine", subtitle="Credit risk analysis for microfinance",
-        nav_upload="📂 Data Upload", nav_pd="📉 Probability of Default", nav_ols="📐 OLS Regression",
-        nav_corr="🔗 Correlations", nav_logit="🧮 Logistic Regression", nav_export="📄 Export",
+        nav_upload="Data Upload", nav_pd="Probability of Default", nav_ols="OLS Regression",
+        nav_corr="Correlations", nav_logit="Logistic Regression", nav_export="Export",
         upload_title="Upload your loan portfolio", upload_desc="CSV or Excel · Any microfinance institution",
         col_map="Column Mapping", col_map_desc="Map your columns to the required analytical fields",
         col_default="Default / status column", col_amount="Loan amount", col_duration="Duration (months)",
@@ -275,7 +275,7 @@ def page_upload():
             "<div class='warn-box'>💡 Aucun fichier chargé — "
             "utilisez le bouton ci-dessous pour la démo.</div>",
             unsafe_allow_html=True)
-        if st.button("🎲 Charger données de démonstration (Togo)"):
+        if st.button("Charger données de démonstration (Togo)"):
             try:
                 dfd = pd.read_csv("Jeux_donnees.csv")
                 mapping = {
@@ -608,8 +608,8 @@ def page_logit():
     kpi(kk5, "red",    "Rappel (Recall)",f"{rec:.1%}",  "VP/(VP+FN)")
     st.markdown("<br>", unsafe_allow_html=True)
 
-    t1, t2, t3, t4 = st.tabs(["📈 ROC & Calibration", "🎯 Coefficients & Odds-Ratios",
-                                "🗂️ Matrice de confusion", "📊 Distribution des scores"])
+    t1, t2, t3, t4 = st.tabs(["ROC & Calibration", "Coefficients & Odds-Ratios",
+                                "Matrice de confusion", "Distribution des scores"])
     with t1:
         rc1, rc2 = st.columns(2)
         with rc1:
