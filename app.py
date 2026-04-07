@@ -9,7 +9,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, roc_curve, confusion_matrix, classification_report
-from sklearn.calibration import calibration_curve
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -37,6 +36,7 @@ st.markdown("""
 .info-box    { background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:.9rem 1.1rem; font-size:.85rem; color:#1e40af; margin:.5rem 0; }
 .warn-box    { background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:.9rem 1.1rem; font-size:.85rem; color:#92400e; margin:.5rem 0; }
 .success-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:.9rem 1.1rem; font-size:.85rem; color:#166534; margin:.5rem 0; }
+.explain-box { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:.85rem 1.1rem; font-size:.85rem; color:#334155; margin:.5rem 0 1rem 0; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -44,8 +44,8 @@ st.markdown("""
 T = {
     "fr": dict(
         title="🏦 CreditMacro · Risk Engine", subtitle="Analyse de risque crédit microfinance",
-        nav_upload="Chargement", nav_pd="Probabilité de Défaut", nav_ols="Régression OLS",
-        nav_corr="Corrélations", nav_logit="Régression Logistique", nav_export="Export",
+        nav_upload="Chargement", nav_pd="Taux de Défaut", nav_ols="Facteurs de Risque",
+        nav_corr="Liens entre Variables", nav_logit="Modèle de Scoring", nav_export="Export",
         upload_title="Chargez votre portefeuille de prêts", upload_desc="CSV ou Excel · Toute institution de microfinance",
         col_map="Mapping des colonnes", col_map_desc="Associez vos colonnes aux champs analytiques",
         col_default="Colonne statut / défaut", col_amount="Montant du prêt", col_duration="Durée (mois)",
@@ -53,25 +53,29 @@ T = {
         col_region="Région", col_gender="Genre", val_default="Valeurs = défaut (ex: EN RETARD, 1)",
         apply_map="✅ Valider le mapping", no_data="⬅️ Chargez d'abord vos données dans Chargement",
         not_enough="Données insuffisantes (min. 30 lignes valides)",
-        pd_title="Probabilité de Défaut — Analyse empirique", pd_global="PD globale",
-        pd_by_sector="PD par secteur", pd_by_region="PD par région", pd_by_amount="PD par tranche de montant",
-        pd_by_age="PD par tranche d'âge", pd_by_gender="PD par genre", pd_by_duration="PD par durée",
-        ols_title="Régression OLS — Facteurs explicatifs du défaut",
-        ols_dep="Variable dépendante", ols_indep="Variables indépendantes",
-        ols_r2="R² ajusté", ols_fstat="F-statistique", ols_nobs="Observations",
-        corr_title="Matrice de corrélations", corr_desc="Corrélations de Pearson entre variables numériques",
-        corr_top="Corrélations les plus fortes avec le défaut", corr_scatter="Nuage de points",
-        logit_title="Régression Logistique — Modèle de scoring PD",
-        logit_roc="Courbe ROC", logit_auc="AUC", logit_cm="Matrice de confusion",
-        logit_calib="Courbe de calibration", logit_score="Distribution des scores PD",
-        logit_thresh="Seuil de décision", logit_report="Rapport de classification", logit_gini="Gini",
+        pd_title="Taux de Défaut — Qui ne rembourse pas ?",
+        pd_global="Taux de défaut global",
+        pd_by_sector="Taux de défaut par secteur d'activité",
+        pd_by_region="Taux de défaut par région",
+        pd_by_gender="Taux de défaut par genre",
+        ols_title="Facteurs de Risque — Qu'est-ce qui influence le défaut ?",
+        ols_explain="Ce graphique montre quels facteurs augmentent ou diminuent le risque de non-remboursement. Les barres rouges signifient que la variable est liée à plus de défauts ; les barres vertes à moins de défauts.",
+        corr_title="Liens entre Variables",
+        corr_explain="Ce graphique montre le lien entre chaque variable et le fait de ne pas rembourser. Plus la barre est longue, plus le lien est fort. Rouge = lié à plus de défauts, Bleu = lié à moins de défauts.",
+        logit_title="Modèle de Scoring — Capacité à prédire le défaut",
+        logit_explain_roc="La courbe ROC montre la capacité du modèle à distinguer les bons et mauvais payeurs. Plus la courbe est haute et à gauche, meilleur est le modèle. Un score de 0,5 = modèle aléatoire ; 1,0 = modèle parfait.",
+        logit_explain_dist="Ce graphique montre comment le modèle distribue les scores de risque. Les barres rouges sont les clients qui ont réellement fait défaut : elles doivent idéalement se concentrer à droite (score élevé).",
+        logit_auc="Score de fiabilité du modèle",
+        logit_thresh="Seuil de décision",
+        logit_cm="Résultats de la prédiction",
         export_title="Export & Rapport de synthèse",
-        export_dl_csv="⬇️ Télécharger portefeuille scoré (CSV)", export_dl_sum="⬇️ Rapport analytique (TXT)",
+        export_dl_csv="⬇️ Télécharger portefeuille scoré (CSV)",
+        export_dl_sum="⬇️ Rapport analytique (TXT)",
     ),
     "en": dict(
         title="🏦 CreditMacro · Risk Engine", subtitle="Credit risk analysis for microfinance",
-        nav_upload="Data Upload", nav_pd="Probability of Default", nav_ols="OLS Regression",
-        nav_corr="Correlations", nav_logit="Logistic Regression", nav_export="Export",
+        nav_upload="Data Upload", nav_pd="Default Rate", nav_ols="Risk Factors",
+        nav_corr="Variable Links", nav_logit="Scoring Model", nav_export="Export",
         upload_title="Upload your loan portfolio", upload_desc="CSV or Excel · Any microfinance institution",
         col_map="Column Mapping", col_map_desc="Map your columns to the required analytical fields",
         col_default="Default / status column", col_amount="Loan amount", col_duration="Duration (months)",
@@ -79,20 +83,24 @@ T = {
         col_region="Region", col_gender="Gender", val_default="Default values (e.g. LATE, 1)",
         apply_map="✅ Confirm mapping", no_data="⬅️ Please load your data in the Upload tab first",
         not_enough="Not enough data (min. 30 valid rows)",
-        pd_title="Probability of Default — Empirical Analysis", pd_global="Portfolio PD",
-        pd_by_sector="PD by sector", pd_by_region="PD by region", pd_by_amount="PD by loan size",
-        pd_by_age="PD by age group", pd_by_gender="PD by gender", pd_by_duration="PD by duration",
-        ols_title="OLS Regression — Default determinants",
-        ols_dep="Dependent variable", ols_indep="Independent variables",
-        ols_r2="Adjusted R²", ols_fstat="F-statistic", ols_nobs="Observations",
-        corr_title="Correlation Matrix", corr_desc="Pearson correlations between numeric variables",
-        corr_top="Strongest correlations with default", corr_scatter="Scatter plot",
-        logit_title="Logistic Regression — PD Scoring Model",
-        logit_roc="ROC Curve", logit_auc="AUC", logit_cm="Confusion Matrix",
-        logit_calib="Calibration Curve", logit_score="Score distribution (PD)",
-        logit_thresh="Decision threshold", logit_report="Classification report", logit_gini="Gini",
+        pd_title="Default Rate — Who is not repaying?",
+        pd_global="Overall default rate",
+        pd_by_sector="Default rate by sector",
+        pd_by_region="Default rate by region",
+        pd_by_gender="Default rate by gender",
+        ols_title="Risk Factors — What drives default?",
+        ols_explain="This chart shows which factors increase or decrease the risk of non-repayment. Red bars mean the variable is linked to more defaults; green bars to fewer defaults.",
+        corr_title="Links Between Variables",
+        corr_explain="This chart shows how strongly each variable is linked to non-repayment. The longer the bar, the stronger the link. Red = linked to more defaults, Blue = linked to fewer defaults.",
+        logit_title="Scoring Model — Ability to predict default",
+        logit_explain_roc="The ROC curve shows how well the model distinguishes good from bad payers. The higher and further left the curve, the better the model. A score of 0.5 = random guess; 1.0 = perfect model.",
+        logit_explain_dist="This chart shows how the model distributes risk scores. Red bars are clients who actually defaulted — ideally they should cluster on the right (high score).",
+        logit_auc="Model reliability score",
+        logit_thresh="Decision threshold",
+        logit_cm="Prediction results",
         export_title="Export & Summary Report",
-        export_dl_csv="⬇️ Download scored portfolio (CSV)", export_dl_sum="⬇️ Analytical report (TXT)",
+        export_dl_csv="⬇️ Download scored portfolio (CSV)",
+        export_dl_sum="⬇️ Analytical report (TXT)",
     )
 }
 
@@ -115,13 +123,6 @@ def guess(cols, kws):
                 return c
     return None
 
-def sig_stars(p):
-    if p < .001: return "***"
-    if p < .01:  return "**"
-    if p < .05:  return "*"
-    if p < .10:  return "."
-    return "n.s."
-
 def kpi(col, cls, lbl, val, sub=""):
     with col:
         st.markdown(
@@ -130,6 +131,9 @@ def kpi(col, cls, lbl, val, sub=""):
             f"<div class='kpi-val'>{val}</div>"
             f"<div class='kpi-sub'>{sub}</div></div>",
             unsafe_allow_html=True)
+
+def explain(txt):
+    st.markdown(f"<div class='explain-box'>💡 {txt}</div>", unsafe_allow_html=True)
 
 def build_df(df_raw, mapping, dcol, dvals):
     rename = {v: k for k, v in mapping.items() if v and v != "—" and v in df_raw.columns}
@@ -176,9 +180,6 @@ with st.sidebar:
         st.markdown("<div style='font-size:.7rem;color:#475569;'>Aucun fichier chargé</div>",
                     unsafe_allow_html=True)
 
-# ════════════════════════════════════════════
-# GUARD FUNCTION
-# ════════════════════════════════════════════
 def require():
     if st.session_state.df is None:
         st.markdown(f"<div class='warn-box'>{L['no_data']}</div>", unsafe_allow_html=True)
@@ -267,7 +268,7 @@ def page_upload():
             nd2 = int(dfc["default"].sum()); pdg = dfc["default"].mean() * 100
             st.markdown(
                 f"<div class='success-box'>✅ {len(dfc):,} prêts · "
-                f"{nd2} défauts · PD globale = {pdg:.1f}%</div>",
+                f"{nd2} défauts · Taux de défaut global = {pdg:.1f}%</div>",
                 unsafe_allow_html=True)
             st.dataframe(dfc.head(8), use_container_width=True)
     else:
@@ -294,432 +295,362 @@ def page_upload():
                 st.error("Fichier Jeux_donnees.csv introuvable dans le répertoire courant.")
 
 # ════════════════════════════════════════════
-# PAGE 2 — PD
+# PAGE 2 — TAUX DE DÉFAUT (simplifié)
 # ════════════════════════════════════════════
 def page_pd():
     df = require()
     st.markdown(f"<div class='sec-title'>{L['pd_title']}</div>", unsafe_allow_html=True)
     n = len(df); nd = int(df["default"].sum()); pdp = df["default"].mean() * 100
-    c1, c2, c3, c4 = st.columns(4)
-    kpi(c1, "",        "Total prêts / Total loans", f"{n:,}")
-    kpi(c2, "red",     "Défauts / Defaults",         f"{nd:,}",       f"PD = {pdp:.2f}%")
-    kpi(c3, "green",   "Sains / Performing",          f"{n - nd:,}",   f"{100 - pdp:.1f}%")
-    kpi(c4, "orange",  L["pd_global"],                f"{pdp:.2f}%",   "Taux observé")
+
+    # KPIs simples
+    c1, c2, c3 = st.columns(3)
+    kpi(c1, "",       "Nombre total de prêts",  f"{n:,}")
+    kpi(c2, "red",    "Clients en défaut",       f"{nd:,}",     f"{pdp:.1f}% du portefeuille")
+    kpi(c3, "green",  "Clients qui remboursent", f"{n - nd:,}", f"{100 - pdp:.1f}% du portefeuille")
+
+    explain("Le taux de défaut indique la proportion de clients qui n'ont pas remboursé leur prêt. Plus ce taux est élevé, plus le risque pour l'institution est important.")
+
     st.markdown("<br>", unsafe_allow_html=True)
 
-    def pd_bar(cat, title):
+    def pd_bar(cat, title, note=""):
         if cat not in df.columns: return
         g = df.groupby(cat)["default"].agg(["mean", "sum", "count"]).reset_index()
         g.columns = [cat, "PD", "Def", "N"]
-        g["PD_pct"] = (g["PD"] * 100).round(2)
+        g["PD_pct"] = (g["PD"] * 100).round(1)
         g = g.sort_values("PD_pct", ascending=True)
         fig = px.bar(g, x="PD_pct", y=cat, orientation="h",
                      color="PD_pct", color_continuous_scale="RdYlGn_r",
                      range_color=[0, max(g["PD_pct"].max(), 1)],
                      text="PD_pct", title=title,
-                     labels={"PD_pct": "PD (%)", cat: ""},
+                     labels={"PD_pct": "% clients en défaut", cat: ""},
                      custom_data=["Def", "N"])
         fig.update_traces(
             texttemplate="%{text:.1f}%", textposition="outside",
-            hovertemplate="<b>%{y}</b><br>PD: %{x:.1f}%<br>Défauts: %{customdata[0]}<br>N: %{customdata[1]}<extra></extra>")
-        fig.update_layout(height=max(230, len(g) * 45),
+            hovertemplate="<b>%{y}</b><br>%{x:.1f}% en défaut<br>%{customdata[0]} défauts sur %{customdata[1]} prêts<extra></extra>")
+        fig.update_layout(height=max(230, len(g) * 50),
                           margin=dict(l=0, r=40, t=40, b=0), coloraxis_showscale=False)
         st.plotly_chart(fig, use_container_width=True)
+        if note:
+            explain(note)
 
     col1, col2 = st.columns(2)
-    with col1: pd_bar("sector", L["pd_by_sector"])
-    with col2: pd_bar("region", L["pd_by_region"])
+    with col1:
+        pd_bar("sector", L["pd_by_sector"],
+               "Les secteurs en rouge sont les plus risqués : ils concentrent le plus de clients en défaut.")
+    with col2:
+        pd_bar("region", L["pd_by_region"],
+               "Certaines régions présentent un taux de défaut plus élevé, ce qui peut orienter les décisions de déploiement.")
 
-    if "amount" in df.columns and df["amount"].notna().sum() > 10:
-        df["_amt_q"] = pd.qcut(df["amount"].dropna(), q=5, duplicates="drop",
-                                labels=["Q1 Très petit", "Q2 Petit", "Q3 Moyen", "Q4 Grand", "Q5 Très grand"])
-        col3, col4 = st.columns(2)
-        with col3: pd_bar("_amt_q", L["pd_by_amount"])
-        with col4:
-            if "duration" in df.columns and df["duration"].notna().sum() > 10:
-                df["_dur_q"] = pd.cut(df["duration"], bins=[0, 6, 12, 24, 36, 120],
-                                       labels=["≤6m", "7-12m", "13-24m", "25-36m", "36m+"])
-                pd_bar("_dur_q", L["pd_by_duration"])
+    if "gender" in df.columns:
+        col3, _ = st.columns(2)
+        with col3:
+            pd_bar("gender", L["pd_by_gender"],
+                   "Comparaison du taux de défaut entre genres.")
 
-    col5, col6 = st.columns(2)
-    with col5:
-        if "age" in df.columns and df["age"].notna().sum() > 10:
-            df["_age_g"] = pd.cut(df["age"], bins=[0, 25, 35, 45, 55, 100],
-                                   labels=["≤25", "26-35", "36-45", "46-55", "55+"])
-            pd_bar("_age_g", L["pd_by_age"])
-    with col6:
-        pd_bar("gender", L["pd_by_gender"])
-
+    # Tableau récapitulatif simplifié
     st.markdown("<div class='sec-title'>Tableau récapitulatif</div>", unsafe_allow_html=True)
     cat_avail = [c for c in ["sector", "region", "gender"] if c in df.columns]
     if cat_avail:
-        dim = st.selectbox("Dimension", cat_avail)
+        dim = st.selectbox("Voir les résultats par", cat_avail)
         tbl = df.groupby(dim)["default"].agg(
-            N="count", Défauts="sum",
-            PD_pct=lambda x: round(x.mean() * 100, 2)).reset_index()
-        tbl["PD_pct"] = tbl["PD_pct"].apply(lambda x: f"{x:.2f}%")
+            **{"Nombre de prêts": "count",
+               "Clients en défaut": "sum"}).reset_index()
+        tbl["Taux de défaut"] = (df.groupby(dim)["default"].mean().values * 100).round(1)
+        tbl["Taux de défaut"] = tbl["Taux de défaut"].apply(lambda x: f"{x:.1f}%")
         st.dataframe(tbl, use_container_width=True, hide_index=True)
 
 # ════════════════════════════════════════════
-# PAGE 3 — OLS
+# PAGE 3 — FACTEURS DE RISQUE (simplifié OLS)
 # ════════════════════════════════════════════
 def page_ols():
     df = require()
     st.markdown(f"<div class='sec-title'>{L['ols_title']}</div>", unsafe_allow_html=True)
+    explain(L["ols_explain"])
+
     num_cols = [c for c in ["amount", "duration", "rate", "age"]
                 if c in df.columns and df[c].notna().sum() > 10]
     if not num_cols:
         st.warning("Aucune variable numérique disponible."); return
-    cc1, cc2 = st.columns([1, 2])
-    with cc1:
-        dep = st.selectbox(L["ols_dep"], ["default"] + num_cols)
-    with cc2:
-        indep = st.multiselect(L["ols_indep"],
-                               [c for c in num_cols if c != dep],
-                               default=[c for c in num_cols if c != dep][:4])
-    if not indep:
-        st.info("Sélectionnez au moins une variable indépendante."); return
-    rdf = df[[dep] + indep].dropna()
-    if len(rdf) < 20:
-        st.warning(L["not_enough"]); return
-    Y = rdf[dep].values
 
-    # Univariate table
+    label_map = {
+        "amount": "Montant du prêt",
+        "duration": "Durée du prêt",
+        "rate": "Taux d'intérêt",
+        "age": "Âge de l'emprunteur"
+    }
+
     rows = []
-    for v in indep:
-        X = rdf[v].values
-        sl, ic, r, p, se = stats.linregress(X, Y)
-        t = sl / se if se > 0 else 0
-        ss_r = np.sum((Y - (sl * X + ic)) ** 2)
-        ss_t = np.sum((Y - Y.mean()) ** 2)
-        r2 = 1 - ss_r / ss_t if ss_t > 0 else 0
-        rows.append({"Variable": v, "β": round(sl, 6), "Intercept": round(ic, 4),
-                     "Std.Err": round(se, 6), "t-stat": round(t, 3),
-                     "p-value": round(p, 4), "R²": round(r2, 4), "Sig.": sig_stars(p)})
-    res_df = pd.DataFrame(rows)
-    st.markdown(f"**OLS Bivariée — Y = `{dep}`**")
-    st.dataframe(
-        res_df.style
-        .map(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
-                else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
-        .background_gradient(subset=["R²"], cmap="Blues"),
-        use_container_width=True, hide_index=True)
-    st.caption("*** p<.001 | ** p<.01 | * p<.05 | . p<.10 | n.s. non significatif")
+    for v in num_cols:
+        pair = df[[v, "default"]].dropna()
+        if len(pair) < 10: continue
+        sl, _, _, p, _ = stats.linregress(pair[v], pair["default"])
+        rows.append({
+            "Facteur": label_map.get(v, v),
+            "Direction": "↑ Plus de défauts" if sl > 0 else "↓ Moins de défauts",
+            "Intensité": abs(sl),
+            "beta_raw": sl,
+        })
 
-    # Multivariate OLS
-    st.markdown("<div class='sec-title'>OLS Multivarié</div>", unsafe_allow_html=True)
-    Xm = np.column_stack([np.ones(len(rdf))] + [rdf[v].values for v in indep])
-    try:
-        beta = np.linalg.lstsq(Xm, Y, rcond=None)[0]
-        Yh = Xm @ beta; res = Y - Yh
-        n, k = len(Y), len(beta)
-        ss_r = np.sum(res ** 2); ss_t = np.sum((Y - Y.mean()) ** 2)
-        r2m = 1 - ss_r / ss_t if ss_t > 0 else 0
-        r2a = 1 - (1 - r2m) * (n - 1) / (n - k - 1) if n > k + 1 else r2m
-        mse = ss_r / (n - k)
-        cov = mse * np.linalg.pinv(Xm.T @ Xm)
-        se_m = np.sqrt(np.maximum(np.diag(cov), 0))
-        t_m = beta / np.where(se_m > 0, se_m, 1e-10)
-        p_m = 2 * (1 - stats.t.cdf(np.abs(t_m), df=n - k))
-        fstat = ((ss_t - ss_r) / (k - 1)) / mse if mse > 0 and k > 1 else 0
-        kc1, kc2, kc3 = st.columns(3)
-        kpi(kc1, "", L["ols_r2"], f"{r2a:.4f}")
-        kpi(kc2, "purple", L["ols_fstat"], f"{fstat:.2f}")
-        kpi(kc3, "teal", L["ols_nobs"], f"{n:,}")
-        mrows = []
-        for i, vn in enumerate(["Intercept"] + indep):
-            mrows.append({"Variable": vn, "β": round(beta[i], 6),
-                          "Std.Error": round(se_m[i], 6), "t-stat": round(t_m[i], 3),
-                          "p-value": round(p_m[i], 4), "Sig.": sig_stars(p_m[i])})
-        mdf = pd.DataFrame(mrows)
-        st.dataframe(
-            mdf.style
-            .map(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
-                      else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
-            .background_gradient(subset=["β"], cmap="coolwarm"),
-            use_container_width=True, hide_index=True)
+    if not rows:
+        st.warning("Pas assez de données pour calculer les facteurs."); return
 
-        # Residuals & QQ plot
-        rc1, rc2 = st.columns(2)
-        with rc1:
-            fig = px.scatter(x=Yh, y=res, opacity=.5, color_discrete_sequence=["#3b82f6"],
-                             labels={"x": "Valeurs ajustées", "y": "Résidus"},
-                             title="Résidus vs. Valeurs ajustées")
-            fig.add_hline(y=0, line_dash="dash", line_color="red", opacity=.6)
-            fig.update_layout(height=300, margin=dict(l=0, r=0, t=40, b=0))
-            st.plotly_chart(fig, use_container_width=True)
-        with rc2:
-            (osm, osr), (sl2, ic2, _) = stats.probplot(res)
-            fqq = go.Figure([
-                go.Scatter(x=osm, y=osr, mode="markers",
-                           marker=dict(color="#8b5cf6", size=4, opacity=.6), name="Résidus"),
-                go.Scatter(x=[min(osm), max(osm)],
-                           y=[sl2 * min(osm) + ic2, sl2 * max(osm) + ic2],
-                           mode="lines", line=dict(color="red", dash="dash"), name="Normale théorique")
-            ])
-            fqq.update_layout(title="Q-Q Plot des résidus", height=300,
-                               margin=dict(l=0, r=0, t=40, b=0))
-            st.plotly_chart(fqq, use_container_width=True)
+    rdf = pd.DataFrame(rows).sort_values("Intensité", ascending=True)
+    rdf["Couleur"] = rdf["beta_raw"].apply(lambda x: "#ef4444" if x > 0 else "#10b981")
 
-        # Scatter per variable
-        st.markdown("<div class='sec-title'>Relations bivariées</div>", unsafe_allow_html=True)
-        vcols = st.columns(min(len(indep), 3))
-        for i, v in enumerate(indep):
-            with vcols[i % 3]:
-                s2, ic3, _, p2, _ = stats.linregress(rdf[v], rdf[dep])
-                xr = np.linspace(rdf[v].min(), rdf[v].max(), 100)
-                fs = go.Figure([
-                    go.Scatter(x=rdf[v], y=rdf[dep], mode="markers",
-                               marker=dict(size=4, opacity=.35, color="#94a3b8")),
-                    go.Scatter(x=xr, y=s2 * xr + ic3, mode="lines",
-                               line=dict(color="#ef4444", width=2),
-                               name=f"β={s2:.4f} {sig_stars(p2)}")
-                ])
-                fs.update_layout(title=f"{dep} ~ {v}", height=260,
-                                  margin=dict(l=0, r=0, t=40, b=0),
-                                  showlegend=True, legend=dict(font_size=9))
-                st.plotly_chart(fs, use_container_width=True)
-    except np.linalg.LinAlgError:
-        st.error("Multicolinéarité détectée — réduisez le nombre de variables.")
+    fig = go.Figure()
+    for _, row in rdf.iterrows():
+        fig.add_trace(go.Bar(
+            x=[row["beta_raw"]],
+            y=[row["Facteur"]],
+            orientation="h",
+            marker_color=row["Couleur"],
+            name=row["Facteur"],
+            text=row["Direction"],
+            textposition="outside",
+            hovertemplate=f"<b>{row['Facteur']}</b><br>{row['Direction']}<extra></extra>"
+        ))
+    fig.add_vline(x=0, line_color="#334155", line_width=1.5)
+    fig.update_layout(
+        showlegend=False,
+        height=max(250, len(rows) * 70),
+        margin=dict(l=0, r=120, t=20, b=0),
+        xaxis=dict(visible=False),
+        yaxis_title="",
+        plot_bgcolor="white"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Scatter plots simplifiés
+    st.markdown("<div class='sec-title'>Relation entre chaque facteur et le défaut</div>",
+                unsafe_allow_html=True)
+    vcols = st.columns(min(len(num_cols), 2))
+    for i, v in enumerate(num_cols):
+        pair = df[[v, "default"]].dropna()
+        if len(pair) < 10: continue
+        with vcols[i % 2]:
+            avg = pair.groupby("default")[v].mean().reset_index()
+            avg["Statut"] = avg["default"].map({0: "✅ Rembourse", 1: "❌ En défaut"})
+            avg[label_map.get(v, v)] = avg[v].round(1)
+            fb = px.bar(avg, x="Statut", y=v,
+                        color="Statut",
+                        color_discrete_map={"✅ Rembourse": "#10b981", "❌ En défaut": "#ef4444"},
+                        title=f"Moyenne : {label_map.get(v, v)}",
+                        labels={v: label_map.get(v, v), "Statut": ""},
+                        text=v)
+            fb.update_traces(texttemplate="%{text:.1f}", textposition="outside")
+            fb.update_layout(height=280, margin=dict(l=0, r=0, t=40, b=0), showlegend=False)
+            st.plotly_chart(fb, use_container_width=True)
 
 # ════════════════════════════════════════════
-# PAGE 4 — CORRELATIONS
+# PAGE 4 — LIENS ENTRE VARIABLES (simplifié)
 # ════════════════════════════════════════════
 def page_corr():
     df = require()
     st.markdown(f"<div class='sec-title'>{L['corr_title']}</div>", unsafe_allow_html=True)
-    st.markdown(f"<div class='info-box'>{L['corr_desc']}</div>", unsafe_allow_html=True)
+    explain(L["corr_explain"])
+
     num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
     avail = [c for c in num_cols if df[c].notna().sum() > 10]
-    if len(avail) < 2:
+
+    label_map = {
+        "amount": "Montant du prêt",
+        "duration": "Durée du prêt",
+        "rate": "Taux d'intérêt",
+        "age": "Âge de l'emprunteur",
+        "default": "Défaut"
+    }
+
+    if "default" not in avail or len(avail) < 2:
         st.warning("Pas assez de variables numériques."); return
-    sel = st.multiselect("Variables à inclure", avail, default=avail)
-    if len(sel) < 2:
-        st.info("Sélectionnez au moins 2 variables."); return
-    cdf = df[sel].dropna()
-    cm = cdf.corr()
-    fh = px.imshow(cm, text_auto=".2f", aspect="auto",
-                   color_continuous_scale="RdBu_r", zmin=-1, zmax=1, title=L["corr_title"])
-    fh.update_layout(height=max(350, len(sel) * 60), margin=dict(l=0, r=0, t=40, b=0))
-    st.plotly_chart(fh, use_container_width=True)
 
-    if "default" in sel:
-        st.markdown(f"<div class='sec-title'>{L['corr_top']}</div>", unsafe_allow_html=True)
-        cwd = cm["default"].drop("default").sort_values(key=abs, ascending=False).reset_index()
-        cwd.columns = ["Variable", "r avec défaut"]
-        cwd["Interprétation"] = cwd["r avec défaut"].apply(
-            lambda x: "Fort" if abs(x) > .3 else ("Modéré" if abs(x) > .15 else "Faible"))
-        fb = px.bar(cwd, x="r avec défaut", y="Variable", orientation="h",
-                    color="r avec défaut", color_continuous_scale="RdBu_r", range_color=[-1, 1],
-                    text="r avec défaut", title=L["corr_top"])
-        fb.update_traces(texttemplate="%{text:.3f}", textposition="outside")
-        fb.add_vline(x=0, line_color="black", line_width=1)
-        fb.update_layout(height=max(230, len(cwd) * 50),
-                         margin=dict(l=0, r=60, t=40, b=0), coloraxis_showscale=False)
-        st.plotly_chart(fb, use_container_width=True)
-        st.dataframe(cwd, use_container_width=True, hide_index=True)
+    cm = df[avail].dropna().corr()
+    cwd = cm["default"].drop("default").reset_index()
+    cwd.columns = ["variable", "r"]
+    cwd["Facteur"] = cwd["variable"].map(lambda x: label_map.get(x, x))
+    cwd["Lien"] = cwd["r"].apply(
+        lambda x: "Fort" if abs(x) > .3 else ("Modéré" if abs(x) > .15 else "Faible"))
+    cwd["Couleur"] = cwd["r"].apply(lambda x: "#ef4444" if x > 0 else "#3b82f6")
+    cwd = cwd.sort_values("r", key=abs, ascending=True)
 
-    st.markdown(f"<div class='sec-title'>{L['corr_scatter']}</div>", unsafe_allow_html=True)
-    sc1, sc2 = st.columns(2)
-    with sc1: xv = st.selectbox("Variable X", sel, index=0)
-    with sc2: yv = st.selectbox("Variable Y", sel, index=min(1, len(sel) - 1))
-    sdf = df[[xv, yv]].dropna()
-    cv = "default" if "default" in df.columns else None
-    if cv:
-        sdf = sdf.copy()
-        sdf["default"] = df.loc[sdf.index, "default"].astype(str)
-    fsc = px.scatter(sdf, x=xv, y=yv, color="default" if cv else None,
-                     color_discrete_map={"0": "#3b82f6", "1": "#ef4444"},
-                     opacity=.55, trendline="ols", title=f"{yv} ~ {xv}")
-    fsc.update_layout(height=360, margin=dict(l=0, r=0, t=40, b=0))
-    st.plotly_chart(fsc, use_container_width=True)
+    fig = go.Figure()
+    for _, row in cwd.iterrows():
+        direction = "lié à plus de défauts" if row["r"] > 0 else "lié à moins de défauts"
+        fig.add_trace(go.Bar(
+            x=[row["r"]],
+            y=[row["Facteur"]],
+            orientation="h",
+            marker_color=row["Couleur"],
+            name=row["Facteur"],
+            text=f"{row['Lien']} ({direction})",
+            textposition="outside",
+            hovertemplate=f"<b>{row['Facteur']}</b><br>Lien: {row['Lien']}<br>{direction}<extra></extra>"
+        ))
+    fig.add_vline(x=0, line_color="#334155", line_width=1.5)
+    fig.update_layout(
+        showlegend=False,
+        height=max(250, len(cwd) * 70),
+        margin=dict(l=0, r=200, t=20, b=0),
+        xaxis=dict(visible=False),
+        yaxis_title="",
+        plot_bgcolor="white"
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
-    # Significance table
-    st.markdown("<div class='sec-title'>Signification des corrélations (Pearson)</div>",
-                unsafe_allow_html=True)
-    sigr = []
-    for i in range(len(sel)):
-        for j in range(i + 1, len(sel)):
-            v1, v2 = sel[i], sel[j]
-            pair = df[[v1, v2]].dropna()
-            if len(pair) < 5: continue
-            rv, pv = stats.pearsonr(pair[v1], pair[v2])
-            sigr.append({"Var 1": v1, "Var 2": v2, "r": round(rv, 4),
-                         "p-value": round(pv, 4), "Sig.": sig_stars(pv), "n": len(pair)})
-    if sigr:
-        st_df = pd.DataFrame(sigr).sort_values("p-value")
-        st.dataframe(
-            st_df.style
-            .map(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
-                      else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
-            .background_gradient(subset=["r"], cmap="RdBu_r", vmin=-1, vmax=1),
-            use_container_width=True, hide_index=True)
+    # Tableau lisible
+    st.markdown("<div class='sec-title'>Résumé des liens</div>", unsafe_allow_html=True)
+    tbl = cwd[["Facteur", "Lien"]].copy()
+    tbl["Direction"] = cwd["r"].apply(
+        lambda x: "↑ Lié à plus de défauts" if x > 0 else "↓ Lié à moins de défauts")
+    tbl = tbl.sort_values("Lien", ascending=False)
+    st.dataframe(tbl, use_container_width=True, hide_index=True)
 
 # ════════════════════════════════════════════
-# PAGE 5 — LOGISTIC REGRESSION
+# PAGE 5 — MODÈLE DE SCORING (simplifié)
 # ════════════════════════════════════════════
 def page_logit():
     df = require()
     st.markdown(f"<div class='sec-title'>{L['logit_title']}</div>", unsafe_allow_html=True)
+
     if "default" not in df.columns or df["default"].nunique() < 2:
         st.warning("Variable défaut manquante ou constante."); return
+
     num_cols = [c for c in ["amount", "duration", "rate", "age"]
                 if c in df.columns and df[c].notna().sum() > 20]
     if not num_cols:
         st.warning("Aucune variable numérique disponible."); return
-    cfg1, cfg2 = st.columns([2, 1])
-    with cfg1:
-        feats = st.multiselect("Variables explicatives (features)", num_cols, default=num_cols)
-    with cfg2:
-        thr = st.slider(L["logit_thresh"], .1, .9, .5, .05)
-        ts  = st.slider("Taille test set", .1, .4, .2, .05)
+
+    label_map = {
+        "amount": "Montant du prêt",
+        "duration": "Durée du prêt",
+        "rate": "Taux d'intérêt",
+        "age": "Âge de l'emprunteur"
+    }
+
+    with st.expander("⚙️ Paramètres du modèle", expanded=False):
+        feats = st.multiselect("Variables utilisées par le modèle",
+                               num_cols, default=num_cols,
+                               format_func=lambda x: label_map.get(x, x))
+        thr = st.slider(L["logit_thresh"], .1, .9, .5, .05,
+                        help="Au-dessus de ce seuil, le client est classé 'à risque'")
+        ts  = st.slider("Proportion de données de test", .1, .4, .2, .05)
+
     if not feats:
         st.info("Sélectionnez au moins une variable."); return
+
     rdf = df[feats + ["default"]].dropna()
     if len(rdf) < 30:
         st.warning(L["not_enough"]); return
+
     Xa = rdf[feats].values; ya = rdf["default"].values
     try:
         Xtr, Xte, ytr, yte = train_test_split(Xa, ya, test_size=ts, random_state=42, stratify=ya)
     except ValueError:
         Xtr, Xte, ytr, yte = train_test_split(Xa, ya, test_size=ts, random_state=42)
+
     sc = StandardScaler()
     Xtrs = sc.fit_transform(Xtr); Xtes = sc.transform(Xte)
     mdl = LogisticRegression(max_iter=1000, random_state=42, class_weight="balanced")
     mdl.fit(Xtrs, ytr)
-    yprob = mdl.predict_proba(Xtes)[:, 1]; ypred = (yprob >= thr).astype(int)
+    yprob = mdl.predict_proba(Xtes)[:, 1]
+    ypred = (yprob >= thr).astype(int)
+
     st.session_state.logit_model = mdl; st.session_state.scaler = sc
     st.session_state.feature_cols = feats; st.session_state.X_test = Xte
     st.session_state.y_test = yte; st.session_state.y_prob = yprob
+
     try: auc = roc_auc_score(yte, yprob)
     except: auc = .5
-    gini = 2 * auc - 1
+
     cm_arr = confusion_matrix(yte, ypred)
     tn, fp, fn, tp = cm_arr.ravel() if cm_arr.shape == (2, 2) else (0, 0, 0, 0)
-    prec = tp / (tp + fp) if tp + fp > 0 else 0
-    rec  = tp / (tp + fn) if tp + fn > 0 else 0
     acc  = (tp + tn) / len(yte) if len(yte) > 0 else 0
-    # KPIs
-    kk1, kk2, kk3, kk4, kk5 = st.columns(5)
-    kpi(kk1, "purple", L["logit_auc"],   f"{auc:.4f}",  "Discriminance")
-    kpi(kk2, "orange", L["logit_gini"],  f"{gini:.4f}", "2·AUC−1")
-    kpi(kk3, "green",  "Accuracy",       f"{acc:.1%}",  f"seuil {thr}")
-    kpi(kk4, "",       "Précision",      f"{prec:.1%}", "VP/(VP+FP)")
-    kpi(kk5, "red",    "Rappel (Recall)",f"{rec:.1%}",  "VP/(VP+FN)")
+    # Défauts détectés = recall
+    recall = tp / (tp + fn) if (tp + fn) > 0 else 0
+
+    # KPIs simples
+    k1, k2, k3 = st.columns(3)
+    fiab = "Excellent" if auc >= .8 else ("Bon" if auc >= .7 else ("Acceptable" if auc >= .6 else "Faible"))
+    kpi(k1, "purple", L["logit_auc"],           f"{auc:.2f} / 1.00", f"Niveau : {fiab}")
+    kpi(k2, "green",  "Prédictions correctes",  f"{acc:.0%}",        f"seuil {thr}")
+    kpi(k3, "orange", "Défauts détectés",        f"{recall:.0%}",     "parmi les vrais défauts")
+
+    explain(f"Le modèle a un score de fiabilité de **{auc:.2f}** sur 1,00 (niveau : {fiab}). "
+            f"Il détecte correctement **{recall:.0%}** des clients qui vont réellement faire défaut.")
+
     st.markdown("<br>", unsafe_allow_html=True)
 
-    t1, t2, t3, t4 = st.tabs(["ROC & Calibration", "Coefficients & Odds-Ratios",
-                                "Matrice de confusion", "Distribution des scores"])
-    with t1:
-        rc1, rc2 = st.columns(2)
-        with rc1:
+    tab1, tab2 = st.tabs(["📈 Performance du modèle", "🎯 Résultats de la prédiction"])
+
+    with tab1:
+        col1, col2 = st.columns(2)
+        with col1:
+            explain(L["logit_explain_roc"])
             fpr_v, tpr_v, _ = roc_curve(yte, yprob)
             fr = go.Figure([
                 go.Scatter(x=fpr_v, y=tpr_v, mode="lines",
-                           line=dict(color="#3b82f6", width=2.5),
+                           line=dict(color="#3b82f6", width=3),
                            fill="tozeroy", fillcolor="rgba(59,130,246,.1)",
-                           name=f"ROC (AUC={auc:.4f})"),
+                           name=f"Notre modèle (score {auc:.2f})"),
                 go.Scatter(x=[0, 1], y=[0, 1], mode="lines",
-                           line=dict(dash="dash", color="#94a3b8", width=1), name="Aléatoire")
+                           line=dict(dash="dash", color="#94a3b8", width=1),
+                           name="Décision aléatoire")
             ])
-            fr.add_annotation(x=.65, y=.2,
-                              text=f"AUC = {auc:.4f}<br>Gini = {gini:.4f}",
+            fr.add_annotation(x=.6, y=.2,
+                              text=f"Score de fiabilité<br><b>{auc:.2f} / 1.00</b><br>Niveau : {fiab}",
                               showarrow=False, bgcolor="white",
-                              bordercolor="#3b82f6", font=dict(size=11))
-            fr.update_layout(title=L["logit_roc"], height=360,
-                             margin=dict(l=0, r=0, t=40, b=0),
-                             xaxis_title="Taux FP (1-Spécificité)",
-                             yaxis_title="Taux VP (Sensibilité)")
+                              bordercolor="#3b82f6", font=dict(size=12))
+            fr.update_layout(
+                title="Capacité du modèle à distinguer bon/mauvais payeur",
+                height=360, margin=dict(l=0, r=0, t=40, b=0),
+                xaxis_title="Fausses alertes (clients sains classés à risque)",
+                yaxis_title="Vrais défauts détectés")
             st.plotly_chart(fr, use_container_width=True)
-        with rc2:
-            if len(yte) >= 20:
-                nb = min(10, max(5, len(yte) // 20))
-                fp_cal, mp = calibration_curve(yte, yprob, n_bins=nb)
-                fc = go.Figure([
-                    go.Scatter(x=mp, y=fp_cal, mode="lines+markers", name="Modèle",
-                               line=dict(color="#8b5cf6", width=2), marker=dict(size=8)),
-                    go.Scatter(x=[0, 1], y=[0, 1], mode="lines",
-                               line=dict(dash="dash", color="#94a3b8"), name="Parfaite")
-                ])
-                fc.update_layout(title=L["logit_calib"], height=360,
-                                 margin=dict(l=0, r=0, t=40, b=0),
-                                 xaxis_title="PD prédite (moy. bin)",
-                                 yaxis_title="Fréquence réelle de défaut")
-                st.plotly_chart(fc, use_container_width=True)
-    with t2:
-        coefs = mdl.coef_[0]; icpt = mdl.intercept_[0]; OR = np.exp(coefs)
-        ptrp = mdl.predict_proba(Xtrs)[:, 1]; W = np.diag(ptrp * (1 - ptrp))
-        try:
-            XtWX = Xtrs.T @ W @ Xtrs
-            cov_l = np.linalg.pinv(XtWX)
-            se_l = np.sqrt(np.maximum(np.diag(cov_l), 0))
-            z_l = coefs / np.where(se_l > 0, se_l, 1e-10)
-            pv_l = 2 * (1 - stats.norm.cdf(np.abs(z_l)))
-        except Exception:
-            se_l = np.zeros(len(coefs)); z_l = np.zeros(len(coefs)); pv_l = np.ones(len(coefs))
-        cdf2 = pd.DataFrame({
-            "Feature": feats, "β": coefs.round(4), "Std.Err": se_l.round(4),
-            "z-stat": z_l.round(3), "p-value": pv_l.round(4),
-            "Sig.": [sig_stars(p) for p in pv_l], "Odds Ratio": OR.round(4),
-            "Effet": ["↑ Risque+" if c > 0 else "↓ Risque−" for c in coefs]
-        }).sort_values("β", key=abs, ascending=False)
-        st.dataframe(
-            cdf2.style
-            .map(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
-                      else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
-            .background_gradient(subset=["β"], cmap="RdBu_r"),
-            use_container_width=True, hide_index=True)
-        fco = px.bar(cdf2.sort_values("β"), x="β", y="Feature", orientation="h",
-                     color="β", color_continuous_scale="RdBu_r",
-                     title="Coefficients logistiques standardisés", text="Odds Ratio")
-        fco.update_traces(texttemplate="OR=%{text:.3f}", textposition="outside")
-        fco.add_vline(x=0, line_dash="dash", line_color="black")
-        fco.update_layout(height=max(280, len(feats) * 55),
-                          margin=dict(l=0, r=80, t=40, b=0), coloraxis_showscale=False)
-        st.plotly_chart(fco, use_container_width=True)
-        st.markdown(
-            f"<div class='info-box'><strong>Intercept:</strong> {icpt:.4f}<br>"
-            "OR > 1 → augmente le risque de défaut | OR &lt; 1 → diminue le risque</div>",
-            unsafe_allow_html=True)
-    with t3:
-        tc1, tc2 = st.columns([1, 1])
-        with tc1:
-            flb = ["Sain (0)", "Défaut (1)"]
+
+        with col2:
+            explain(L["logit_explain_dist"])
+            sdf2 = pd.DataFrame({
+                "Score de risque estimé": yprob,
+                "Statut réel": yte.astype(str).map({"0": "✅ Rembourse", "1": "❌ En défaut"})
+            })
+            fd = px.histogram(sdf2, x="Score de risque estimé", color="Statut réel",
+                              nbins=25, barmode="overlay", opacity=.75,
+                              color_discrete_map={"✅ Rembourse": "#3b82f6", "❌ En défaut": "#ef4444"},
+                              title="Distribution des scores de risque")
+            fd.add_vline(x=thr, line_dash="dash", line_color="#0f172a",
+                         annotation_text=f"Seuil de décision ({thr})",
+                         annotation_position="top right")
+            fd.update_layout(height=360, margin=dict(l=0, r=0, t=40, b=0),
+                             xaxis_title="Score de risque (0 = aucun risque, 1 = risque maximal)",
+                             yaxis_title="Nombre de clients",
+                             legend_title="Statut réel")
+            st.plotly_chart(fd, use_container_width=True)
+
+    with tab2:
+        explain(f"Sur {len(yte)} clients de test, le modèle a correctement classé **{tp + tn}** clients. "
+                f"Il a manqué **{fn}** vrais défauts et généré **{fp}** fausses alertes.")
+
+        col3, col4 = st.columns(2)
+        with col3:
+            labels = ["✅ Rembourse", "❌ En défaut"]
             fcm = px.imshow(cm_arr, text_auto=True, aspect="auto",
-                            x=flb, y=flb, color_continuous_scale="Blues",
-                            title=L["logit_cm"], labels=dict(x="Prédit", y="Réel", color="N"))
+                            x=labels, y=labels,
+                            color_continuous_scale="Blues",
+                            title="Matrice de résultats",
+                            labels=dict(x="Prédit par le modèle", y="Réalité", color="Clients"))
             fcm.update_layout(height=320, margin=dict(l=0, r=0, t=40, b=0))
             st.plotly_chart(fcm, use_container_width=True)
-        with tc2:
-            rpt = classification_report(yte, ypred, target_names=flb, output_dict=True)
-            st.markdown(f"**{L['logit_report']}**")
-            st.dataframe(pd.DataFrame(rpt).T.round(3), use_container_width=True)
-    with t4:
-        sdf2 = pd.DataFrame({"PD estimée": yprob, "Réel": yte.astype(str)})
-        fd = px.histogram(sdf2, x="PD estimée", color="Réel", nbins=30, barmode="overlay",
-                          color_discrete_map={"0": "#3b82f6", "1": "#ef4444"}, opacity=.7,
-                          title=L["logit_score"])
-        fd.add_vline(x=thr, line_dash="dash", line_color="black",
-                     annotation_text=f"Seuil={thr}", annotation_position="top right")
-        fd.update_layout(height=340, margin=dict(l=0, r=0, t=40, b=0))
-        st.plotly_chart(fd, use_container_width=True)
-        if len(yprob) >= 10:
-            sca = pd.DataFrame({"s": yprob, "d": yte})
-            n_dec = min(10, max(3, len(sca) // 3))
-            sca["decile"] = pd.qcut(sca["s"], q=n_dec,
-                                    labels=[f"D{i}" for i in range(1, n_dec + 1)],
-                                    duplicates="drop")
-            dtbl = sca.groupby("decile", observed=True).agg(
-                N=("d", "count"), Déf=("d", "sum"),
-                PD_réelle=("d", "mean"), PD_moy=("s", "mean")).reset_index()
-            dtbl["PD_réelle"] = (dtbl["PD_réelle"] * 100).round(2)
-            dtbl["PD_moy"]    = (dtbl["PD_moy"]    * 100).round(2)
-            fdc = px.bar(dtbl, x="decile", y="PD_réelle", title="PD réelle par décile de score",
-                         color="PD_réelle", color_continuous_scale="RdYlGn_r", text="PD_réelle")
-            fdc.update_traces(texttemplate="%{text:.1f}%", textposition="outside")
-            fdc.update_layout(height=300, margin=dict(l=0, r=0, t=40, b=0), coloraxis_showscale=False)
-            st.plotly_chart(fdc, use_container_width=True)
-            st.dataframe(dtbl, use_container_width=True, hide_index=True)
+
+        with col4:
+            st.markdown("**Lecture de la matrice :**")
+            st.markdown(f"""
+- ✅ **{tn}** clients sains correctement identifiés
+- ❌ **{tp}** vrais défauts correctement détectés
+- ⚠️ **{fp}** clients sains classés à tort comme risqués *(fausses alertes)*
+- 🔴 **{fn}** vrais défauts non détectés *(manqués)*
+""")
+            st.markdown(f"""
+**En résumé :** Pour 100 clients analysés, le modèle prédit correctement le statut de **{acc:.0%}** d'entre eux.
+""")
 
 # ════════════════════════════════════════════
 # PAGE 6 — EXPORT
@@ -730,31 +661,35 @@ def page_export():
     n = len(df); pdg = df["default"].mean() * 100 if "default" in df.columns else 0
     ec1, ec2, ec3 = st.columns(3)
     kpi(ec1, "", "Total prêts", f"{n:,}")
-    kpi(ec2, "red", "PD globale", f"{pdg:.2f}%")
-    ms = "✅ Modèle entraîné" if st.session_state.logit_model else "⚠️ Non entraîné — voir Régression Logistique"
-    kpi(ec3, "green" if st.session_state.logit_model else "orange", "Modèle logistique", ms)
+    kpi(ec2, "red", "Taux de défaut global", f"{pdg:.1f}%")
+    ms = "✅ Modèle entraîné" if st.session_state.logit_model else "⚠️ Non entraîné — voir Modèle de Scoring"
+    kpi(ec3, "green" if st.session_state.logit_model else "orange", "Modèle de scoring", ms)
     st.markdown("<br>", unsafe_allow_html=True)
+
     edf = df.copy()
     if st.session_state.logit_model and st.session_state.feature_cols:
         try:
             fs = st.session_state.feature_cols
             Xall = edf[fs].fillna(edf[fs].median())
             Xsc = st.session_state.scaler.transform(Xall.values)
-            edf["PD_score"] = st.session_state.logit_model.predict_proba(Xsc)[:, 1].round(4)
-            edf["Classe_risque"] = pd.cut(edf["PD_score"], bins=[0, .15, .30, .50, 1.0],
-                                           labels=["Faible", "Modéré", "Élevé", "Très élevé"])
+            edf["Score_risque"] = st.session_state.logit_model.predict_proba(Xsc)[:, 1].round(4)
+            edf["Classe_risque"] = pd.cut(edf["Score_risque"], bins=[0, .15, .30, .50, 1.0],
+                                           labels=["🟢 Faible", "🟡 Modéré", "🟠 Élevé", "🔴 Très élevé"])
             st.markdown(
-                "<div class='success-box'>✅ Scores PD calculés pour l'ensemble du portefeuille "
-                "(colonnes <strong>PD_score</strong> et <strong>Classe_risque</strong>)</div>",
+                "<div class='success-box'>✅ Scores de risque calculés pour l'ensemble du portefeuille "
+                "(colonnes <strong>Score_risque</strong> et <strong>Classe_risque</strong>)</div>",
                 unsafe_allow_html=True)
-            fe = px.histogram(edf, x="PD_score", color="Classe_risque", nbins=30,
-                              title="Distribution PD — portefeuille complet",
-                              color_discrete_map={"Faible": "#10b981", "Modéré": "#f59e0b",
-                                                   "Élevé": "#f97316", "Très élevé": "#ef4444"})
+            fe = px.histogram(edf, x="Score_risque", color="Classe_risque", nbins=30,
+                              title="Répartition des clients par niveau de risque",
+                              color_discrete_map={
+                                  "🟢 Faible": "#10b981", "🟡 Modéré": "#f59e0b",
+                                  "🟠 Élevé": "#f97316", "🔴 Très élevé": "#ef4444"},
+                              labels={"Score_risque": "Score de risque", "Classe_risque": "Niveau de risque"})
             fe.update_layout(height=300, margin=dict(l=0, r=0, t=40, b=0))
             st.plotly_chart(fe, use_container_width=True)
         except Exception as e:
             st.warning(f"Scoring impossible : {e}")
+
     dl1, dl2 = st.columns(2)
     with dl1:
         st.download_button(label=L["export_dl_csv"],
@@ -763,26 +698,28 @@ def page_export():
                            use_container_width=True)
     with dl2:
         lines = ["RAPPORT ANALYTIQUE — CreditMacro Risk Engine", "=" * 50,
-                 f"Nombre de prêts : {n}", f"PD globale observée : {pdg:.2f}%", ""]
+                 f"Nombre de prêts : {n}", f"Taux de défaut global : {pdg:.1f}%", ""]
         if "sector" in df.columns:
-            lines.append("PD par secteur:")
+            lines.append("Taux de défaut par secteur d'activité :")
             for kv, vv in df.groupby("sector")["default"].mean().items():
                 lines.append(f"  {kv}: {vv * 100:.1f}%")
         if "region" in df.columns:
-            lines.append("\nPD par région:")
+            lines.append("\nTaux de défaut par région :")
             for kv, vv in df.groupby("region")["default"].mean().items():
                 lines.append(f"  {kv}: {vv * 100:.1f}%")
         if st.session_state.logit_model and st.session_state.y_prob is not None:
             try:
                 auc2 = roc_auc_score(st.session_state.y_test, st.session_state.y_prob)
-                lines += ["", f"Modèle logistique — AUC: {auc2:.4f}  Gini: {2 * auc2 - 1:.4f}",
-                          f"Features : {', '.join(st.session_state.feature_cols)}"]
+                fiab2 = "Excellent" if auc2 >= .8 else ("Bon" if auc2 >= .7 else ("Acceptable" if auc2 >= .6 else "Faible"))
+                lines += ["", f"Modèle de scoring — Fiabilité: {auc2:.2f}/1.00 ({fiab2})",
+                          f"Variables utilisées : {', '.join(st.session_state.feature_cols)}"]
             except Exception:
                 pass
         st.download_button(label=L["export_dl_sum"],
                            data="\n".join(lines).encode("utf-8"),
                            file_name="rapport_analytique.txt", mime="text/plain",
                            use_container_width=True)
+
     st.markdown("<div class='sec-title'>Aperçu du portefeuille scoré</div>", unsafe_allow_html=True)
     st.dataframe(edf.head(25), use_container_width=True)
 
