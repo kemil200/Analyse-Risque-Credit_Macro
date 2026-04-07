@@ -400,8 +400,8 @@ def page_ols():
     st.markdown(f"**OLS Bivariée — Y = `{dep}`**")
     st.dataframe(
         res_df.style
-        .applymap(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
-                  else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
+        .map(lambda v: "color:#166534;font-weight:700" if v in ["***", "**", "*"]
+                else ("color:#9ca3af" if v == "n.s." else ""), subset=["Sig."])
         .background_gradient(subset=["R²"], cmap="Blues"),
         use_container_width=True, hide_index=True)
     st.caption("*** p<.001 | ** p<.01 | * p<.05 | . p<.10 | n.s. non significatif")
